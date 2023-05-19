@@ -1,8 +1,9 @@
 import React from 'react'
 import './App.css'
+import Header from "./components/Header/Header"
+import Technologies from "./components/Technologies/Technologies"
 
-
-export function App() {
+function App() {
   return (
     <div>
       <Header />
@@ -11,26 +12,4 @@ export function App() {
   )
 }
 
-function Header() {
-  return (
-    <div>
-      <ul>
-        <a href="#">Home</a>
-        <a href="#">News Fees</a>
-        <a href="#">Messages</a>
-      </ul>
-    </div>
-  )
-}
-
-function Technologies() {
-  return (
-    <ul>
-      <li>CSS</li>
-      <li>HTML</li>
-      <li>JS</li>
-      <li>React</li>
-    </ul>
-  )
-}
-
+export default App
