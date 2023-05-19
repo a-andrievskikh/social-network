@@ -1,12 +1,17 @@
 import React from 'react'
 import './App.css'
 
-function App() {
+export function App() {
   return (
     <div className="App">
-      Hello, samurai! Let's go!
+      <div>First DIV</div>
+      <ul>
+        <li>CSS</li>
+        <li>HTML</li>
+        <li>JS</li>
+        <li>React</li>
+        <li>12</li>
+      </ul>
     </div>
   )
 }
-
-export default App;
