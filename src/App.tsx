@@ -1,17 +1,36 @@
 import React from 'react'
 import './App.css'
 
+
 export function App() {
   return (
-    <div className="App">
-      <div>First DIV</div>
+    <div>
+      <Header />
+      <Technologies />
+    </div>
+  )
+}
+
+function Header() {
+  return (
+    <div>
       <ul>
-        <li>CSS</li>
-        <li>HTML</li>
-        <li>JS</li>
-        <li>React</li>
-        <li>12</li>
+        <a href="#">Home</a>
+        <a href="#">News Fees</a>
+        <a href="#">Messages</a>
       </ul>
     </div>
   )
 }
+
+function Technologies() {
+  return (
+    <ul>
+      <li>CSS</li>
+      <li>HTML</li>
+      <li>JS</li>
+      <li>React</li>
+    </ul>
+  )
+}
+
