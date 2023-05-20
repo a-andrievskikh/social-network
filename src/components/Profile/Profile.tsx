@@ -1,8 +1,9 @@
 import React from 'react'
+import styles from './Profile.module.css'
 
 function Profile() {
   return (
-    <div className="content">
+    <div className={styles.content}>
       <div>
         <img src="https://www.edarabia.com/wp-content/uploads/2019/12/robotics-perception-292756.jpg"
              alt="" />
@@ -13,9 +14,9 @@ function Profile() {
       </div>
       <div>
         My Posts
-        <div>New Post</div>
-        <div>Post 1</div>
-        <div>Post 2</div>
+        <div className={styles.posts}>New Post</div>
+        <div className={styles.item}>Post 1</div>
+        <div className={styles.item}>Post 2</div>
       </div>
     </div>
   )
