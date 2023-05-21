@@ -1,4 +1,5 @@
 import React from 'react'
+import MyPosts from './MyPosts/MyPosts'
 import styles from './Profile.module.css'
 
 function Profile() {
@@ -9,15 +10,11 @@ function Profile() {
              alt="" />
       </div>
       <div>
-        <img src="https://p16.tiktokcdn.com/tos-maliva-avt-0068/6423ad2a7b4eb473f04aa5da968ccc0c~c5_100x100.jpeg"
+        <img style={{width: '100px', borderRadius: '50%'}}
+             src="https://i.pinimg.com/originals/7e/73/1f/7e731f9fcfc7bd222e14c2e6850c69db.jpg"
              alt="" />
       </div>
-      <div>
-        My Posts
-        <div className={styles.posts}>New Post</div>
-        <div className={styles.item}>Post 1</div>
-        <div className={styles.item}>Post 2</div>
-      </div>
+      <MyPosts />
     </div>
   )
 }
