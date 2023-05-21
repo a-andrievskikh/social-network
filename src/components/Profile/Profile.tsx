@@ -4,7 +4,7 @@ import styles from './Profile.module.css'
 
 function Profile() {
   return (
-    <div className={styles.content}>
+    <div>
       <div>
         <img src="https://www.edarabia.com/wp-content/uploads/2019/12/robotics-perception-292756.jpg"
              alt="" />
