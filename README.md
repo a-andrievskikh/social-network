@@ -28,7 +28,6 @@
 ### `yarn start`
 
 <hr>
-<hr>
 
 Узнать больше: [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started)
 
