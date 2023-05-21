@@ -12,11 +12,8 @@ function MyPosts() {
         <button>Post remove</button>
       </div>
       <div className={styles.posts}>
-        <Post />
-        <Post />
-        <Post />
-        <Post />
-        <Post />
+        <Post message={`Hi, how are you?`} likeCount={15} />
+        <Post message={`It's my first project.`} likeCount={20} />
       </div>
     </div>
   )
