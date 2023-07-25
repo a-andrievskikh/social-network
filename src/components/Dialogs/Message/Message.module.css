@@ -1,0 +1,18 @@
+.message {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px;
+}
+
+.messageRight {
+  justify-content: end;
+}
+
+.avatar img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
