@@ -2,7 +2,8 @@ import React, { FC } from 'react'
 import s from './Post.module.css'
 
 type PostPropsType = {
-  message: string,
+  id: number
+  message: string
   likesCount: number
 }
 
@@ -13,7 +14,7 @@ export const Post: FC<PostPropsType> = (props) => (
       alt="" />
     {props.message}
     <div>
-      <span>{props.likesCount} {props.likesCount > 1 ? 'Likes' : 'Like'}</span>
+      <span>{props.likesCount} {props.likesCount > 1 || props.likesCount === 0 ? 'Likes' : 'Like'}</span>
     </div>
   </div>
 )
