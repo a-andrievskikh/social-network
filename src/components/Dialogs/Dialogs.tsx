@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import s from './Dialogs.module.css'
 import { DialogItem } from './DialogItem/DialogItem'
 import { Message } from './Message/Message'
-import { DialogsType, MessageType } from '../../App'
+import { DialogsType, MessageType } from '../../index'
 
 type DialogsPropsType = {
   dialogs: DialogsType[]
