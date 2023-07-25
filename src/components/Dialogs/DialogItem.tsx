@@ -55,13 +55,17 @@ const dialogsElements = dialogs
 const messagesElements = messages
   .map(m => <Message key={m.id} id={m.id} message={m.message} />)
 
-export const Dialogs = () => (
-  <div className={s.dialogs}>
-    <div className={s.dialogsItems}>
-      {dialogsElements}
-    </div>
-    <div className={s.messages}>
-      {messagesElements}
-    </div>
-  </div>
-)
+export const Dialogs = () => {
+  return (
+    (
+      <div className={s.dialogs}>
+        <div className={s.dialogsItems}>
+          {dialogsElements}
+        </div>
+        <div className={s.messages}>
+          {messagesElements}
+        </div>
+      </div>
+    )
+  )
+}
