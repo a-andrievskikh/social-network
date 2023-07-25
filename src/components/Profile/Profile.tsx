@@ -1,24 +1,18 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { MyPosts } from './MyPosts/MyPosts'
 import { ProfileInfo } from './ProfileItem/ProfileInfo'
+import { PostType } from '../../App'
 
-export type PostType = {
-  id: number
-  message: string
-  likesCount: number
+type ProfilePropsType = {
+  posts: PostType[]
 }
 
-export const Profile = () => {
-
-  const posts: PostType[] = [
-    {id: 1, message: 'Hi, how are you?', likesCount: 15},
-    {id: 2, message: 'It\'s my first project.', likesCount: 20},
-  ]
+export const Profile: FC<ProfilePropsType> = (props) => {
 
   return (
     <div>
       <ProfileInfo />
-      <MyPosts posts={posts} />
+      <MyPosts posts={props.posts} />
     </div>
   )
 

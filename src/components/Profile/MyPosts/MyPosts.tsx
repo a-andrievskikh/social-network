@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Post } from './Post/Post'
 import s from './MyPosts.module.css'
-import { PostType } from '../Profile'
+import { PostType } from '../../../App'
 
 type PostPropsType = {
   posts: PostType[]
