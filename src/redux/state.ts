@@ -60,3 +60,13 @@ export const state: StateType = {
     messages,
   },
 }
+
+export const addPost = (postMessage: string) => {
+  return {
+    ...state,
+    profilePage: {
+      ...state.profilePage,
+      posts: [...posts, {id: 3, message: postMessage, likesCount: 0}],
+    },
+  }
+}

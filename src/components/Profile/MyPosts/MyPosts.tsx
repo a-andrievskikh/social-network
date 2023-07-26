@@ -5,6 +5,7 @@ import { PostType } from '../../../redux/state'
 
 type PostPropsType = {
   posts: PostType[]
+  addPost: (postMessage: string) => void
 }
 
 export const MyPosts: FC<PostPropsType> = (props) => {
@@ -13,9 +14,13 @@ export const MyPosts: FC<PostPropsType> = (props) => {
 
   const newPostElement = useRef<HTMLTextAreaElement>(null)
 
-  const handleAddPostClick = () => alert(newPostElement.current?.value)
+  const handleAddPostClick = () => {
+    if (newPostElement.current?.value) {
+      props.addPost(newPostElement.current?.value)
+    }
+  }
   const handleRemovePostClick = () => alert('Post removed')
-  
+
   return (
     <div className={s.postsBlock}>
       <h3>My Posts</h3>
