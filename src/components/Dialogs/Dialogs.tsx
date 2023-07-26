@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useRef } from 'react'
 import s from './Dialogs.module.css'
 import { DialogItem } from './DialogItem/DialogItem'
 import { Message } from './Message/Message'
@@ -15,6 +15,10 @@ export const Dialogs: FC<DialogsPropsType> = (props) => {
   const messagesElements = props.state.messages
     .map((m, idx) => <Message key={m.id} id={m.id} message={m.message} idx={idx} />)
 
+
+  const addMessageElement = useRef<HTMLTextAreaElement>(null)
+  const handleAddMessageClick = () => alert(addMessageElement.current?.value)
+
   return (
     (
       <div className={s.dialogs}>
@@ -23,6 +27,10 @@ export const Dialogs: FC<DialogsPropsType> = (props) => {
         </div>
         <div>
           {messagesElements}
+        </div>
+        <div>
+          <textarea ref={addMessageElement}></textarea>
+          <button onClick={handleAddMessageClick}>Add message</button>
         </div>
       </div>
     )

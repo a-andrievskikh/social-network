@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useRef } from 'react'
 import { Post } from './Post/Post'
 import s from './MyPosts.module.css'
 import { PostType } from '../../../redux/state'
@@ -11,18 +11,23 @@ export const MyPosts: FC<PostPropsType> = (props) => {
   const postsElements = props.posts
     .map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount} />)
 
+  const newPostElement = useRef<HTMLTextAreaElement>(null)
+
+  const handleAddPostClick = () => alert(newPostElement.current?.value)
+  const handleRemovePostClick = () => alert('Post removed')
+  
   return (
     <div className={s.postsBlock}>
       <h3>My Posts</h3>
       <div>
         <div>
-          <textarea></textarea>
+          <textarea ref={newPostElement}></textarea>
         </div>
         <div>
-          <button>Add post</button>
+          <button onClick={handleAddPostClick}>Add post</button>
         </div>
         <div>
-          <button>Remove post</button>
+          <button onClick={handleRemovePostClick}>Remove post</button>
         </div>
       </div>
       <div className={s.posts}>
