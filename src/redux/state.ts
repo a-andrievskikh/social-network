@@ -20,9 +20,11 @@ export type DialogsPageType = {
   dialogs: DialogType[]
   messages: MessageType[]
 }
-export type StateType = {
+type SidebarType = {}
+export type RootStateType = {
   profilePage: ProfilePageType
   dialogsPage: DialogsPageType
+  sidebar: SidebarType
 }
 
 const posts: PostType[] = [
@@ -48,7 +50,7 @@ const messages: MessageType[] = [
   {id: 6, message: 'Yo'},
 ]
 
-export const state: StateType = {
+export const state: RootStateType = {
   profilePage: {
     posts,
   },
@@ -56,6 +58,7 @@ export const state: StateType = {
     dialogs,
     messages,
   },
+  sidebar: {},
 }
 
 export const addPost = (postMessage: string) => {
