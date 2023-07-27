@@ -13,8 +13,10 @@ export type PostType = {
   message: string
   likesCount: number
 }
+export type NewPostTextType = string
 export type ProfilePageType = {
   posts: PostType[]
+  newPostText: NewPostTextType
 }
 export type DialogsPageType = {
   dialogs: DialogType[]
@@ -31,7 +33,6 @@ const posts: PostType[] = [
   {id: 1, message: 'Hi, how are you?', likesCount: 15},
   {id: 2, message: 'It\'s my first project.', likesCount: 20},
 ]
-
 const dialogs: DialogType[] = [
   {id: 1, name: 'Dymich'},
   {id: 2, name: 'Andrey'},
@@ -40,7 +41,6 @@ const dialogs: DialogType[] = [
   {id: 5, name: 'Viktor'},
   {id: 6, name: 'Valera'},
 ]
-
 const messages: MessageType[] = [
   {id: 1, message: 'Hi'},
   {id: 2, message: 'How are you?'},
@@ -53,6 +53,7 @@ const messages: MessageType[] = [
 export const state: RootStateType = {
   profilePage: {
     posts,
+    newPostText: 'Hey!',
   },
   dialogsPage: {
     dialogs,
@@ -61,10 +62,10 @@ export const state: RootStateType = {
   sidebar: {},
 }
 
-export const addPost = (postMessage: string) => {
-  state.profilePage.posts.unshift({id: 3, message: postMessage, likesCount: 0})
+export const addPost = () => {
+  state.profilePage.posts.unshift({id: 3, message: state.profilePage.newPostText, likesCount: 0})
+  state.profilePage.newPostText = ''
   rerenderEntireTree(state)
-
   /*rerenderEntireTree({
     ...state,
     profilePage: {
@@ -72,4 +73,9 @@ export const addPost = (postMessage: string) => {
       posts: [{id: 3, message: postMessage, likesCount: 0}, ...posts],
     },
   })*/
+}
+
+export const updateNewPostText = (newText: string) => {
+  state.profilePage.newPostText = newText
+  rerenderEntireTree(state)
 }
