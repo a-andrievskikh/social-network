@@ -73,7 +73,7 @@ export const addPost = () => {
     profilePage: {
       ...state.profilePage,
       posts: [{id: 3, message: postMessage, likesCount: 0}, ...posts],
-    },
+    } ,
   })*/
 }
 export const updateNewPostText = (newText: string) => {
