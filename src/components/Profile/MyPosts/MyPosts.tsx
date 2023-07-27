@@ -17,12 +17,12 @@ export const MyPosts: FC<PostPropsType> = (props) => {
   const newPostElement = useRef<HTMLTextAreaElement>(null)
 
   const handleAddPostClick = () => {
-    if (newPostElement.current?.value) {
+    if (newPostElement.current) {
       props.addPost()
     }
   }
   const handleUpdateNewPostTextChange = () => {
-    if (newPostElement.current?.value) {
+    if (newPostElement.current) {
       props.updateNewPostText(newPostElement.current.value)
     }
   }
