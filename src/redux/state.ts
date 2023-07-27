@@ -69,7 +69,7 @@ export const store: StoreType = {
     return this._state
   },
   _callSubscriber() {
-    console.log('Rendered!')
+    console.log('State changed')
   },
   addPost() {
     this._state.profilePage.posts.unshift({
@@ -85,11 +85,11 @@ export const store: StoreType = {
       } ,
     })*/
   },
-  updateNewPostText(newText: string) {
+  updateNewPostText(newText) {
     this._state.profilePage.newPostText = newText
     this._callSubscriber()
   },
-  subscribe(observer: () => void) {
+  subscribe(observer) {
     this._callSubscriber = observer
   },
 }
