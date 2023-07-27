@@ -16,10 +16,10 @@ export const MyPosts: FC<PostPropsType> = (props) => {
 
   const handleAddPostClick = () => {
     if (newPostElement.current?.value) {
-      props.addPost(newPostElement.current?.value)
+      props.addPost(newPostElement.current.value)
+      newPostElement.current.value = ''
     }
   }
-  const handleRemovePostClick = () => alert('Post removed')
 
   return (
     <div className={s.postsBlock}>
@@ -30,9 +30,6 @@ export const MyPosts: FC<PostPropsType> = (props) => {
         </div>
         <div>
           <button onClick={handleAddPostClick}>Add post</button>
-        </div>
-        <div>
-          <button onClick={handleRemovePostClick}>Remove post</button>
         </div>
       </div>
       <div className={s.posts}>

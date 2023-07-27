@@ -8,6 +8,7 @@ type PostPropsType = {
 }
 
 export const Post: FC<PostPropsType> = (props) => {
+  const handleRemovePostClick = () => alert('Post removed')
   return (
     (
       <div className={s.item}>
@@ -18,6 +19,9 @@ export const Post: FC<PostPropsType> = (props) => {
         {props.message}
         <div>
           <span>{props.likesCount} {props.likesCount > 1 || props.likesCount === 0 ? 'Likes' : 'Like'}</span>
+        </div>
+        <div>
+          <button onClick={handleRemovePostClick}>Remove post</button>
         </div>
       </div>
     )
