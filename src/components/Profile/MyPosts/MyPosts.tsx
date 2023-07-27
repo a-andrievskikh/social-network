@@ -26,7 +26,7 @@ export const MyPosts: FC<PostPropsType> = (props) => {
       <h3>My Posts</h3>
       <div>
         <div>
-          <textarea ref={newPostElement}></textarea>
+          <textarea ref={newPostElement} />
         </div>
         <div>
           <button onClick={handleAddPostClick}>Add post</button>

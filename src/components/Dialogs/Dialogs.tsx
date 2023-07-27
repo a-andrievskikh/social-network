@@ -29,7 +29,7 @@ export const Dialogs: FC<DialogsPropsType> = (props) => {
           {messagesElements}
         </div>
         <div>
-          <textarea ref={addMessageElement}></textarea>
+          <textarea ref={addMessageElement} />
           <button onClick={handleAddMessageClick}>Add message</button>
         </div>
       </div>
