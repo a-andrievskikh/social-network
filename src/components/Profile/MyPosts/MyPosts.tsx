@@ -7,7 +7,7 @@ import {
   PostType,
   addPostAC,
   updateNewPostTextAC,
-} from '../../../redux/state'
+} from '../../../redux/store'
 
 type PostPropsType = {
   posts: PostType[]
