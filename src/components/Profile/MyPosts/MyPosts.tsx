@@ -5,9 +5,8 @@ import {
   ActionsType,
   NewPostTextType,
   PostType,
-  addPostAC,
-  updateNewPostTextAC,
 } from '../../../redux/store'
+import { addPostAC, updateNewPostTextAC } from '../../../redux/profile-reducer'
 
 type PostPropsType = {
   posts: PostType[]
