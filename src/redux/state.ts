@@ -1,3 +1,6 @@
+const ADD_POST = 'ADD-POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+
 export type DialogType = {
   id: number
   name: string
@@ -34,16 +37,9 @@ export type StoreType = {
   getState: () => RootStateType
   subscribe: (observer: () => void) => void
 }
-type AddPostActionType = {
-  type: 'ADD-POST'
-}
 
-type UpdateNewPostTextActionType = {
-  type: 'UPDATE-NEW-POST-TEXT'
-  newText: string
-}
-
-export type ActionsType = AddPostActionType | UpdateNewPostTextActionType
+export type ActionsType = ReturnType<typeof addPostAC>
+  | ReturnType<typeof updateNewPostTextAC>
 
 export const store: StoreType = {
   _state: {
@@ -86,7 +82,7 @@ export const store: StoreType = {
 
   dispatch(action) {
     switch (action.type) {
-      case 'ADD-POST': {
+      case ADD_POST: {
         this._state.profilePage.posts.unshift({
           id: 3, message: this._state.profilePage.newPostText, likesCount: 0,
         })
@@ -94,7 +90,7 @@ export const store: StoreType = {
         this._callSubscriber()
       }
         break
-      case 'UPDATE-NEW-POST-TEXT': {
+      case UPDATE_NEW_POST_TEXT: {
         this._state.profilePage.newPostText = action.newText
         this._callSubscriber()
       }
@@ -104,3 +100,6 @@ export const store: StoreType = {
     }
   },
 }
+export const addPostAC = () => ({type: ADD_POST} as const)
+export const updateNewPostTextAC = (newText: string) =>
+  ({type: UPDATE_NEW_POST_TEXT, newText} as const)

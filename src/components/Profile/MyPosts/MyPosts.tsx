@@ -1,7 +1,13 @@
 import React, { FC, useRef } from 'react'
 import { Post } from './Post/Post'
 import s from './MyPosts.module.css'
-import { ActionsType, NewPostTextType, PostType } from '../../../redux/state'
+import {
+  ActionsType,
+  NewPostTextType,
+  PostType,
+  addPostAC,
+  updateNewPostTextAC,
+} from '../../../redux/state'
 
 type PostPropsType = {
   posts: PostType[]
@@ -15,14 +21,16 @@ export const MyPosts: FC<PostPropsType> = (props) => {
 
   const newPostElement = useRef<HTMLTextAreaElement>(null)
 
-  const handleAddPostClick = () => {
+  const addPostClickHandler = () => {
     if (newPostElement.current) {
-      props.dispatch({type: 'ADD-POST'})
+      const action = addPostAC()
+      props.dispatch(action)
     }
   }
-  const handleUpdateNewPostTextChange = () => {
+  const updateNewPostTextChangeHandler = () => {
     if (newPostElement.current) {
-      props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: newPostElement.current.value})
+      const action = updateNewPostTextAC(newPostElement.current.value)
+      props.dispatch(action)
     }
   }
 
@@ -33,11 +41,11 @@ export const MyPosts: FC<PostPropsType> = (props) => {
         <div>
           <textarea ref={newPostElement}
                     value={props.newPostText}
-                    onChange={handleUpdateNewPostTextChange}
+                    onChange={updateNewPostTextChangeHandler}
           />
         </div>
         <div>
-          <button onClick={handleAddPostClick}>Add post</button>
+          <button onClick={addPostClickHandler}>Add post</button>
         </div>
       </div>
       <div className={s.posts}>
