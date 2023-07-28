@@ -1,5 +1,7 @@
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
+const SEND_MESSAGE = 'SEND-MESSAGE'
 
 export type DialogType = {
   id: number
@@ -22,6 +24,7 @@ export type ProfilePageType = {
 export type DialogsPageType = {
   dialogs: DialogType[]
   messages: MessageType[]
+  newMessageBody: string
 }
 type SidebarType = {}
 export type RootStateType = {
@@ -40,6 +43,8 @@ export type StoreType = {
 
 export type ActionsType = ReturnType<typeof addPostAC>
   | ReturnType<typeof updateNewPostTextAC>
+  | ReturnType<typeof updateNewMessageBodyAC>
+  | ReturnType<typeof sendMessageAC>
 
 export const store: StoreType = {
   _state: {
@@ -67,6 +72,7 @@ export const store: StoreType = {
         {id: 5, message: 'Yo'},
         {id: 6, message: 'Yo'},
       ],
+      newMessageBody: '',
     },
     sidebar: {},
   },
@@ -79,7 +85,6 @@ export const store: StoreType = {
   subscribe(observer) {
     this._callSubscriber = observer
   },
-
   dispatch(action) {
     switch (action.type) {
       case ADD_POST: {
@@ -95,11 +100,26 @@ export const store: StoreType = {
         this._callSubscriber()
       }
         break
-      default:
-        return this._state
+      case UPDATE_NEW_MESSAGE_BODY: {
+        this._state.dialogsPage.newMessageBody = action.body
+        this._callSubscriber()
+        break
+      }
+      case SEND_MESSAGE: {
+        const body = this._state.dialogsPage.newMessageBody
+        this._state.dialogsPage.newMessageBody = ''
+        this._state.dialogsPage.messages.push({id: 6, message: body})
+        this._callSubscriber()
+        break
+      }
     }
   },
 }
+
 export const addPostAC = () => ({type: ADD_POST} as const)
 export const updateNewPostTextAC = (newText: string) =>
   ({type: UPDATE_NEW_POST_TEXT, newText} as const)
+export const updateNewMessageBodyAC = (newMessage: string) =>
+  ({type: UPDATE_NEW_MESSAGE_BODY, body: newMessage} as const)
+export const sendMessageAC = () => ({type: SEND_MESSAGE} as const)
+
