@@ -29,12 +29,21 @@ export type RootStateType = {
 
 export type StoreType = {
   _state: RootStateType,
-  getState: () => RootStateType
   _callSubscriber: () => void
-  addPost: () => void
-  updateNewPostText: (newText: string) => void
+  dispatch: (action: ActionsType) => void
+  getState: () => RootStateType
   subscribe: (observer: () => void) => void
 }
+type AddPostActionType = {
+  type: 'ADD-POST'
+}
+
+type UpdateNewPostTextActionType = {
+  type: 'UPDATE-NEW-POST-TEXT'
+  newText: string
+}
+
+export type ActionsType = AddPostActionType | UpdateNewPostTextActionType
 
 export const store: StoreType = {
   _state: {
@@ -65,31 +74,33 @@ export const store: StoreType = {
     },
     sidebar: {},
   },
-  getState() {
-    return this._state
-  },
   _callSubscriber() {
     console.log('State changed')
   },
-  addPost() {
-    this._state.profilePage.posts.unshift({
-      id: 3, message: this._state.profilePage.newPostText, likesCount: 0,
-    })
-    this._state.profilePage.newPostText = ''
-    this._callSubscriber()
-    /*rerenderEntireTree({
-      ...state,
-      profilePage: {
-        ...state.profilePage,
-        posts: [{id: 3, message: postMessage, likesCount: 0}, ...posts],
-      } ,
-    })*/
-  },
-  updateNewPostText(newText) {
-    this._state.profilePage.newPostText = newText
-    this._callSubscriber()
+  getState() {
+    return this._state
   },
   subscribe(observer) {
     this._callSubscriber = observer
+  },
+
+  dispatch(action) {
+    switch (action.type) {
+      case 'ADD-POST': {
+        this._state.profilePage.posts.unshift({
+          id: 3, message: this._state.profilePage.newPostText, likesCount: 0,
+        })
+        this._state.profilePage.newPostText = ''
+        this._callSubscriber()
+      }
+        break
+      case 'UPDATE-NEW-POST-TEXT': {
+        this._state.profilePage.newPostText = action.newText
+        this._callSubscriber()
+      }
+        break
+      default:
+        return this._state
+    }
   },
 }
