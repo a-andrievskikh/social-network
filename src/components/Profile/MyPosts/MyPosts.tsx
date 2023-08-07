@@ -1,35 +1,33 @@
-import React, { FC, useRef } from 'react'
+import React from 'react'
 import { Post } from './Post/Post'
 import s from './MyPosts.module.css'
 import {
-  ActionsType,
   NewPostTextType,
   PostType,
-} from '../../../redux/store'
-import { addPostAC, updateNewPostTextAC } from '../../../redux/profile-reducer'
+} from '../../../App'
+import { addPostAC, updateNewPostTextAC } from '../../../store/profile-reducer'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppRootStateType } from '../../../store/store'
 
-type PostPropsType = {
-  posts: PostType[]
-  newPostText: NewPostTextType
-  dispatch: (action: ActionsType) => void
-}
+export const MyPosts = () => {
+  const dispatch = useDispatch()
 
-export const MyPosts: FC<PostPropsType> = (props) => {
-  const postsElements = props.posts
+  const posts = useSelector<AppRootStateType, PostType[]>(state => state.profilePage.posts)
+  const newPostText = useSelector<AppRootStateType, NewPostTextType>(state => state.profilePage.newPostText)
+
+  const postsElements = posts
     .map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount} />)
 
-  const newPostElement = useRef<HTMLTextAreaElement>(null)
+  const newPostElement = React.useRef<HTMLTextAreaElement>(null)
 
   const addPostClickHandler = () => {
     if (newPostElement.current) {
-      const action = addPostAC()
-      props.dispatch(action)
+      dispatch(addPostAC())
     }
   }
   const updateNewPostTextChangeHandler = () => {
     if (newPostElement.current) {
-      const action = updateNewPostTextAC(newPostElement.current.value)
-      props.dispatch(action)
+      dispatch(updateNewPostTextAC(newPostElement.current.value))
     }
   }
 
@@ -39,7 +37,7 @@ export const MyPosts: FC<PostPropsType> = (props) => {
       <div>
         <div>
           <textarea ref={newPostElement}
-                    value={props.newPostText}
+                    value={newPostText}
                     onChange={updateNewPostTextChangeHandler}
           />
         </div>

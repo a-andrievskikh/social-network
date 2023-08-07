@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { Route } from 'react-router-dom'
 import './App.css'
 import { Header } from './components/Header/Header'
@@ -8,28 +8,49 @@ import { Dialogs } from './components/Dialogs/Dialogs'
 import { News } from './components/News/News'
 import { Music } from './components/Music/Music'
 import { Settings } from './components/Settings/Settings'
-import { ActionsType, RootStateType } from './redux/store'
 
-type AppPropsType = {
-  state: RootStateType
-  dispatch: (action: ActionsType) => void
+export type DialogType = {
+  id: number
+  name: string
+}
+export type MessageType = {
+  id: number
+  message: string
+}
+export type PostType = {
+  id: number
+  message: string
+  likesCount: number
+}
+export type NewPostTextType = string
+export type ProfilePageType = {
+  posts: PostType[]
+  newPostText: NewPostTextType
+}
+export type DialogsPageType = {
+  dialogs: DialogType[]
+  messages: MessageType[]
+  newMessageBody: string
+}
+export type SidebarType = {}
+export type RootStateType = {
+  profilePage: ProfilePageType
+  dialogsPage: DialogsPageType
+  sidebar: SidebarType
 }
 
-export const App: FC<AppPropsType> = (props) => {
+export const App = () => {
   return (
+
     <div className="app-wrapper">
       <Header />
       <Navbar />
       <div className="app-wrapper-content">
         <Route path="/profile"
-               render={() => <Profile profilePage={props.state.profilePage}
-                                      dispatch={props.dispatch}
-               />}
+               render={() => <Profile />}
         />
         <Route path="/dialogs"
-               render={() => <Dialogs dialogsPage={props.state.dialogsPage}
-                                      dispatch={props.dispatch}
-               />}
+               render={() => <Dialogs />}
         />
         <Route path="/news" render={() => <News />} />
         <Route path="/music" render={() => <Music />} />

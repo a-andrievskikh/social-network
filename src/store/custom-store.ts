@@ -1,4 +1,6 @@
-import { addPostAC, profileReducer, updateNewPostTextAC } from './profile-reducer'
+export {}
+
+/*import { addPostAC, profileReducer, updateNewPostTextAC } from './profile-reducer'
 import { dialogsReducer, sendMessageAC, updateNewMessageBodyAC } from './dialogs-reducer'
 
 export type DialogType = {
@@ -87,8 +89,4 @@ export const store: StoreType = {
     this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
     this._callSubscriber()
   },
-}
-
-
-
-
+}*/
