@@ -40,8 +40,8 @@ export type RootStateType = {
 }
 
 export const App = () => {
-  return (
 
+  return (
     <div className="app-wrapper">
       <Header />
       <Navbar />
