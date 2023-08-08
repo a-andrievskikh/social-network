@@ -1,4 +1,4 @@
-import React from 'react'
+import { ChangeEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { sendMessageAC, updateNewMessageBodyAC } from '../../store/dialogs-reducer'
 import s from './Dialogs.module.css'
@@ -20,7 +20,7 @@ export const Dialogs = () => {
   const messagesElements = messages
     .map((m, idx) => <Message key={m.id} id={m.id} message={m.message} idx={idx} />)
 
-  const onChangeTextHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     dispatch(updateNewMessageBodyAC(e.currentTarget.value))
   }
 
