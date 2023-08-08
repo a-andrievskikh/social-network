@@ -3,7 +3,7 @@ import { dialogsReducer } from './dialogs-reducer'
 import { sidebarReducer } from './sidebar-reducer'
 import { combineReducers, createStore } from 'redux'
 
-export type AppRootStateType = ReturnType<typeof rootReducer>
+export type AppRootStateType = ReturnType<typeof store.getState>
 
 const rootReducer = combineReducers({
   profilePage: profileReducer,
