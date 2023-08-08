@@ -40,7 +40,6 @@ export type RootStateType = {
 }
 
 export const App = () => {
-
   return (
     <div className="app-wrapper">
       <Header />
