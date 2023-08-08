@@ -1,10 +1,7 @@
-import React from 'react'
+import { useRef } from 'react'
 import { Post } from './Post/Post'
 import s from './MyPosts.module.css'
-import {
-  NewPostTextType,
-  PostType,
-} from '../../../App'
+import { NewPostTextType, PostType } from '../../../App'
 import { addPostAC, updateNewPostTextAC } from '../../../store/profile-reducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppRootStateType } from '../../../store/store'
@@ -18,7 +15,7 @@ export const MyPosts = () => {
   const postsElements = posts
     .map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount} />)
 
-  const newPostElement = React.useRef<HTMLTextAreaElement>(null)
+  const newPostElement = useRef<HTMLTextAreaElement>(null)
 
   const addPostClickHandler = () => {
     if (newPostElement.current) {
