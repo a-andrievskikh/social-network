@@ -1,4 +1,3 @@
-import React, { FC } from 'react'
 import s from './Message.module.css'
 
 type MessagePropsType = {
@@ -7,12 +6,7 @@ type MessagePropsType = {
   idx: number
 }
 
-export const Message: FC<MessagePropsType> = (
-  {
-    id,
-    message,
-    idx,
-  }) => {
+export const Message = ({id, message, idx}: MessagePropsType) => {
   return (
     <div className={`${s.message} ${s.avatar} ${idx % 2 === 1 ? s.messageRight : ''}`}>
       {
