@@ -1,4 +1,4 @@
-import s from './message.module.css'
+import s from './Message.module.css'
 
 type MessagePropsType = {
   id: number
