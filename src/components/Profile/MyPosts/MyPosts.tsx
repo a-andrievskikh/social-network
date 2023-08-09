@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { Post } from './Post/Post'
-import s from './myPosts.module.css'
+import s from './MyPosts.module.css'
 import { NewPostTextType, PostType } from '../../../store/profile-reducer'
 import { addPostAC, updateNewPostTextAC } from '../../../store/profile-reducer'
 import { useDispatch, useSelector } from 'react-redux'
