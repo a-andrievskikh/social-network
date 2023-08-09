@@ -1,4 +1,4 @@
-import s from './post.module.css'
+import s from './Post.module.css'
 
 type PostPropsType = {
   id: number
