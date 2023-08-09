@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { AppRootStateType } from '../../store/store'
 import { followAC, setUsersAC, unfollowAC, UserType } from '../../store/users-reducer'
-import s from './users.module.css'
+import s from './Users.module.css'
 
 export const Users = () => {
   const dispatch = useDispatch()
