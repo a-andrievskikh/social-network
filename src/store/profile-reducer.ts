@@ -7,28 +7,27 @@ export type PostType = {
   likesCount: number
 }
 export type NewPostTextType = string
-export type ProfilePageType = {
-  posts: PostType[]
-  newPostText: NewPostTextType
-}
+
+type InitialStateType = typeof initialState
+
 type ActionsType = ReturnType<typeof addPostAC>
   | ReturnType<typeof updateNewPostTextAC>
 
-const initialState: ProfilePageType = {
+const initialState = {
   posts: [
-    {id: 1, message: 'Hi, how are you?', likesCount: 15},
-    {id: 2, message: 'It\'s my first project.', likesCount: 20},
-  ],
+    { id: 1, message: 'Hi, how are you?', likesCount: 15 },
+    { id: 2, message: 'It\'s my first project.', likesCount: 20 },
+  ] as PostType[],
   newPostText: 'Hey!',
 }
 
-export const profileReducer = (state: ProfilePageType = initialState, action: ActionsType): ProfilePageType => {
+export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case ADD_POST:
       return {
         ...state,
         posts: [
-          {id: 3, message: state.newPostText, likesCount: 0},
+          { id: 3, message: state.newPostText, likesCount: 0 },
           ...state.posts,
         ],
         newPostText: '',
@@ -43,6 +42,6 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
   }
 }
 
-export const addPostAC = () => ({type: ADD_POST} as const)
+export const addPostAC = () => ({ type: ADD_POST } as const)
 export const updateNewPostTextAC = (newText: string) =>
-  ({type: UPDATE_NEW_POST_TEXT, newText} as const)
+  ({ type: UPDATE_NEW_POST_TEXT, newText } as const)
