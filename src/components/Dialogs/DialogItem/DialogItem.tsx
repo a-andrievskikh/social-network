@@ -1,4 +1,4 @@
-import s from './dialogItem.module.css'
+import s from './DialogItem.module.css'
 import { NavLink } from 'react-router-dom'
 
 type DialogItemPropsType = {
