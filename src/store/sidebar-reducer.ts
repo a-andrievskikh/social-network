@@ -1,5 +1,4 @@
-import { SidebarType } from '../App'
-
+export type SidebarType = {}
 export type ActionsType = ReturnType<typeof sidebarAC>
 
 const initialState: SidebarType = {}

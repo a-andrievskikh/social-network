@@ -1,4 +1,3 @@
-import React from 'react'
 import { Route } from 'react-router-dom'
 import './App.css'
 import { Header } from './components/Header/Header'
@@ -8,36 +7,7 @@ import { Dialogs } from './components/Dialogs/Dialogs'
 import { News } from './components/News/News'
 import { Music } from './components/Music/Music'
 import { Settings } from './components/Settings/Settings'
-
-export type DialogType = {
-  id: number
-  name: string
-}
-export type MessageType = {
-  id: number
-  message: string
-}
-export type PostType = {
-  id: number
-  message: string
-  likesCount: number
-}
-export type NewPostTextType = string
-export type ProfilePageType = {
-  posts: PostType[]
-  newPostText: NewPostTextType
-}
-export type DialogsPageType = {
-  dialogs: DialogType[]
-  messages: MessageType[]
-  newMessageBody: string
-}
-export type SidebarType = {}
-export type RootStateType = {
-  profilePage: ProfilePageType
-  dialogsPage: DialogsPageType
-  sidebar: SidebarType
-}
+import { Users } from './components/Users/Users'
 
 export const App = () => {
   return (
@@ -45,12 +15,9 @@ export const App = () => {
       <Header />
       <Navbar />
       <div className="app-wrapper-content">
-        <Route path="/profile"
-               render={() => <Profile />}
-        />
-        <Route path="/dialogs"
-               render={() => <Dialogs />}
-        />
+        <Route path="/profile" render={() => <Profile />} />
+        <Route path="/dialogs" render={() => <Dialogs />} />
+        <Route path="/users" render={() => <Users />} />
         <Route path="/news" render={() => <News />} />
         <Route path="/music" render={() => <Music />} />
         <Route path="/settings" render={() => <Settings />} />

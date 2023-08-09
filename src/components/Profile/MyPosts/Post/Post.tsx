@@ -1,4 +1,4 @@
-import s from './Post.module.css'
+import s from './post.module.css'
 
 type PostPropsType = {
   id: number
@@ -6,7 +6,7 @@ type PostPropsType = {
   likesCount: number
 }
 
-export const Post = ({id, message, likesCount}: PostPropsType) => {
+export const Post = ({ id, message, likesCount }: PostPropsType) => {
   const handleRemovePostClick = () => alert('Post removed')
   return (
     (

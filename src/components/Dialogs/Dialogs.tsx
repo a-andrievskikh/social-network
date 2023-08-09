@@ -1,11 +1,11 @@
 import { ChangeEvent } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { sendMessageAC, updateNewMessageBodyAC } from '../../store/dialogs-reducer'
-import s from './Dialogs.module.css'
+import s from './dialogs.module.css'
 import { DialogItem } from './DialogItem/DialogItem'
 import { Message } from './Message/Message'
 import { AppRootStateType } from '../../store/store'
-import { DialogType, MessageType } from '../../App'
+import { DialogType, MessageType } from '../../store/dialogs-reducer'
 
 export const Dialogs = () => {
   const dispatch = useDispatch()

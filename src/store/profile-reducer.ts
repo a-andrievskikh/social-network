@@ -1,9 +1,18 @@
-import { ProfilePageType } from '../App'
-
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 
-type ActionsType = ReturnType<typeof addPostAC> | ReturnType<typeof updateNewPostTextAC>
+export type PostType = {
+  id: number
+  message: string
+  likesCount: number
+}
+export type NewPostTextType = string
+export type ProfilePageType = {
+  posts: PostType[]
+  newPostText: NewPostTextType
+}
+type ActionsType = ReturnType<typeof addPostAC>
+  | ReturnType<typeof updateNewPostTextAC>
 
 const initialState: ProfilePageType = {
   posts: [
