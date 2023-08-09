@@ -14,19 +14,18 @@ export type UserType = {
   status: string
   location: UserLocation
 }
-export type UsersPageType = {
-  users: UserType[]
-}
+
+type InitialStateType = typeof initialState
 
 type ActionsType = ReturnType<typeof followAC>
   | ReturnType<typeof unfollowAC>
   | ReturnType<typeof setUsersAC>
 
-const initialState: UsersPageType = {
-  users: [],
+const initialState = {
+  users: [] as UserType[],
 }
 
-export const usersReducer = (state: UsersPageType = initialState, action: ActionsType) => {
+export const usersReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case FOLLOW:
       return {
