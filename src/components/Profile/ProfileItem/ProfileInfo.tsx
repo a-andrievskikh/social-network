@@ -1,4 +1,4 @@
-import s from './profileInfo.module.css'
+import s from './ProfileInfo.module.css'
 
 export const ProfileInfo = () => (
   <div>
