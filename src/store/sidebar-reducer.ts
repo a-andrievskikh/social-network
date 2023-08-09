@@ -1,9 +1,12 @@
 export type SidebarType = {}
+
+type InitialStateType = typeof initialState
+
 export type ActionsType = ReturnType<typeof sidebarAC>
 
-const initialState: SidebarType = {}
+const initialState = {}
 
-export const sidebarReducer = (state: SidebarType = initialState, action: ActionsType): SidebarType => {
+export const sidebarReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case 'SIDEBAR': {
       return 'sidebar'
@@ -14,5 +17,5 @@ export const sidebarReducer = (state: SidebarType = initialState, action: Action
 }
 
 export const sidebarAC = () => {
-  return {type: 'SIDEBAR'} as const
+  return { type: 'SIDEBAR' } as const
 }
