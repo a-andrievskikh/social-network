@@ -9,7 +9,6 @@ import { useEffect } from 'react'
 export const Users = () => {
   const dispatch = useDispatch()
   const users = useSelector<AppRootStateType, UserType[]>(state => state.usersPage.users)
-
   const follow = (userID: number) => dispatch(followAC(userID))
   const unfollow = (userID: number) => dispatch(unfollowAC(userID))
 
