@@ -4,6 +4,7 @@ import { followAC, setUsersAC, unfollowAC, UserType } from '../../store/users-re
 import s from './Users.module.css'
 import axios from 'axios'
 import userAvatar from '../../assets/rick.jpg'
+import { useEffect } from 'react'
 
 export const Users = () => {
   const dispatch = useDispatch()
@@ -12,17 +13,14 @@ export const Users = () => {
   const follow = (userID: number) => dispatch(followAC(userID))
   const unfollow = (userID: number) => dispatch(unfollowAC(userID))
 
-  const getUsers = () => {
-    if (!users.length) {
-      axios
-        .get('https://social-network.samuraijs.com/api/1.0/users')
-        .then(res => dispatch(setUsersAC(res.data.items)))
-    }
-  }
+  useEffect(() => {
+    axios
+      .get('https://social-network.samuraijs.com/api/1.0/users')
+      .then(res => dispatch(setUsersAC(res.data.items)))
+  }, [])
 
   return (
     <div className={s.avatar}>
-      <button onClick={getUsers}>Get Users</button>
       {
         users.map(u => {
             return (
