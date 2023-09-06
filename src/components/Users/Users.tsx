@@ -2,6 +2,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppRootStateType } from '../../store/store'
 import { followAC, setUsersAC, unfollowAC, UserType } from '../../store/users-reducer'
 import s from './Users.module.css'
+import axios from 'axios'
+import userAvatar from '../../assets/rick.jpg'
 
 export const Users = () => {
   const dispatch = useDispatch()
@@ -10,41 +12,10 @@ export const Users = () => {
   const follow = (userID: number) => dispatch(followAC(userID))
   const unfollow = (userID: number) => dispatch(unfollowAC(userID))
 
-  if (users.length === 0) {
-    dispatch(setUsersAC([
-      {
-        id: 1,
-        userAvatar: 'https://sun1-87.userapi.com/s/v1/ig2/62slIoVgPwltdzSkHnL24fxSf31Z0PUmBlhtMBLgcRveNxtsdwME5hF-Ih-FEHyQGj3hzdDI-rPXjy0X15seFhvz.jpg?size=400x400&quality=96&crop=2,2,598,598&ava=1',
-        followed: false,
-        fullName: 'Mike',
-        status: 'Hey',
-        location: { city: 'NY', country: 'USA' },
-      },
-      {
-        id: 2,
-        userAvatar: 'https://sun1-87.userapi.com/s/v1/ig2/62slIoVgPwltdzSkHnL24fxSf31Z0PUmBlhtMBLgcRveNxtsdwME5hF-Ih-FEHyQGj3hzdDI-rPXjy0X15seFhvz.jpg?size=400x400&quality=96&crop=2,2,598,598&ava=1',
-        followed: true,
-        fullName: 'John',
-        status: 'Hey',
-        location: { city: 'LA', country: 'USA' },
-      },
-      {
-        id: 3,
-        userAvatar: 'https://sun1-87.userapi.com/s/v1/ig2/62slIoVgPwltdzSkHnL24fxSf31Z0PUmBlhtMBLgcRveNxtsdwME5hF-Ih-FEHyQGj3hzdDI-rPXjy0X15seFhvz.jpg?size=400x400&quality=96&crop=2,2,598,598&ava=1',
-        followed: false,
-        fullName: 'Ann',
-        status: 'Hey',
-        location: { city: 'NY', country: 'USA' },
-      },
-      {
-        id: 4,
-        userAvatar: 'https://sun1-87.userapi.com/s/v1/ig2/62slIoVgPwltdzSkHnL24fxSf31Z0PUmBlhtMBLgcRveNxtsdwME5hF-Ih-FEHyQGj3hzdDI-rPXjy0X15seFhvz.jpg?size=400x400&quality=96&crop=2,2,598,598&ava=1',
-        followed: false,
-        fullName: 'Sarah',
-        status: 'Hey',
-        location: { city: 'LA', country: 'USA' },
-      },
-    ]))
+  if (!users.length) {
+    axios
+      .get('https://social-network.samuraijs.com/api/1.0/users')
+      .then(res => dispatch(setUsersAC(res.data.items)))
   }
 
   return (
@@ -55,30 +26,25 @@ export const Users = () => {
               <div key={u.id}>
               <span>
                 <div>
-                  <img src={u.userAvatar} alt="" />
+                  <img src={!u.photos.small ? userAvatar : u.photos.small} alt="user's avatar" />
                 </div>
                 <div>
                   {
                     u.followed
-                      ? <button onClick={() => unfollow(u.id)}>UNFOLLOW</button>
-                      : <button onClick={() => follow(u.id)}>FOLLOW</button>
+                      ? <button onClick={() => unfollow(u.id)}>Unfollow</button>
+                      : <button onClick={() => follow(u.id)}>Follow</button>
                   }
                 </div>
               </span>
+
                 <span>
-                <span>
-                  <div>{u.fullName}</div>
+                  <div>{u.name}</div>
                   <div>{u.status}</div>
                 </span>
-               </span>
                 <span>
-                <div>
-                  {u.location.country}
-                </div>
-                <div>
-                  {u.location.city}
-                </div>
-              </span>
+                  <div>{'u.location.country'}</div>
+                  <div>{'u.location.city'}</div>
+               </span>
               </div>
             )
           },

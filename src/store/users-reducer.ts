@@ -2,17 +2,20 @@ const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET-USERS'
 
-export type UserLocation = {
-  city: string
-  country: string
+export type UsersDataType = {
+  items: UserType[]
+  totalCount: number
+  error: string
 }
 export type UserType = {
+  name: string
   id: number
-  userAvatar: string
+  photos: {
+    small: string | undefined
+    large: string | undefined
+  },
+  status: string | undefined,
   followed: boolean
-  fullName: string
-  status: string
-  location: UserLocation
 }
 
 type InitialStateType = typeof initialState
@@ -47,12 +50,6 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
   }
 }
 
-export const followAC = (userID: number) => {
-  return { type: FOLLOW, userID } as const
-}
-export const unfollowAC = (userID: number) => {
-  return { type: UNFOLLOW, userID } as const
-}
-export const setUsersAC = (users: UserType[]) => {
-  return { type: SET_USERS, users } as const
-}
+export const followAC = (userID: number) => ({ type: FOLLOW, userID } as const)
+export const unfollowAC = (userID: number) => ({ type: UNFOLLOW, userID } as const)
+export const setUsersAC = (users: UserType[]) => ({ type: SET_USERS, users } as const)
