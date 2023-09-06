@@ -12,14 +12,17 @@ export const Users = () => {
   const follow = (userID: number) => dispatch(followAC(userID))
   const unfollow = (userID: number) => dispatch(unfollowAC(userID))
 
-  if (!users.length) {
-    axios
-      .get('https://social-network.samuraijs.com/api/1.0/users')
-      .then(res => dispatch(setUsersAC(res.data.items)))
+  const getUsers = () => {
+    if (!users.length) {
+      axios
+        .get('https://social-network.samuraijs.com/api/1.0/users')
+        .then(res => dispatch(setUsersAC(res.data.items)))
+    }
   }
 
   return (
     <div className={s.avatar}>
+      <button onClick={getUsers}>Get Users</button>
       {
         users.map(u => {
             return (
@@ -36,7 +39,6 @@ export const Users = () => {
                   }
                 </div>
               </span>
-
                 <span>
                   <div>{u.name}</div>
                   <div>{u.status}</div>
