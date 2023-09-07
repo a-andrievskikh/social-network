@@ -3,3 +3,11 @@
   height: 60px;
   border-radius: 50%;
 }
+
+.pages {
+  cursor: pointer;
+}
+
+.selectedPage {
+  font-weight: bold;
+}
