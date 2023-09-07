@@ -32,8 +32,7 @@ export const Users = () => {
   }, [])
 
   const pagesCount = Math.ceil(totalUsersCount / pageSize)
-  const pages = []
-  for (let i = 1; i <= pagesCount; i++) pages.push(i)
+  const pages = Array.from({ length: pagesCount }, (_, i) => i + 1)
 
   console.log('users rendered')
   console.log(currentPage)
