@@ -1,17 +1,7 @@
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+const SET_USER_PROFILE = 'SET-USER-PROFILE'
 
-export type PostType = {
-  id: number
-  message: string
-  likesCount: number
-}
-export type NewPostTextType = string
-
-type InitialStateType = typeof initialState
-
-type ActionsType = ReturnType<typeof addPostAC>
-  | ReturnType<typeof updateNewPostTextAC>
 
 const initialState = {
   posts: [
@@ -19,6 +9,7 @@ const initialState = {
     { id: 2, message: 'It\'s my first project.', likesCount: 20 },
   ] as PostType[],
   newPostText: 'Hey!',
+  profile: {} as ProfileType,
 }
 
 export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -33,15 +24,55 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
         newPostText: '',
       }
     case UPDATE_NEW_POST_TEXT:
-      return {
-        ...state,
-        newPostText: action.newText,
-      }
+      return { ...state, newPostText: action.newText }
+    case SET_USER_PROFILE:
+      return { ...state, profile: action.profile }
     default:
       return state
   }
 }
 
+// Actions
 export const addPostAC = () => ({ type: ADD_POST } as const)
-export const updateNewPostTextAC = (newText: string) =>
-  ({ type: UPDATE_NEW_POST_TEXT, newText } as const)
+export const updateNewPostTextAC = (newText: string) => ({ type: UPDATE_NEW_POST_TEXT, newText } as const)
+export const setUserProfileAC = (profile: ProfileType) => ({ type: SET_USER_PROFILE, profile } as const)
+
+//Types
+type InitialStateType = typeof initialState
+
+type ActionsType =
+  | ReturnType<typeof addPostAC>
+  | ReturnType<typeof updateNewPostTextAC>
+  | ReturnType<typeof setUserProfileAC>
+
+export type PostType = {
+  id: number
+  message: string
+  likesCount: number
+}
+export type NewPostTextType = string
+export type ProfileType = {
+  aboutMe: string
+  contacts: Contacts,
+  lookingForAJob: boolean,
+  lookingForAJobDescription: string
+  fullName: string
+  userId: number,
+  photos: Photos
+}
+
+export type Contacts = {
+  facebook: string
+  website: null,
+  vk: string
+  twitter: string
+  instagram: string
+  youtube: null,
+  github: string
+  mainLink: null
+}
+
+export type Photos = {
+  small: string
+  large: string
+}
