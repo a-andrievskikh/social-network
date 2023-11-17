@@ -1,10 +1,10 @@
 import { useRef } from 'react'
 import { Post } from './Post/Post'
 import s from './MyPosts.module.css'
-import { NewPostTextType, PostType } from '../../../store/profile-reducer'
-import { addPostAC, updateNewPostTextAC } from '../../../store/profile-reducer'
+import { NewPostTextType, PostType } from 'store/profile-reducer'
+import { addPostAC, updateNewPostTextAC } from 'store/profile-reducer'
 import { useDispatch, useSelector } from 'react-redux'
-import { AppRootStateType } from '../../../store/store'
+import { AppRootStateType } from 'store/store'
 
 export const MyPosts = () => {
   const dispatch = useDispatch()
