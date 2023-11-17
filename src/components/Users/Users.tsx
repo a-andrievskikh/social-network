@@ -14,6 +14,8 @@ import axios from 'axios'
 import userAvatar from 'assets/images/rick.jpg'
 import { useEffect } from 'react'
 import { Preloader } from 'components/common/preloader/Preloader'
+import { NavLink } from 'react-router-dom'
+import { setUserProfileAC } from 'store/profile-reducer'
 
 export const Users = () => {
   const dispatch = useDispatch()
@@ -36,11 +38,20 @@ export const Users = () => {
       })
   }, [])
 
+  useEffect(() => {
+    dispatch(toggleIsFetchingAC(true))
+    axios
+      .get(`https://social-network.samuraijs.com/api/1.0/profile/${2}`)
+      .then(res => {
+        dispatch(setUserProfileAC(res.data))
+        dispatch(toggleIsFetchingAC(false))
+      })
+  }, [])
+
   const pagesCount = Math.ceil(totalUsersCount / pageSize)
   const pages = Array.from({ length: pagesCount }, (_, i) => i + 1)
 
   console.log('users rendered')
-  console.log(currentPage)
 
   const onPageHandler = (pageNumber: number) => {
     dispatch(setCurrentPageAC(pageNumber))
@@ -72,7 +83,10 @@ export const Users = () => {
               <div key={u.id}>
               <span>
                 <div>
-                  <img src={!u.photos.small ? userAvatar : u.photos.small} alt="user's avatar" />
+                <NavLink to={`/profile/${u.id}`}>
+                  <img src={!u.photos.small ? userAvatar : u.photos.small}
+                       alt="user's avatar" />
+                </NavLink>
                 </div>
                 <div>
                   {
