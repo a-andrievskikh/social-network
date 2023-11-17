@@ -15,6 +15,14 @@ const rootReducer = combineReducers({
 
 export const store = createStore(rootReducer)
 
+declare global {
+  interface Window {
+    store: typeof store;
+  }
+}
+
+window.store = store
+
 
 
 
