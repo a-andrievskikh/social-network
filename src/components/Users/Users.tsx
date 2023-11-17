@@ -1,17 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { AppRootStateType } from '../../store/store'
+import { AppRootStateType } from 'store/store'
 import {
-  setCurrentPageAC,
   followAC,
+  setCurrentPageAC,
+  setTotalUsersCountAC,
   setUsersAC,
+  toggleIsFetchingAC,
   unfollowAC,
   UserType,
-  setTotalUsersCountAC,
-} from '../../store/users-reducer'
+} from 'store/users-reducer'
 import s from './Users.module.css'
 import axios from 'axios'
-import userAvatar from '../../assets/rick.jpg'
+import userAvatar from 'assets/images/rick.jpg'
 import { useEffect } from 'react'
+import { Preloader } from 'components/common/preloader/Preloader'
 
 export const Users = () => {
   const dispatch = useDispatch()
@@ -19,15 +21,18 @@ export const Users = () => {
   const pageSize = useSelector<AppRootStateType, number>(state => state.usersPage.pageSize)
   const totalUsersCount = useSelector<AppRootStateType, number>(state => state.usersPage.totalUsersCount)
   const currentPage = useSelector<AppRootStateType, number>(state => state.usersPage.currentPage)
+  const isFetching = useSelector<AppRootStateType, boolean>(state => state.usersPage.isFetching)
   const follow = (userID: number) => dispatch(followAC(userID))
   const unfollow = (userID: number) => dispatch(unfollowAC(userID))
 
   useEffect(() => {
+    dispatch(toggleIsFetchingAC(true))
     axios
       .get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`)
       .then(res => {
         dispatch(setUsersAC(res.data.items))
         dispatch(setTotalUsersCountAC(res.data.totalCount))
+        dispatch(toggleIsFetchingAC(false))
       })
   }, [])
 
@@ -39,21 +44,28 @@ export const Users = () => {
 
   const onPageHandler = (pageNumber: number) => {
     dispatch(setCurrentPageAC(pageNumber))
+    dispatch(toggleIsFetchingAC(true))
     axios
       .get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${pageSize}`)
-      .then(res => dispatch(setUsersAC(res.data.items)))
+      .then(res => {
+        dispatch(toggleIsFetchingAC(false))
+        dispatch(setUsersAC(res.data.items))
+      })
+
   }
 
   return (
     <div className={s.avatar}>
       <div>
         {
-          pages.map((p, i) => <span key={i}
-                                    className={currentPage === p ? s.selectedPage : s.pages}
-                                    onClick={() => onPageHandler(p)}
+          pages.map((p, i) => <span
+            key={i}
+            className={currentPage === p ? s.selectedPage : s.pages}
+            onClick={() => onPageHandler(p)}
           >{p}</span>)
         }
       </div>
+      {isFetching && <Preloader />}
       {
         users.map(u => {
             return (
@@ -86,3 +98,4 @@ export const Users = () => {
     </div>
   )
 }
+
