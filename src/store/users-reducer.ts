@@ -3,36 +3,16 @@ const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET-USERS'
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT'
-
-export type UsersDataType = {
-  items: UserType[]
-  totalCount: number
-  error: string
-}
-export type UserType = {
-  name: string
-  id: number
-  photos: {
-    small: string | undefined
-    large: string | undefined
-  },
-  status: string | undefined,
-  followed: boolean
-}
+const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING'
 
 type InitialStateType = typeof initialState
-
-type ActionsType = ReturnType<typeof followAC>
-  | ReturnType<typeof unfollowAC>
-  | ReturnType<typeof setUsersAC>
-  | ReturnType<typeof setCurrentPageAC>
-  | ReturnType<typeof setTotalUsersCountAC>
 
 const initialState = {
   users: [] as UserType[],
   pageSize: 5,
   totalUsersCount: 0,
   currentPage: 1,
+  isFetching: false,
 }
 
 export const usersReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -53,6 +33,9 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
       return { ...state, currentPage: action.currentPage }
     case SET_TOTAL_USERS_COUNT:
       return { ...state, totalUsersCount: action.totalUsersCount }
+    case TOGGLE_IS_FETCHING:
+      return { ...state, isFetching: action.isFetching }
+
     default:
       return state
   }
@@ -63,4 +46,31 @@ export const unfollowAC = (userID: number) => ({ type: UNFOLLOW, userID } as con
 export const setUsersAC = (users: UserType[]) => ({ type: SET_USERS, users } as const)
 export const setCurrentPageAC = (currentPage: number) => ({ type: SET_CURRENT_PAGE, currentPage } as const)
 export const setTotalUsersCountAC = (totalUsersCount: number) =>
-  ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount, } as const)
+  ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount } as const)
+export const toggleIsFetchingAC = (isFetching: boolean) => ({ type: TOGGLE_IS_FETCHING, isFetching } as const)
+
+// Actions
+type ActionsType =
+  | ReturnType<typeof followAC>
+  | ReturnType<typeof unfollowAC>
+  | ReturnType<typeof setUsersAC>
+  | ReturnType<typeof setCurrentPageAC>
+  | ReturnType<typeof setTotalUsersCountAC>
+  | ReturnType<typeof toggleIsFetchingAC>
+
+// Types
+export type UsersDataType = {
+  items: UserType[]
+  totalCount: number
+  error: string
+}
+export type UserType = {
+  name: string
+  id: number
+  photos: {
+    small: string | undefined
+    large: string | undefined
+  },
+  status: string | undefined,
+  followed: boolean
+}
