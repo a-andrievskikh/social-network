@@ -38,7 +38,7 @@ export const usersReducer = (state: InitialStateType = initialState, action: Act
       return state
   }
 }
-
+// Actions
 export const followAC = (userID: number) => ({ type: FOLLOW, userID } as const)
 export const unfollowAC = (userID: number) => ({ type: UNFOLLOW, userID } as const)
 export const setUsersAC = (users: UserType[]) => ({ type: SET_USERS, users } as const)
@@ -47,7 +47,7 @@ export const setTotalUsersCountAC = (totalUsersCount: number) =>
   ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount } as const)
 export const toggleIsFetchingAC = (isFetching: boolean) => ({ type: TOGGLE_IS_FETCHING, isFetching } as const)
 
-// Actions
+// Types
 type ActionsType =
   | ReturnType<typeof followAC>
   | ReturnType<typeof unfollowAC>
@@ -56,7 +56,6 @@ type ActionsType =
   | ReturnType<typeof setTotalUsersCountAC>
   | ReturnType<typeof toggleIsFetchingAC>
 
-// Types
 export type UsersDataType = {
   items: UserType[]
   totalCount: number
