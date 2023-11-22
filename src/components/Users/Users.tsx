@@ -1,5 +1,3 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { AppRootStateType } from 'store/store'
 import {
   followAC,
   setCurrentPageAC,
@@ -10,27 +8,39 @@ import {
   UserType,
 } from 'store/users-reducer'
 import s from './Users.module.css'
-import axios from 'axios'
 import userAvatar from 'assets/images/rick.jpg'
 import { useEffect } from 'react'
-import { Preloader } from 'components/common/preloader/Preloader'
+import { Preloader } from 'common/preloader/Preloader'
 import { NavLink } from 'react-router-dom'
 import { setUserProfileAC } from 'store/profile-reducer'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { useAppSelector } from 'common/hooks/useAppSelector'
+import {
+  currentPageSelector, isFetchingSelector,
+  pageSizeSelector,
+  totalUsersCountSelector,
+  usersSelector,
+} from 'components/Users/users-selectors'
+import { usersAPI } from 'components/Users/api/users-api'
+import { profileAPI } from 'components/Profile/api/profile-api'
 
 export const Users = () => {
-  const dispatch = useDispatch()
-  const users = useSelector<AppRootStateType, UserType[]>(state => state.usersPage.users)
-  const pageSize = useSelector<AppRootStateType, number>(state => state.usersPage.pageSize)
-  const totalUsersCount = useSelector<AppRootStateType, number>(state => state.usersPage.totalUsersCount)
-  const currentPage = useSelector<AppRootStateType, number>(state => state.usersPage.currentPage)
-  const isFetching = useSelector<AppRootStateType, boolean>(state => state.usersPage.isFetching)
+  const dispatch = useAppDispatch()
+  const users = useAppSelector<UserType[]>(usersSelector)
+  const pageSize = useAppSelector<number>(pageSizeSelector)
+  const totalUsersCount = useAppSelector<number>(totalUsersCountSelector)
+  const currentPage = useAppSelector<number>(currentPageSelector)
+  const isFetching = useAppSelector<boolean>(isFetchingSelector)
+
   const follow = (userID: number) => dispatch(followAC(userID))
   const unfollow = (userID: number) => dispatch(unfollowAC(userID))
 
+  const pagesCount = Math.ceil(totalUsersCount / pageSize)
+  const pages = Array.from({ length: pagesCount }, (_, i) => i + 1)
+
   useEffect(() => {
     dispatch(toggleIsFetchingAC(true))
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`)
+    usersAPI.getUsersPortion(currentPage, pageSize)
       .then(res => {
         dispatch(setUsersAC(res.data.items))
         dispatch(setTotalUsersCountAC(res.data.totalCount))
@@ -38,32 +48,22 @@ export const Users = () => {
       })
   }, [])
 
-  useEffect(() => {
+  const onChangePageHandler = async (pageNumber: number) => {
     dispatch(toggleIsFetchingAC(true))
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/profile/${2}`)
-      .then(res => {
-        dispatch(setUserProfileAC(res.data))
-        dispatch(toggleIsFetchingAC(false))
-      })
-  }, [])
-
-  const pagesCount = Math.ceil(totalUsersCount / pageSize)
-  const pages = Array.from({ length: pagesCount }, (_, i) => i + 1)
-
-  console.log('users rendered')
-
-  const onPageHandler = (pageNumber: number) => {
     dispatch(setCurrentPageAC(pageNumber))
-    dispatch(toggleIsFetchingAC(true))
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${pageSize}`)
-      .then(res => {
-        dispatch(toggleIsFetchingAC(false))
-        dispatch(setUsersAC(res.data.items))
-      })
-
+    const res = await usersAPI.getNewPage(pageNumber, pageSize)
+    dispatch(setUsersAC(res.data.items))
+    dispatch(toggleIsFetchingAC(false))
   }
+
+  const onProfileHandler = async (userID: number) => {
+    dispatch(toggleIsFetchingAC(true))
+    const res = await profileAPI.getProfile(userID)
+    dispatch(setUserProfileAC(res.data))
+    dispatch(toggleIsFetchingAC(false))
+  }
+
+  // console.log('users rendered')
 
   return (
     <div className={s.avatar}>
@@ -72,8 +72,9 @@ export const Users = () => {
           pages.map((p, i) => <span
             key={i}
             className={currentPage === p ? s.selectedPage : s.pages}
-            onClick={() => onPageHandler(p)}
-          >{p}</span>)
+            onClick={() => onChangePageHandler(p)}
+          >{p}
+          </span>)
         }
       </div>
       {isFetching && <Preloader />}
@@ -85,7 +86,9 @@ export const Users = () => {
                 <div>
                 <NavLink to={`/profile/${u.id}`}>
                   <img src={!u.photos.small ? userAvatar : u.photos.small}
-                       alt="user's avatar" />
+                       alt="user's avatar"
+                       onClick={() => onProfileHandler(u.id)}
+                  />
                 </NavLink>
                 </div>
                 <div>
