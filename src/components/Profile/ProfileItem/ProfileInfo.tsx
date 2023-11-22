@@ -1,27 +1,40 @@
 import s from './ProfileInfo.module.css'
-import { Preloader } from 'components/common/preloader/Preloader'
-import { useSelector } from 'react-redux'
-import { AppRootStateType } from 'store/store'
+import { Preloader } from 'common/preloader/Preloader'
 import { ProfileType } from 'store/profile-reducer'
+import { useAppSelector } from 'common/hooks/useAppSelector'
+import {
+  aboutMeSelector,
+  largePhotoSelector,
+  profileSelector,
+} from 'components/Profile/ProfileItem/profileInfo-selectors'
+import banner from 'assets/images/banner.png'
+import { NavLink } from 'react-router-dom'
 
 export const ProfileInfo = () => {
-  const profile = useSelector<AppRootStateType, ProfileType>(state => state.profilePage.profile)
-  const largePhoto = useSelector<AppRootStateType, string>(state => state.profilePage.profile.photos.large)
-  const aboutMe = useSelector<AppRootStateType, string>(state => state.profilePage.profile.aboutMe)
+  const profile = useAppSelector<ProfileType>(profileSelector)
+  const largePhoto = useAppSelector<string>(largePhotoSelector)
+  const aboutMe = useAppSelector<string>(aboutMeSelector)
 
   if (!Object.keys(profile).length) return <Preloader />
 
   return (
     <div>
       <div className={`${s.descriptionBlock} ${s.banner}`}>
-        <img src="https://www.edarabia.com/wp-content/uploads/2019/12/robotics-perception-292756.jpg"
-             alt="" />
+        <img src={banner}
+             alt="user's banner" />
       </div>
       <div className={s.descriptionBlock}>
         <img className={s.logo}
              src={largePhoto}
-             alt="" />
-        <p>About me: {aboutMe}</p>
+             alt="user's large photo" />
+        <div>Name: {profile.fullName}</div>
+        <p>About me: {aboutMe || 'Information not yet provided'}</p>
+        <p>{profile.userId}</p>
+      </div>
+      <div>
+        <NavLink to={'/users'}>
+          <button>Back to Users</button>
+        </NavLink>
       </div>
     </div>
   )
