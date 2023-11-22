@@ -5,7 +5,9 @@
 }
 
 .item a {
-  color: deeppink;
+  color: #1f242a;
+  font-size: 24px;
+  font-family: Verdana, sans-serif;
   text-decoration: none;
 }
 
