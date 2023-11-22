@@ -1,7 +1,8 @@
+import rick from '../assets/images/rick.jpg'
+
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
-
 
 const initialState = {
   posts: [
@@ -9,7 +10,27 @@ const initialState = {
     { id: 2, message: 'It\'s my first project.', likesCount: 20 },
   ] as PostType[],
   newPostText: 'Hey!',
-  profile: {} as ProfileType,
+  profile: {
+    aboutMe: 'Initial Profile',
+    contacts: {
+      facebook: '',
+      website: null,
+      vk: '',
+      twitter: '',
+      instagram: '',
+      youtube: null,
+      github: 'github.com',
+      mainLink: null,
+    },
+    lookingForAJob: true,
+    lookingForAJobDescription: '',
+    fullName: 'samurai dimych',
+    userId: 1,
+    photos: {
+      small: rick,
+      large: rick,
+    },
+  } as ProfileType,
 }
 
 export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
