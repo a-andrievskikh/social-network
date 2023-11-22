@@ -3,14 +3,14 @@ import { Post } from './Post/Post'
 import s from './MyPosts.module.css'
 import { NewPostTextType, PostType } from 'store/profile-reducer'
 import { addPostAC, updateNewPostTextAC } from 'store/profile-reducer'
-import { useDispatch, useSelector } from 'react-redux'
-import { AppRootStateType } from 'store/store'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { useAppSelector } from 'common/hooks/useAppSelector'
 
 export const MyPosts = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
-  const posts = useSelector<AppRootStateType, PostType[]>(state => state.profilePage.posts)
-  const newPostText = useSelector<AppRootStateType, NewPostTextType>(state => state.profilePage.newPostText)
+  const posts = useAppSelector<PostType[]>(state => state.profilePage.posts)
+  const newPostText = useAppSelector<NewPostTextType>(state => state.profilePage.newPostText)
 
   const postsElements = posts
     .map(p => <Post key={p.id} id={p.id} message={p.message} likesCount={p.likesCount} />)
