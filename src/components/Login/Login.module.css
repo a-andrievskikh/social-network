@@ -1,0 +1,10 @@
+.loginBlock {
+  float: right;
+  font-family: Verdana, sans-serif;
+  font-size: 18px;
+}
+
+.loginBlock a {
+  color: #1f242a;
+  text-decoration: none;
+}

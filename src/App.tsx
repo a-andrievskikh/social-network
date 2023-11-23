@@ -8,8 +8,27 @@ import { News } from 'components/News/News'
 import { Music } from 'components/Music/Music'
 import { Settings } from 'components/Settings/Settings'
 import { Users } from 'components/Users/Users'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { useEffect } from 'react'
+import { toggleIsFetchingAC } from 'store/users-reducer'
+import { authAPI } from 'common/api/auth-api'
+import { setAuthUserData, setIsLoggedIn } from 'store/auth-reducer'
 
 export const App = () => {
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(toggleIsFetchingAC(true))
+    authAPI.me()
+      .then(res => {
+        if (res.data.resultCode === 0) {
+          dispatch(setIsLoggedIn(true))
+          dispatch(setAuthUserData(res.data.data))
+          dispatch(toggleIsFetchingAC(false))
+        }
+      })
+  }, [])
+
   return (
     <div className="app-wrapper">
       <Header />

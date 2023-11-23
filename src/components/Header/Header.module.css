@@ -6,3 +6,8 @@
 .header img {
   width: 50px;
 }
+
+.login {
+  grid-area: h;
+  font-size: 18px;
+}

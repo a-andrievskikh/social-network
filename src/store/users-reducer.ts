@@ -56,11 +56,6 @@ type ActionsType =
   | ReturnType<typeof setTotalUsersCountAC>
   | ReturnType<typeof toggleIsFetchingAC>
 
-export type UsersDataType = {
-  items: UserType[]
-  totalCount: number
-  error: string
-}
 export type UserType = {
   name: string
   id: number
