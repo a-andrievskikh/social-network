@@ -57,12 +57,12 @@ type ActionsType =
   | ReturnType<typeof toggleIsFetchingAC>
 
 export type UserType = {
-  name: string
   id: number
+  name: string
+  status: string | undefined,
   photos: {
     small: string | undefined
     large: string | undefined
   },
-  status: string | undefined,
   followed: boolean
 }
