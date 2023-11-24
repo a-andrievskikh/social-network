@@ -32,8 +32,14 @@ export const Users = () => {
   const currentPage = useAppSelector<number>(currentPageSelector)
   const isFetching = useAppSelector<boolean>(isFetchingSelector)
 
-  const follow = (userID: number) => dispatch(setFollowAC(userID))
-  const unfollow = (userID: number) => dispatch(setUnfollowAC(userID))
+  const follow = async (userID: number) => {
+    const res = await usersAPI.setFollow(userID)
+    if (res.data.resultCode === 0) dispatch(setFollowAC(userID))
+  }
+  const unfollow = async (userID: number) => {
+    const res = await usersAPI.setUnfollow(userID)
+    if (res.data.resultCode === 0) dispatch(setUnfollowAC(userID))
+  }
 
   const pagesCount = Math.ceil(totalUsersCount / pageSize)
   const pages = Array.from({ length: pagesCount }, (_, i) => i + 1)
