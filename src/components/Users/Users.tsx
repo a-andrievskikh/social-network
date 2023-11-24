@@ -39,13 +39,13 @@ export const Users = () => {
   const pages = Array.from({ length: pagesCount }, (_, i) => i + 1)
 
   useEffect(() => {
-    dispatch(toggleIsFetchingAC(true))
-    usersAPI.getUsersPortion(currentPage, pageSize)
-      .then(res => {
-        dispatch(setUsersAC(res.data.items))
-        dispatch(setTotalUsersCountAC(res.data.totalCount))
-        dispatch(toggleIsFetchingAC(false))
-      })
+    (async () => {
+      dispatch(toggleIsFetchingAC(true))
+      const res = await usersAPI.getUsersPortion(currentPage, pageSize)
+      dispatch(setUsersAC(res.data.items))
+      dispatch(setTotalUsersCountAC(res.data.totalCount))
+      dispatch(toggleIsFetchingAC(false))
+    })()
   }, [])
 
   const onChangePageHandler = async (pageNumber: number) => {
