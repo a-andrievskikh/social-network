@@ -1,10 +1,11 @@
 import {
-  setFollowAC,
   setCurrentPageAC,
+  setFollowAC,
   setTotalUsersCountAC,
-  setUsersAC,
-  toggleIsFetchingAC,
   setUnfollowAC,
+  setUsersAC,
+  toggleFollowingProgressAC,
+  toggleIsFetchingAC,
   UserType,
 } from 'store/users-reducer'
 import s from './Users.module.css'
@@ -16,7 +17,9 @@ import { setUserProfileAC } from 'store/profile-reducer'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import {
-  currentPageSelector, isFetchingSelector,
+  currentPageSelector,
+  followingInProgressSelector,
+  isFetchingSelector,
   pageSizeSelector,
   totalUsersCountSelector,
   usersSelector,
@@ -31,14 +34,24 @@ export const Users = () => {
   const totalUsersCount = useAppSelector<number>(totalUsersCountSelector)
   const currentPage = useAppSelector<number>(currentPageSelector)
   const isFetching = useAppSelector<boolean>(isFetchingSelector)
+  const followingInProgress = useAppSelector<number[]>(followingInProgressSelector)
+
 
   const follow = async (userID: number) => {
+    dispatch(toggleFollowingProgressAC(true, userID))
     const res = await usersAPI.setFollow(userID)
-    if (res.data.resultCode === 0) dispatch(setFollowAC(userID))
+    if (res.data.resultCode === 0) {
+      dispatch(setFollowAC(userID))
+    }
+    dispatch(toggleFollowingProgressAC(false, userID))
   }
   const unfollow = async (userID: number) => {
+    dispatch(toggleFollowingProgressAC(true, userID))
     const res = await usersAPI.setUnfollow(userID)
-    if (res.data.resultCode === 0) dispatch(setUnfollowAC(userID))
+    if (res.data.resultCode === 0) {
+      dispatch(setUnfollowAC(userID))
+    }
+    dispatch(toggleFollowingProgressAC(false, userID))
   }
 
   const pagesCount = Math.ceil(totalUsersCount / pageSize)
@@ -87,23 +100,25 @@ export const Users = () => {
         users.map(u => {
             return (
               <div key={u.id}>
-              <span>
-                <div>
-                <NavLink to={`/profile/${u.id}`}>
-                  <img src={!u.photos.small ? userAvatar : u.photos.small}
-                       alt="user's avatar"
-                       onClick={() => onProfileHandler(u.id)}
-                  />
-                </NavLink>
-                </div>
-                <div>
-                  {
-                    u.followed
-                      ? <button onClick={() => unfollow(u.id)}>Unfollow</button>
-                      : <button onClick={() => follow(u.id)}>Follow</button>
-                  }
-                </div>
-              </span>
+                <span>
+                  <div>
+                    <NavLink to={`/profile/${u.id}`}>
+                      <img src={!u.photos.small ? userAvatar : u.photos.small}
+                           alt="user's avatar"
+                           onClick={() => onProfileHandler(u.id)}
+                      />
+                    </NavLink>
+                  </div>
+                  <div>
+
+                  </div>
+                </span>{
+                u.followed
+                  ? <button onClick={() => unfollow(u.id)}
+                            disabled={followingInProgress.some(id => id === u.id)}>Unfollow</button>
+                  : <button onClick={() => follow(u.id)}
+                            disabled={followingInProgress.some(id => id === u.id)}>Follow</button>
+              }
                 <span>
                   <div>{u.name}</div>
                   <div>{u.status}</div>
