@@ -47,7 +47,7 @@ export const Users = () => {
   useEffect(() => {
     (async () => {
       dispatch(toggleIsFetchingAC(true))
-      const res = await usersAPI.getUsersPortion(currentPage, pageSize)
+      const res = await usersAPI.getUsers(currentPage, pageSize)
       dispatch(setUsersAC(res.data.items))
       dispatch(setTotalUsersCountAC(res.data.totalCount))
       dispatch(toggleIsFetchingAC(false))
@@ -57,7 +57,7 @@ export const Users = () => {
   const onChangePageHandler = async (pageNumber: number) => {
     dispatch(toggleIsFetchingAC(true))
     dispatch(setCurrentPageAC(pageNumber))
-    const res = await usersAPI.getNewPage(pageNumber, pageSize)
+    const res = await usersAPI.getUsers(pageNumber, pageSize)
     dispatch(setUsersAC(res.data.items))
     dispatch(toggleIsFetchingAC(false))
   }
