@@ -18,15 +18,15 @@ export const App = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(toggleIsFetchingAC(true))
-    authAPI.me()
-      .then(res => {
-        if (res.data.resultCode === 0) {
-          dispatch(setIsLoggedIn(true))
-          dispatch(setAuthUserData(res.data.data))
-          dispatch(toggleIsFetchingAC(false))
-        }
-      })
+    (async () => {
+      dispatch(toggleIsFetchingAC(true))
+      const res = await authAPI.me()
+      if (res.data.resultCode === 0) {
+        dispatch(setIsLoggedIn(true))
+        dispatch(setAuthUserData(res.data.data))
+        dispatch(toggleIsFetchingAC(false))
+      }
+    })()
   }, [])
 
   return (
