@@ -1,10 +1,10 @@
 import {
-  followAC,
+  setFollowAC,
   setCurrentPageAC,
   setTotalUsersCountAC,
   setUsersAC,
   toggleIsFetchingAC,
-  unfollowAC,
+  setUnfollowAC,
   UserType,
 } from 'store/users-reducer'
 import s from './Users.module.css'
@@ -32,8 +32,8 @@ export const Users = () => {
   const currentPage = useAppSelector<number>(currentPageSelector)
   const isFetching = useAppSelector<boolean>(isFetchingSelector)
 
-  const follow = (userID: number) => dispatch(followAC(userID))
-  const unfollow = (userID: number) => dispatch(unfollowAC(userID))
+  const follow = (userID: number) => dispatch(setFollowAC(userID))
+  const unfollow = (userID: number) => dispatch(setUnfollowAC(userID))
 
   const pagesCount = Math.ceil(totalUsersCount / pageSize)
   const pages = Array.from({ length: pagesCount }, (_, i) => i + 1)
