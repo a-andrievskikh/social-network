@@ -8,6 +8,7 @@ export const Header = () => {
   const login = useAppSelector<null | string>(loginSelector)
 
   // console.log(login)
+  
   return (
     <header className={s.header}>
       <img
