@@ -1,11 +1,5 @@
 import s from './Message.module.css'
 
-type MessagePropsType = {
-  id: number
-  message: string
-  idx: number
-}
-
 export const Message = ({ id, message, idx }: MessagePropsType) => {
   return (
     <div className={`${s.message} ${s.avatar} ${idx % 2 === 1 ? s.messageRight : ''}`}>
@@ -33,4 +27,11 @@ export const Message = ({ id, message, idx }: MessagePropsType) => {
       }
     </div>
   )
+}
+
+// Types
+type MessagePropsType = {
+  id: number
+  message: string
+  idx: number
 }

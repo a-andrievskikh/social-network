@@ -12,6 +12,7 @@ import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useEffect } from 'react'
 import { authAPI } from 'common/api/auth-api'
 import { setAuthUserDataTC, setIsLoggedInTC } from 'store/auth-reducer'
+import { Login } from 'components/Login/Login'
 
 export const App = () => {
   const dispatch = useAppDispatch()
@@ -31,6 +32,7 @@ export const App = () => {
       <Header />
       <Navbar />
       <div className="app-wrapper-content">
+        <Route path="/login" render={() => <Login />} />
         <Route path="/profile" render={() => <Profile />} />
         <Route path="/dialogs" render={() => <Dialogs />} />
         <Route path="/users" render={() => <Users />} />

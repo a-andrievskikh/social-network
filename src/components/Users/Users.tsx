@@ -3,7 +3,7 @@ import s from './Users.module.css'
 import userAvatar from 'assets/images/rick.jpg'
 import { useEffect } from 'react'
 import { Preloader } from 'common/preloader/Preloader'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import {
@@ -15,6 +15,7 @@ import {
   usersSelector,
 } from 'components/Users/users-selectors'
 import { setUserProfileTC } from 'store/profile-reducer'
+import { isLoggedInSelector } from 'components/Header/header-selectors'
 
 export const Users = () => {
   const dispatch = useAppDispatch()
@@ -24,6 +25,7 @@ export const Users = () => {
   const currentPage = useAppSelector<number>(currentPageSelector)
   const isFetching = useAppSelector<boolean>(isFetchingSelector)
   const followingInProgress = useAppSelector<number[]>(followingInProgressSelector)
+  const isLoggedIn = useAppSelector<boolean>(isLoggedInSelector)
 
   const follow = async (userID: number) => dispatch(setFollowTC(userID))
   const unfollow = async (userID: number) => dispatch(setUnfollowTC(userID))
@@ -40,6 +42,8 @@ export const Users = () => {
   const profileHandler = (userID: number) =>
     dispatch(setUserProfileTC(userID))
 
+
+  if (!isLoggedIn) return <Redirect to={'login'} />
   // console.log('users rendered')
 
   return (

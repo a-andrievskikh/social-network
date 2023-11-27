@@ -6,13 +6,21 @@ import { Message } from './Message/Message'
 import { DialogType, MessageType } from 'store/dialogs-reducer'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
+import { Redirect } from 'react-router-dom'
+import { isLoggedInSelector } from 'components/Header/header-selectors'
+import {
+  dialogsSelector,
+  messagesSelector,
+  newMessageBodySelector,
+} from 'components/Dialogs/DialogItem/dialogs-selectors'
 
 export const Dialogs = () => {
   const dispatch = useAppDispatch()
 
-  const dialogs = useAppSelector<DialogType[]>(state => state.dialogsPage.dialogs)
-  const messages = useAppSelector<MessageType[]>(state => state.dialogsPage.messages)
-  const newMessageBody = useAppSelector<string>(state => state.dialogsPage.newMessageBody)
+  const dialogs = useAppSelector<DialogType[]>(dialogsSelector)
+  const messages = useAppSelector<MessageType[]>(messagesSelector)
+  const newMessageBody = useAppSelector<string>(newMessageBodySelector)
+  const isLoggedIn = useAppSelector<boolean>(isLoggedInSelector)
 
   const dialogsElements = dialogs
     .map(d => <DialogItem key={d.id} id={d.id} name={d.name} />)
@@ -25,6 +33,8 @@ export const Dialogs = () => {
   }
 
   const onSendMessageClickHandler = () => dispatch(sendMessageTC())
+
+  if (!isLoggedIn) return <Redirect to={'login'} />
 
   return (
     (
