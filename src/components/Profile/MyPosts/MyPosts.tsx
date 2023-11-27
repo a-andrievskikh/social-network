@@ -1,8 +1,7 @@
 import { useRef } from 'react'
 import { Post } from './Post/Post'
 import s from './MyPosts.module.css'
-import { NewPostTextType, PostType } from 'store/profile-reducer'
-import { addPostAC, updateNewPostTextAC } from 'store/profile-reducer'
+import { addPostTC, NewPostTextType, PostType, updateNewPostTextTC } from 'store/profile-reducer'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 
@@ -18,14 +17,11 @@ export const MyPosts = () => {
   const newPostElement = useRef<HTMLTextAreaElement>(null)
 
   const addPostClickHandler = () => {
-    if (newPostElement.current) {
-      dispatch(addPostAC())
-    }
+    if (newPostElement.current) dispatch(addPostTC())
+
   }
   const updateNewPostTextChangeHandler = () => {
-    if (newPostElement.current) {
-      dispatch(updateNewPostTextAC(newPostElement.current.value))
-    }
+    if (newPostElement.current) dispatch(updateNewPostTextTC(newPostElement.current.value))
   }
 
   return (

@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react'
-import { sendMessageAC, updateNewMessageBodyAC } from 'store/dialogs-reducer'
+import { sendMessageTC, updateNewMessageBodyTC } from 'store/dialogs-reducer'
 import s from './Dialogs.module.css'
 import { DialogItem } from './DialogItem/DialogItem'
 import { Message } from './Message/Message'
@@ -21,10 +21,10 @@ export const Dialogs = () => {
     .map((m, idx) => <Message key={m.id} id={m.id} message={m.message} idx={idx} />)
 
   const onChangeTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    dispatch(updateNewMessageBodyAC(e.currentTarget.value))
+    dispatch(updateNewMessageBodyTC(e.currentTarget.value))
   }
 
-  const onSendMessageClickHandler = () => dispatch(sendMessageAC())
+  const onSendMessageClickHandler = () => dispatch(sendMessageTC())
 
   return (
     (

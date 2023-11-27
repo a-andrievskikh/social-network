@@ -1,3 +1,5 @@
+import { AppThunk } from 'store/store'
+
 const SET_USER_DATA = 'SET-USER-DATA'
 const SET_IS_LOGGED_IN = 'SET-IS-LOGGED-IN'
 
@@ -31,8 +33,12 @@ export const authReducer = (state: InitialStateT = initialState, action: Actions
 }
 
 // Actions
-export const setAuthUserDataAC = (userData: UserDataT) => ({ type: SET_USER_DATA, userData } as const)
-export const setIsLoggedInAC = (isLoggedIn: boolean) => ({ type: SET_IS_LOGGED_IN, isLoggedIn } as const)
+const setAuthUserDataAC = (userData: UserDataT) => ({ type: SET_USER_DATA, userData } as const)
+const setIsLoggedInAC = (isLoggedIn: boolean) => ({ type: SET_IS_LOGGED_IN, isLoggedIn } as const)
+
+// Thunks
+export const setAuthUserDataTC = (userData: UserDataT): AppThunk => async dispatch => dispatch(setAuthUserDataAC(userData))
+export const setIsLoggedInTC = (isLoggedIn: boolean): AppThunk => async dispatch => dispatch(setIsLoggedInAC(isLoggedIn))
 
 // Types
 type ActionsType =

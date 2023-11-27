@@ -1,19 +1,9 @@
-import {
-  setCurrentPageAC,
-  setFollowAC,
-  setTotalUsersCountAC,
-  setUnfollowAC,
-  setUsersAC,
-  toggleFollowingProgressAC,
-  toggleIsFetchingAC,
-  UserType,
-} from 'store/users-reducer'
+import { setCurrentPageTC, setFollowTC, setUnfollowTC, setUsersTC, UserType } from 'store/users-reducer'
 import s from './Users.module.css'
 import userAvatar from 'assets/images/rick.jpg'
 import { useEffect } from 'react'
 import { Preloader } from 'common/preloader/Preloader'
 import { NavLink } from 'react-router-dom'
-import { setUserProfileAC } from 'store/profile-reducer'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import {
@@ -24,8 +14,7 @@ import {
   totalUsersCountSelector,
   usersSelector,
 } from 'components/Users/users-selectors'
-import { usersAPI } from 'components/Users/api/users-api'
-import { profileAPI } from 'components/Profile/api/profile-api'
+import { setUserProfileTC } from 'store/profile-reducer'
 
 export const Users = () => {
   const dispatch = useAppDispatch()
@@ -36,51 +25,20 @@ export const Users = () => {
   const isFetching = useAppSelector<boolean>(isFetchingSelector)
   const followingInProgress = useAppSelector<number[]>(followingInProgressSelector)
 
-
-  const follow = async (userID: number) => {
-    dispatch(toggleFollowingProgressAC(true, userID))
-    const res = await usersAPI.setFollow(userID)
-    if (res.data.resultCode === 0) {
-      dispatch(setFollowAC(userID))
-    }
-    dispatch(toggleFollowingProgressAC(false, userID))
-  }
-  const unfollow = async (userID: number) => {
-    dispatch(toggleFollowingProgressAC(true, userID))
-    const res = await usersAPI.setUnfollow(userID)
-    if (res.data.resultCode === 0) {
-      dispatch(setUnfollowAC(userID))
-    }
-    dispatch(toggleFollowingProgressAC(false, userID))
-  }
+  const follow = async (userID: number) => dispatch(setFollowTC(userID))
+  const unfollow = async (userID: number) => dispatch(setUnfollowTC(userID))
 
   const pagesCount = Math.ceil(totalUsersCount / pageSize)
   const pages = Array.from({ length: pagesCount }, (_, i) => i + 1)
 
-  useEffect(() => {
-    (async () => {
-      dispatch(toggleIsFetchingAC(true))
-      const res = await usersAPI.getUsers(currentPage, pageSize)
-      dispatch(setUsersAC(res.data.items))
-      dispatch(setTotalUsersCountAC(res.data.totalCount))
-      dispatch(toggleIsFetchingAC(false))
-    })()
-  }, [])
+  useEffect(() =>
+    dispatch(setUsersTC(currentPage, pageSize)), [])
 
-  const onChangePageHandler = async (pageNumber: number) => {
-    dispatch(toggleIsFetchingAC(true))
-    dispatch(setCurrentPageAC(pageNumber))
-    const res = await usersAPI.getUsers(pageNumber, pageSize)
-    dispatch(setUsersAC(res.data.items))
-    dispatch(toggleIsFetchingAC(false))
-  }
+  const pageHandler = (pageNumber: number) =>
+    dispatch(setCurrentPageTC(pageNumber, pageSize))
 
-  const onProfileHandler = async (userID: number) => {
-    dispatch(toggleIsFetchingAC(true))
-    const res = await profileAPI.getProfile(userID)
-    dispatch(setUserProfileAC(res.data))
-    dispatch(toggleIsFetchingAC(false))
-  }
+  const profileHandler = (userID: number) =>
+    dispatch(setUserProfileTC(userID))
 
   // console.log('users rendered')
   return (
@@ -90,7 +48,7 @@ export const Users = () => {
           pages.map((p, i) => <span
             key={i}
             className={currentPage === p ? s.selectedPage : s.pages}
-            onClick={() => onChangePageHandler(p)}
+            onClick={() => pageHandler(p)}
           >{p}
           </span>)
         }
@@ -105,7 +63,7 @@ export const Users = () => {
                     <NavLink to={`/profile/${u.id}`}>
                       <img src={!u.photos.small ? userAvatar : u.photos.small}
                            alt="user's avatar"
-                           onClick={() => onProfileHandler(u.id)}
+                           onClick={() => profileHandler(u.id)}
                       />
                     </NavLink>
                   </div>

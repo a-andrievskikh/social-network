@@ -1,20 +1,7 @@
+import { AppThunk } from 'store/store'
+
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'SEND-MESSAGE'
-
-export type DialogType = {
-  id: number
-  name: string
-}
-export type MessageType = {
-  id: number
-  message: string
-}
-
-type InitialStateType = typeof initialState
-
-type ActionsType =
-  | ReturnType<typeof updateNewMessageBodyAC>
-  | ReturnType<typeof sendMessageAC>
 
 const initialState = {
   dialogs: [
@@ -57,6 +44,26 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: A
   }
 }
 
-export const updateNewMessageBodyAC = (newMessage: string) =>
-  ({ type: UPDATE_NEW_MESSAGE_BODY, body: newMessage } as const)
-export const sendMessageAC = () => ({ type: SEND_MESSAGE } as const)
+// Actions
+const updateNewMessageBodyAC = (newMessage: string) => ({ type: UPDATE_NEW_MESSAGE_BODY, body: newMessage } as const)
+const sendMessageAC = () => ({ type: SEND_MESSAGE } as const)
+
+// Thunks
+export const updateNewMessageBodyTC = (newMessage: string): AppThunk => async dispatch => dispatch(updateNewMessageBodyAC(newMessage))
+export const sendMessageTC = (): AppThunk => async dispatch => dispatch(sendMessageAC())
+
+// Types
+export type DialogType = {
+  id: number
+  name: string
+}
+export type MessageType = {
+  id: number
+  message: string
+}
+
+type InitialStateType = typeof initialState
+
+type ActionsType =
+  | ReturnType<typeof updateNewMessageBodyAC>
+  | ReturnType<typeof sendMessageAC>

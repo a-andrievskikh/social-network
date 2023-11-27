@@ -1,4 +1,6 @@
 import rick from '../assets/images/rick.jpg'
+import { AppThunk } from 'store/store'
+import { profileAPI } from 'components/Profile/api/profile-api'
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
@@ -54,9 +56,18 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
 }
 
 // Actions
-export const addPostAC = () => ({ type: ADD_POST } as const)
-export const updateNewPostTextAC = (newText: string) => ({ type: UPDATE_NEW_POST_TEXT, newText } as const)
-export const setUserProfileAC = (profile: ProfileType) => ({ type: SET_USER_PROFILE, profile } as const)
+const addPostAC = () => ({ type: ADD_POST } as const)
+const updateNewPostTextAC = (newText: string) => ({ type: UPDATE_NEW_POST_TEXT, newText } as const)
+const setUserProfileAC = (profile: ProfileType) => ({ type: SET_USER_PROFILE, profile } as const)
+
+// Thunks
+export const addPostTC = (): AppThunk => async dispatch => dispatch(addPostAC())
+export const updateNewPostTextTC = (newText: string): AppThunk => async dispatch => dispatch(updateNewPostTextAC(newText))
+
+export const setUserProfileTC = (userID: number): AppThunk => async dispatch => {
+  const res = await profileAPI.getProfile(userID)
+  dispatch(setUserProfileAC(res.data))
+}
 
 //Types
 type InitialStateType = typeof initialState

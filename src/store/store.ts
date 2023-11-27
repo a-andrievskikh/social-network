@@ -1,5 +1,5 @@
-import { AnyAction, combineReducers, createStore } from 'redux'
-import { ThunkDispatch } from 'redux-thunk'
+import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux'
+import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { profileReducer } from './profile-reducer'
 import { dialogsReducer } from './dialogs-reducer'
 import { sidebarReducer } from './sidebar-reducer'
@@ -14,11 +14,11 @@ const rootReducer = combineReducers({
   auth: authReducer,
 })
 
-export const store = createStore(rootReducer)
+export const store = createStore(rootReducer, applyMiddleware(thunk))
 
-export type AppRootStateT = ReturnType<typeof rootReducer>
+export type AppRootStateT = ReturnType<typeof store.getState>
 export type AppDispatch = ThunkDispatch<AppRootStateT, unknown, AnyAction>
-
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateT, unknown, AnyAction>
 
 declare global {
   interface Window {
