@@ -31,13 +31,13 @@ export const authReducer = (state: InitialStateT = initialState, action: Actions
 }
 
 // Actions
-export const setAuthUserData = (userData: UserDataT) => ({ type: SET_USER_DATA, userData } as const)
-export const setIsLoggedIn = (isLoggedIn: boolean) => ({ type: SET_IS_LOGGED_IN, isLoggedIn } as const)
+export const setAuthUserDataAC = (userData: UserDataT) => ({ type: SET_USER_DATA, userData } as const)
+export const setIsLoggedInAC = (isLoggedIn: boolean) => ({ type: SET_IS_LOGGED_IN, isLoggedIn } as const)
 
 // Types
 type ActionsType =
-  | ReturnType<typeof setAuthUserData>
-  | ReturnType<typeof setIsLoggedIn>
+  | ReturnType<typeof setAuthUserDataAC>
+  | ReturnType<typeof setIsLoggedInAC>
 
 type InitialStateT = {
   userData: UserDataT
