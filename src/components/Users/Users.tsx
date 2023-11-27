@@ -41,6 +41,7 @@ export const Users = () => {
     dispatch(setUserProfileTC(userID))
 
   // console.log('users rendered')
+
   return (
     <div className={s.avatar}>
       <div>
