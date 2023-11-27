@@ -10,7 +10,7 @@ import { Settings } from 'components/Settings/Settings'
 import { Users } from 'components/Users/Users'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useEffect } from 'react'
-import { authAPI } from 'common/api/auth-api'
+import { authAPI } from 'components/Auth/auth-api'
 import { setAuthUserDataTC, setIsLoggedInTC } from 'store/auth-reducer'
 import { Login } from 'components/Login/Login'
 
