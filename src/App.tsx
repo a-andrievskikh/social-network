@@ -12,7 +12,7 @@ import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useEffect } from 'react'
 import { toggleIsFetchingAC } from 'store/users-reducer'
 import { authAPI } from 'common/api/auth-api'
-import { setAuthUserData, setIsLoggedIn } from 'store/auth-reducer'
+import { setAuthUserDataAC, setIsLoggedInAC } from 'store/auth-reducer'
 
 export const App = () => {
   const dispatch = useAppDispatch()
@@ -22,8 +22,8 @@ export const App = () => {
       dispatch(toggleIsFetchingAC(true))
       const res = await authAPI.me()
       if (res.data.resultCode === 0) {
-        dispatch(setIsLoggedIn(true))
-        dispatch(setAuthUserData(res.data.data))
+        dispatch(setIsLoggedInAC(true))
+        dispatch(setAuthUserDataAC(res.data.data))
         dispatch(toggleIsFetchingAC(false))
       }
     })()
