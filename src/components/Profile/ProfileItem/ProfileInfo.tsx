@@ -7,8 +7,9 @@ import {
   largePhotoSelector,
   profileSelector,
 } from 'components/Profile/ProfileItem/profileInfo-selectors'
-import banner from 'assets/images/banner.png'
+// import banner from 'assets/images/banner.png'
 import { NavLink } from 'react-router-dom'
+import { ProfileStatus } from './ProfileStatus'
 
 export const ProfileInfo = () => {
   const profile = useAppSelector<ProfileType>(profileSelector)
@@ -19,10 +20,10 @@ export const ProfileInfo = () => {
 
   return (
     <div>
-      <div className={`${s.descriptionBlock} ${s.banner}`}>
-        <img src={banner}
-             alt="user's banner" />
-      </div>
+      {/*<div className={`${s.descriptionBlock} ${s.banner}`}>*/}
+      {/*  <img src={banner}*/}
+      {/*       alt="user's banner" />*/}
+      {/*</div>*/}
       <div className={s.descriptionBlock}>
         <img className={s.logo}
              src={largePhoto}
@@ -30,6 +31,7 @@ export const ProfileInfo = () => {
         <div>Name: {profile.fullName}</div>
         <p>About me: {aboutMe || 'Information not yet provided'}</p>
         <p>{profile.userId}</p>
+        <div>Profile Status: {<ProfileStatus />}</div>
       </div>
       <div>
         <NavLink to={'/users'}>
