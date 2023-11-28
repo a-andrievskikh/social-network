@@ -11,6 +11,7 @@ import {
 import { NavLink } from 'react-router-dom'
 import { ProfileStatus } from './ProfileStatus'
 import { useEffect } from 'react'
+import rick from 'assets/images/rick.jpg'
 
 export const ProfileInfo = () => {
   const profile = useAppSelector<ProfileType>(profileSelector)
@@ -31,7 +32,7 @@ export const ProfileInfo = () => {
       {/*</div>*/}
       <div className={s.descriptionBlock}>
         <img className={s.logo}
-             src={largePhoto}
+             src={largePhoto || rick}
              alt="user's large photo" />
         <div>Name: {profile.fullName}</div>
         <p>About me: {aboutMe || 'Information not yet provided'}</p>

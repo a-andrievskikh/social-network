@@ -1,10 +1,15 @@
 import s from 'components/Login/Login.module.css'
-import { NavLink } from 'react-router-dom'
+import { LoginReduxFrom } from 'components/Login/LoginForm'
 
 export const Login = () => {
+  const onSubmit = (formData: any) => {
+    console.log(formData)
+  }
   return (
     <div className={s.loginBlock}>
-      <NavLink to={'/login'}>LOGIN</NavLink>
+      <h1>Login</h1>
+      <LoginReduxFrom onSubmit={onSubmit} />
     </div>
   )
 }
+

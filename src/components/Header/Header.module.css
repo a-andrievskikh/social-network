@@ -1,4 +1,9 @@
 .header {
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   grid-area: h;
   background-color: #555ec3;
 }
@@ -8,6 +13,8 @@
 }
 
 .login {
-  /*grid-area: h;*/
-  font-size: 18px;
+  grid-area: h;
+  font-size: 24px;
+  text-decoration: none;
+  color: #181818;
 }
