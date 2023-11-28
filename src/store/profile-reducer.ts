@@ -5,6 +5,7 @@ import { profileAPI } from 'components/Profile/api/profile-api'
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
+const SET_USER_STATUS = 'SET-USER-STATUS'
 
 const initialState = {
   posts: [
@@ -33,6 +34,7 @@ const initialState = {
       large: rick,
     },
   } as ProfileType,
+  userStatus: 'No Status',
 }
 
 export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -50,6 +52,9 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
       return { ...state, newPostText: action.newText }
     case SET_USER_PROFILE:
       return { ...state, profile: action.profile }
+    case SET_USER_STATUS:
+      return { ...state, userStatus: action.userStatus }
+
     default:
       return state
   }
@@ -59,15 +64,16 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
 const addPostAC = () => ({ type: ADD_POST } as const)
 const updateNewPostTextAC = (newText: string) => ({ type: UPDATE_NEW_POST_TEXT, newText } as const)
 const setUserProfileAC = (profile: ProfileType) => ({ type: SET_USER_PROFILE, profile } as const)
+const setUserStatusAC = (userStatus: string) => ({ type: SET_USER_STATUS, userStatus } as const)
 
 // Thunks
 export const addPostTC = (): AppThunk => async dispatch => dispatch(addPostAC())
 export const updateNewPostTextTC = (newText: string): AppThunk => async dispatch => dispatch(updateNewPostTextAC(newText))
-
 export const setUserProfileTC = (userID: number): AppThunk => async dispatch => {
   const res = await profileAPI.getProfile(userID)
   dispatch(setUserProfileAC(res.data))
 }
+export const setUserStatusTC = (userStatus: string): AppThunk => async dispatch => dispatch(setUserStatusAC(userStatus))
 
 //Types
 type InitialStateType = typeof initialState
@@ -76,6 +82,7 @@ type ActionsType =
   | ReturnType<typeof addPostAC>
   | ReturnType<typeof updateNewPostTextAC>
   | ReturnType<typeof setUserProfileAC>
+  | ReturnType<typeof setUserStatusAC>
 
 export type PostType = {
   id: number
