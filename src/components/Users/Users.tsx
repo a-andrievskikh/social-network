@@ -39,8 +39,7 @@ export const Users = () => {
   const pageHandler = (pageNumber: number) =>
     dispatch(setCurrentPageTC(pageNumber, pageSize))
 
-  const profileHandler = (userID: number) =>
-    dispatch(setUserProfileTC(userID))
+  const profileHandler = (userID: number) => dispatch(setUserProfileTC(userID))
 
 
   if (!isLoggedIn) return <Redirect to={'login'} />

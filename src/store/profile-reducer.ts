@@ -34,7 +34,7 @@ const initialState = {
       large: rick,
     },
   } as ProfileType,
-  userStatus: 'No Status',
+  statusText: 'Initial Status',
 }
 
 export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -53,7 +53,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
     case SET_USER_PROFILE:
       return { ...state, profile: action.profile }
     case SET_USER_STATUS:
-      return { ...state, userStatus: action.userStatus }
+      return { ...state, statusText: action.statusText }
 
     default:
       return state
@@ -64,7 +64,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
 const addPostAC = () => ({ type: ADD_POST } as const)
 const updateNewPostTextAC = (newText: string) => ({ type: UPDATE_NEW_POST_TEXT, newText } as const)
 const setUserProfileAC = (profile: ProfileType) => ({ type: SET_USER_PROFILE, profile } as const)
-const setUserStatusAC = (userStatus: string) => ({ type: SET_USER_STATUS, userStatus } as const)
+const setUserStatusAC = (statusText: string) => ({ type: SET_USER_STATUS, statusText } as const)
 
 // Thunks
 export const addPostTC = (): AppThunk => async dispatch => dispatch(addPostAC())
@@ -73,7 +73,17 @@ export const setUserProfileTC = (userID: number): AppThunk => async dispatch => 
   const res = await profileAPI.getProfile(userID)
   dispatch(setUserProfileAC(res.data))
 }
-export const setUserStatusTC = (userStatus: string): AppThunk => async dispatch => dispatch(setUserStatusAC(userStatus))
+export const getUserStatusTC = (userID: number): AppThunk => async dispatch => {
+  debugger
+  const res = await profileAPI.getStatus(userID)
+  dispatch(setUserStatusAC(res.statusText))
+}
+export const setUserStatusTC = (statusText: string): AppThunk => async dispatch => {
+  const res = await profileAPI.updateStatus(statusText)
+  if (res.data.resultCode === 0) {
+    dispatch(setUserStatusAC(statusText))
+  }
+}
 
 //Types
 type InitialStateType = typeof initialState

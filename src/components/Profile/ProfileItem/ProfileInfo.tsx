@@ -1,6 +1,6 @@
 import s from './ProfileInfo.module.css'
 import { Preloader } from 'common/preloader/Preloader'
-import { ProfileType } from 'store/profile-reducer'
+import { getUserStatusTC, ProfileType } from 'store/profile-reducer'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import {
   aboutMeSelector,
@@ -10,11 +10,16 @@ import {
 // import banner from 'assets/images/banner.png'
 import { NavLink } from 'react-router-dom'
 import { ProfileStatus } from './ProfileStatus'
+import { useEffect } from 'react'
 
 export const ProfileInfo = () => {
   const profile = useAppSelector<ProfileType>(profileSelector)
   const largePhoto = useAppSelector<string>(largePhotoSelector)
   const aboutMe = useAppSelector<string>(aboutMeSelector)
+
+  useEffect(() => {
+    getUserStatusTC(profile.userId)
+  }, [profile.userId])
 
   if (!Object.keys(profile).length) return <Preloader />
 
@@ -31,7 +36,7 @@ export const ProfileInfo = () => {
         <div>Name: {profile.fullName}</div>
         <p>About me: {aboutMe || 'Information not yet provided'}</p>
         <p>{profile.userId}</p>
-        <div>Profile Status: {<ProfileStatus />}</div>
+        <div>Profile Status: <ProfileStatus /></div>
       </div>
       <div>
         <NavLink to={'/users'}>

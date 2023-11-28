@@ -1,13 +1,14 @@
 import { useAppSelector } from 'common/hooks/useAppSelector'
-import { userStatusSelector } from 'components/Profile/ProfileItem/profileInfo-selectors'
+import { statusTextSelector } from 'components/Profile/ProfileItem/profileInfo-selectors'
 
 export const OffEditMode = ({ setEditMode }: OffEditMode) => {
-  const userStatus = useAppSelector<string>(userStatusSelector)
+  const statusText = useAppSelector<string>(statusTextSelector)
   const onClickSetEditModeHandler = () => setEditMode(true)
+
 
   return (
     <div>
-      <span onDoubleClick={onClickSetEditModeHandler}>{userStatus}</span>
+      <span onDoubleClick={onClickSetEditModeHandler}>{statusText}</span>
     </div>
   )
 }
