@@ -15,7 +15,6 @@ import { setAuthUserDataTC, setIsLoggedInTC } from 'store/auth-reducer'
 import { Login } from 'components/Login/Login'
 
 export const App = () => {
-
   const dispatch = useAppDispatch()
 
   useEffect(() => {
