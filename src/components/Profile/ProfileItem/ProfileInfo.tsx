@@ -35,7 +35,7 @@ export const ProfileInfo = () => {
              alt="user's large photo" />
         <div>Name: {profile.fullName}</div>
         <p>About me: {aboutMe || 'Information not yet provided'}</p>
-        <p>{profile.userId}</p>
+        <p>User ID: {profile.userId}</p>
         <div>Profile Status: <ProfileStatus /></div>
       </div>
       <div>
