@@ -3,16 +3,14 @@ import { AppThunk } from 'store/store'
 import { profileAPI } from 'components/Profile/api/profile-api'
 
 const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_USER_STATUS = 'SET-USER-STATUS'
 
 const initialState = {
   posts: [
     { id: 1, message: 'Hi, how are you?', likesCount: 15 },
-    { id: 2, message: 'It\'s my first project.', likesCount: 20 },
+    { id: 2, message: `It's my first project.`, likesCount: 20 },
   ] as PostType[],
-  newPostText: 'Hey!',
   profile: {
     aboutMe: 'Initial Profile',
     contacts: {
@@ -43,13 +41,10 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
       return {
         ...state,
         posts: [
-          { id: 3, message: state.newPostText, likesCount: 0 },
+          { id: 3, message: action.value, likesCount: 0 },
           ...state.posts,
         ],
-        newPostText: '',
       }
-    case UPDATE_NEW_POST_TEXT:
-      return { ...state, newPostText: action.newText }
     case SET_USER_PROFILE:
       return { ...state, profile: action.profile }
     case SET_USER_STATUS:
@@ -61,14 +56,12 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
 }
 
 // Actions
-const addPostAC = () => ({ type: ADD_POST } as const)
-const updateNewPostTextAC = (newText: string) => ({ type: UPDATE_NEW_POST_TEXT, newText } as const)
+const addPostAC = (value: string) => ({ type: ADD_POST, value } as const)
 const setUserProfileAC = (profile: ProfileType) => ({ type: SET_USER_PROFILE, profile } as const)
 const setUserStatusAC = (statusText: string) => ({ type: SET_USER_STATUS, statusText } as const)
 
 // Thunks
-export const addPostTC = (): AppThunk => async dispatch => dispatch(addPostAC())
-export const updateNewPostTextTC = (newText: string): AppThunk => async dispatch => dispatch(updateNewPostTextAC(newText))
+export const addPostTC = (value: string): AppThunk => async dispatch => dispatch(addPostAC(value))
 export const setUserProfileTC = (userID: number): AppThunk => async dispatch => {
   const res = await profileAPI.getProfile(userID)
   dispatch(setUserProfileAC(res.data))
@@ -90,7 +83,6 @@ type InitialStateType = typeof initialState
 
 type ActionsType =
   | ReturnType<typeof addPostAC>
-  | ReturnType<typeof updateNewPostTextAC>
   | ReturnType<typeof setUserProfileAC>
   | ReturnType<typeof setUserStatusAC>
 
@@ -99,7 +91,6 @@ export type PostType = {
   message: string
   likesCount: number
 }
-export type NewPostTextType = string
 export type ProfileType = {
   aboutMe: string
   contacts: Contacts,
