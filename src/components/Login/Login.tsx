@@ -1,8 +1,8 @@
 import s from 'components/Login/Login.module.css'
-import { LoginReduxFrom } from 'components/Login/LoginForm'
+import { FormDataT, LoginReduxFrom } from 'components/Login/LoginForm'
 
 export const Login = () => {
-  const onSubmit = (formData: any) => {
+  const onSubmit = (formData: FormDataT) => {
     console.log(formData)
   }
   return (

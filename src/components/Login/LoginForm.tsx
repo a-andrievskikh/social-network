@@ -1,6 +1,6 @@
-import { Field, reduxForm } from 'redux-form'
+import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 
-const LoginForm = ({ handleSubmit }: any) => {
+const LoginForm = ({ handleSubmit }: InjectedFormProps<FormDataT>) => {
 
   return (
     <form onSubmit={handleSubmit}>
@@ -20,4 +20,11 @@ const LoginForm = ({ handleSubmit }: any) => {
   )
 }
 
-export const LoginReduxFrom = reduxForm({ form: 'login' })(LoginForm)
+export const LoginReduxFrom = reduxForm<FormDataT>({ form: 'login' })(LoginForm)
+
+// Types
+export type FormDataT = {
+  login: string
+  password: string
+  rememberMe: boolean
+}
