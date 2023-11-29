@@ -1,6 +1,6 @@
 import s from './ProfileInfo.module.css'
 import { Preloader } from 'common/preloader/Preloader'
-import { getUserStatusTC, ProfileType } from 'store/profile-reducer'
+import { getUserStatusTC } from 'store/profile-reducer'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import {
   aboutMeSelector,
@@ -14,9 +14,9 @@ import { useEffect } from 'react'
 import rick from 'assets/images/rick.jpg'
 
 export const ProfileInfo = () => {
-  const profile = useAppSelector<ProfileType>(profileSelector)
-  const largePhoto = useAppSelector<string>(largePhotoSelector)
-  const aboutMe = useAppSelector<string>(aboutMeSelector)
+  const profile = useAppSelector(profileSelector)
+  const largePhoto = useAppSelector(largePhotoSelector)
+  const aboutMe = useAppSelector(aboutMeSelector)
 
   useEffect(() => {
     getUserStatusTC(profile.userId)
