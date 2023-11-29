@@ -4,8 +4,8 @@ import { isLoggedInSelector, loginSelector } from 'components/Header/header-sele
 import { NavLink } from 'react-router-dom'
 
 export const Header = () => {
-  const isLoggedIn = useAppSelector<boolean>(isLoggedInSelector)
-  const login = useAppSelector<null | string>(loginSelector)
+  const isLoggedIn = useAppSelector(isLoggedInSelector)
+  const login = useAppSelector(loginSelector)
 
   // console.log(login)
 
