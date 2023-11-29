@@ -1,6 +1,5 @@
 import { AppThunk } from 'store/store'
 
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'SEND-MESSAGE'
 
 const initialState = {
@@ -20,23 +19,16 @@ const initialState = {
     { id: 5, message: 'Yo' },
     { id: 6, message: 'Yo' },
   ] as MessageType[],
-  newMessageBody: '',
 }
 
 export const dialogsReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
-    case UPDATE_NEW_MESSAGE_BODY:
-      return {
-        ...state,
-        newMessageBody: action.body,
-      }
     case SEND_MESSAGE:
       return {
         ...state,
-        newMessageBody: '',
         messages: [
           ...state.messages,
-          { id: 6, message: state.newMessageBody },
+          { id: 7, message: action.message },
         ],
       }
     default:
@@ -45,12 +37,10 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: A
 }
 
 // Actions
-const updateNewMessageBodyAC = (newMessage: string) => ({ type: UPDATE_NEW_MESSAGE_BODY, body: newMessage } as const)
-const sendMessageAC = () => ({ type: SEND_MESSAGE } as const)
+const sendMessageAC = (message: string) => ({ type: SEND_MESSAGE, message } as const)
 
 // Thunks
-export const updateNewMessageBodyTC = (newMessage: string): AppThunk => async dispatch => dispatch(updateNewMessageBodyAC(newMessage))
-export const sendMessageTC = (): AppThunk => async dispatch => dispatch(sendMessageAC())
+export const sendMessageTC = (message: string): AppThunk => async dispatch => dispatch(sendMessageAC(message))
 
 // Types
 export type DialogType = {
@@ -65,5 +55,4 @@ export type MessageType = {
 type InitialStateType = typeof initialState
 
 type ActionsType =
-  | ReturnType<typeof updateNewMessageBodyAC>
   | ReturnType<typeof sendMessageAC>
