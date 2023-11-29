@@ -1,4 +1,4 @@
-import { setCurrentPageTC, setFollowTC, setUnfollowTC, setUsersTC, UserType } from 'store/users-reducer'
+import { setCurrentPageTC, setFollowTC, setUnfollowTC, setUsersTC } from 'store/users-reducer'
 import s from './Users.module.css'
 import userAvatar from 'assets/images/rick.jpg'
 import { useEffect } from 'react'
@@ -19,13 +19,13 @@ import { isLoggedInSelector } from 'components/Header/header-selectors'
 
 export const Users = () => {
   const dispatch = useAppDispatch()
-  const users = useAppSelector<UserType[]>(usersSelector)
-  const pageSize = useAppSelector<number>(pageSizeSelector)
-  const totalUsersCount = useAppSelector<number>(totalUsersCountSelector)
-  const currentPage = useAppSelector<number>(currentPageSelector)
-  const isFetching = useAppSelector<boolean>(isFetchingSelector)
-  const followingInProgress = useAppSelector<number[]>(followingInProgressSelector)
-  const isLoggedIn = useAppSelector<boolean>(isLoggedInSelector)
+  const users = useAppSelector(usersSelector)
+  const pageSize = useAppSelector(pageSizeSelector)
+  const totalUsersCount = useAppSelector(totalUsersCountSelector)
+  const currentPage = useAppSelector(currentPageSelector)
+  const isFetching = useAppSelector(isFetchingSelector)
+  const followingInProgress = useAppSelector(followingInProgressSelector)
+  const isLoggedIn = useAppSelector(isLoggedInSelector)
 
   const follow = async (userID: number) => dispatch(setFollowTC(userID))
   const unfollow = async (userID: number) => dispatch(setUnfollowTC(userID))
