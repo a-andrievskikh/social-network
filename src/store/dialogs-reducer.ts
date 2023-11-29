@@ -1,4 +1,5 @@
 import { AppThunk } from 'store/store'
+import { v1 } from 'uuid'
 
 const SEND_MESSAGE = 'SEND-MESSAGE'
 
@@ -12,12 +13,12 @@ const initialState = {
     { id: 6, name: 'Valera' },
   ] as DialogType[],
   messages: [
-    { id: 1, message: 'Hi' },
-    { id: 2, message: 'How are you?' },
-    { id: 3, message: 'Yo' },
-    { id: 4, message: 'Yo' },
-    { id: 5, message: 'Yo' },
-    { id: 6, message: 'Yo' },
+    { id: v1(), message: 'Hi' },
+    { id: v1(), message: 'How are you?' },
+    { id: v1(), message: 'Yo' },
+    { id: v1(), message: 'Yo' },
+    { id: v1(), message: 'Yo' },
+    { id: v1(), message: 'Yo' },
   ] as MessageType[],
 }
 
@@ -28,7 +29,7 @@ export const dialogsReducer = (state: InitialStateType = initialState, action: A
         ...state,
         messages: [
           ...state.messages,
-          { id: 7, message: action.message },
+          { id: v1(), message: action.message },
         ],
       }
     default:
@@ -48,7 +49,7 @@ export type DialogType = {
   name: string
 }
 export type MessageType = {
-  id: number
+  id: string
   message: string
 }
 

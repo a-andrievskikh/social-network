@@ -1,11 +1,5 @@
 import s from './Post.module.css'
 
-type PostPropsType = {
-  id: number
-  message: string
-  likesCount: number
-}
-
 export const Post = ({ id, message, likesCount }: PostPropsType) => {
   const handleRemovePostClick = () => alert('Post removed')
   return (
@@ -25,4 +19,12 @@ export const Post = ({ id, message, likesCount }: PostPropsType) => {
       </div>
     )
   )
+}
+
+// Types
+
+type PostPropsType = {
+  id: string
+  message: string
+  likesCount: number
 }

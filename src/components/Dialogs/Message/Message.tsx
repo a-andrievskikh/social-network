@@ -31,7 +31,7 @@ export const Message = ({ id, message, idx }: MessagePropsType) => {
 
 // Types
 type MessagePropsType = {
-  id: number
+  id: string
   message: string
   idx: number
 }

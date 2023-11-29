@@ -1,15 +1,19 @@
 import rick from '../assets/images/rick.jpg'
 import { AppThunk } from 'store/store'
 import { profileAPI } from 'components/Profile/api/profile-api'
+import { v1 } from 'uuid'
 
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_USER_STATUS = 'SET-USER-STATUS'
 
+const user1 = v1()
+const user2 = v1()
+
 const initialState = {
   posts: [
-    { id: 1, message: 'Hi, how are you?', likesCount: 15 },
-    { id: 2, message: `It's my first project.`, likesCount: 20 },
+    { id: user1, message: 'Hi, how are you?', likesCount: 15 },
+    { id: user2, message: `It's my first project.`, likesCount: 20 },
   ] as PostType[],
   profile: {
     aboutMe: 'Initial Profile',
@@ -41,7 +45,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
       return {
         ...state,
         posts: [
-          { id: 3, message: action.value, likesCount: 0 },
+          { id: v1(), message: action.value, likesCount: 0 },
           ...state.posts,
         ],
       }
@@ -87,7 +91,7 @@ type ActionsType =
   | ReturnType<typeof setUserStatusAC>
 
 export type PostType = {
-  id: number
+  id: string
   message: string
   likesCount: number
 }
