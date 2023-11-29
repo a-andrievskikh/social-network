@@ -1,60 +1,36 @@
-import { ChangeEvent } from 'react'
-import { sendMessageTC, updateNewMessageBodyTC } from 'store/dialogs-reducer'
 import s from './Dialogs.module.css'
 import { DialogItem } from './DialogItem/DialogItem'
 import { Message } from './Message/Message'
-import { DialogType, MessageType } from 'store/dialogs-reducer'
-import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { Redirect } from 'react-router-dom'
 import { isLoggedInSelector } from 'components/Header/header-selectors'
-import {
-  dialogsSelector,
-  messagesSelector,
-  newMessageBodySelector,
-} from 'components/Dialogs/DialogItem/dialogs-selectors'
+import { dialogsSelector, messagesSelector } from 'components/Dialogs/dialogs-selectors'
+import { AddMessageReduxForm, NewMessageBodyT } from 'components/Dialogs/AddMessageForm/AddMessageForm'
+import { sendMessageTC } from 'store/dialogs-reducer'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
 
 export const Dialogs = () => {
   const dispatch = useAppDispatch()
+  const dialogs = useAppSelector(dialogsSelector)
+  const messages = useAppSelector(messagesSelector)
+  const isLoggedIn = useAppSelector(isLoggedInSelector)
 
-  const dialogs = useAppSelector<DialogType[]>(dialogsSelector)
-  const messages = useAppSelector<MessageType[]>(messagesSelector)
-  const newMessageBody = useAppSelector<string>(newMessageBodySelector)
-  const isLoggedIn = useAppSelector<boolean>(isLoggedInSelector)
-
-  const dialogsElements = dialogs
+  const dialogsItems = dialogs
     .map(d => <DialogItem key={d.id} id={d.id} name={d.name} />)
 
-  const messagesElements = messages
+  const messagesItems = messages
     .map((m, idx) => <Message key={m.id} id={m.id} message={m.message} idx={idx} />)
 
-  const onChangeTextHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    dispatch(updateNewMessageBodyTC(e.currentTarget.value))
-  }
-
-  const onSendMessageClickHandler = () => dispatch(sendMessageTC())
+  const addNewMessageHandler = (value: NewMessageBodyT) => dispatch(sendMessageTC(value.newMessageBody))
 
   if (!isLoggedIn) return <Redirect to={'login'} />
 
   return (
-    (
-      <div className={s.dialogs}>
-        <div>
-          {dialogsElements}
-        </div>
-        <div>
-          <div>
-            <div>{messagesElements}</div>
-            <div>
-              <textarea value={newMessageBody}
-                        onChange={onChangeTextHandler}
-                        placeholder={'Enter your message'}
-              />
-              <button onClick={onSendMessageClickHandler}>Send message</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
+    <div className={s.dialogs}>
+      <div className={s.dialogsItems}>{dialogsItems}</div>
+      <div className={s.messagesItems}>{messagesItems}</div>
+      <AddMessageReduxForm onSubmit={addNewMessageHandler} />
+    </div>
   )
 }
+
