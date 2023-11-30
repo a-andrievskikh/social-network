@@ -1,13 +1,24 @@
 import s from 'components/Login/Login.module.css'
-import { FormDataT, LoginReduxFrom } from 'components/Login/LoginForm/LoginForm'
+import { LoginReduxFrom } from 'components/Login/LoginForm/LoginForm'
+import { LoginT, loginTC } from 'store/auth-reducer'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { Redirect } from 'react-router-dom'
+import { useAppSelector } from 'common/hooks/useAppSelector'
+import { isLoggedInSelector } from 'components/Header/header-selectors'
 
 export const Login = () => {
+  const dispatch = useAppDispatch()
+  const isLoggedIn = useAppSelector(isLoggedInSelector)
+  const onSubmit = (formData: LoginT) => {
+    console.log(formData)
+    dispatch(loginTC(formData))
+  }
 
-  const onSubmit = (formData: FormDataT) => console.log(formData)
+  if (isLoggedIn) return <Redirect to={'/profile'} />
 
   return (
     <div className={s.loginBlock}>
-      <h1>Login</h1>
+      <h1>LOGIN</h1>
       <LoginReduxFrom onSubmit={onSubmit} />
     </div>
   )
