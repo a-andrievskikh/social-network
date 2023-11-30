@@ -42,7 +42,7 @@ export const Users = () => {
   const profileHandler = (userID: number) => dispatch(setUserProfileTC(userID))
 
 
-  if (!isLoggedIn) return <Redirect to={'login'} />
+  if (!isLoggedIn) return <Redirect to={'/login'} />
   // console.log('users rendered')
 
   return (
