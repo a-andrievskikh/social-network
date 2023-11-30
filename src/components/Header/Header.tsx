@@ -2,12 +2,28 @@ import s from './Header.module.css'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { isLoggedInSelector, loginSelector } from 'components/Header/header-selectors'
 import { NavLink } from 'react-router-dom'
+import { useAppDispatch } from 'common/hooks/useAppDispatch'
+import { logoutTC } from 'store/auth-reducer'
 
 export const Header = () => {
+  const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(isLoggedInSelector)
   const login = useAppSelector(loginSelector)
 
-  // console.log(login)
+  const onLogoutHandler = () => dispatch(logoutTC())
+
+  const loginLogoutBtn = () => {
+    return isLoggedIn ?
+      (<div>{login} -
+        <button onClick={onLogoutHandler}>LOGOUT</button>
+      </div>)
+      :
+      (<NavLink to="/login" activeClassName={s.login}>
+        <div>
+          <button>LOGIN</button>
+        </div>
+      </NavLink>)
+  }
 
   return (
     <header className={s.header}>
@@ -17,12 +33,7 @@ export const Header = () => {
           alt=""
         />
       </div>
-      <div>
-        {isLoggedIn ? login :
-          <NavLink to="/login"
-                   activeClassName={s.login}>LOGIN
-          </NavLink>}
-      </div>
+      <div>{loginLogoutBtn()}</div>
     </header>
   )
 }
