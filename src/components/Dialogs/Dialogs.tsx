@@ -23,7 +23,7 @@ export const Dialogs = () => {
 
   const addNewMessageHandler = (value: NewMessageBodyT) => dispatch(sendMessageTC(value.newMessageBody))
 
-  if (!isLoggedIn) return <Redirect to={'login'} />
+  if (!isLoggedIn) return <Redirect to={'/login'} />
 
   return (
     <div className={s.dialogs}>
