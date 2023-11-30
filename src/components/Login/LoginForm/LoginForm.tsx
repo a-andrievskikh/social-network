@@ -2,10 +2,11 @@ import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 import { Input } from 'common/FormsControls/FormsControls'
 import { maxLengthCreator, required } from 'utils/validators'
 import { LoginT } from 'store/auth-reducer'
+import s from 'components/Login/Login.module.css'
 
 const maxLength20 = maxLengthCreator(20)
 
-const LoginForm = ({ handleSubmit }: InjectedFormProps<LoginT>) => {
+const LoginForm = ({ handleSubmit, error }: InjectedFormProps<LoginT>) => {
 
   return (
     <form onSubmit={handleSubmit}>
@@ -26,6 +27,7 @@ const LoginForm = ({ handleSubmit }: InjectedFormProps<LoginT>) => {
       <div>
         <Field name={'rememberMe'} type="checkbox" component={'input'} /> Remember me
       </div>
+      {error && <div className={s.formCommonError}>{error}</div>}
       <div>
         <button>Login</button>
       </div>

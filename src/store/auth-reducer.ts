@@ -1,5 +1,6 @@
 import { AppThunk } from 'store/store'
 import { authAPI } from 'components/Auth/auth-api'
+import { stopSubmit } from 'redux-form'
 
 const SET_USER_DATA = 'SET-USER-DATA'
 const SET_IS_LOGGED_IN = 'SET-IS-LOGGED-IN'
@@ -54,6 +55,9 @@ export const loginTC = (login: LoginT): AppThunk => async dispatch => {
   const res = await authAPI.login(login)
   if (res.data.resultCode === 0) {
     dispatch(getAuthUserDataTC())
+  } else {
+    let message = res.data.messages.length ? res.data.messages[0] : 'Some error'
+    dispatch(stopSubmit('login', { _error: message }))
   }
 }
 
