@@ -47,11 +47,8 @@ export const getAuthUserDataTC = (): AppThunk => async dispatch => {
   const res = await authAPI.me()
   if (res.data.resultCode === 0) {
     dispatch(setAuthUserDataAC(res.data.data, true))
-    // dispatch(setIsLoggedInTC(true))
   }
 }
-export const setIsLoggedInTC = (isLoggedIn: boolean): AppThunk =>
-  async dispatch => dispatch(setIsLoggedInAC(isLoggedIn))
 
 export const loginTC = (login: LoginT): AppThunk => async dispatch => {
   const res = await authAPI.login(login)
@@ -64,10 +61,8 @@ export const logoutTC = (): AppThunk => async dispatch => {
   const res = await authAPI.logout()
   if (res.data.resultCode === 0) {
     dispatch(setAuthUserDataAC(initialState.data, false))
-    // dispatch(setIsLoggedInTC(false))
   }
 }
-
 
 // Types
 type ActionsType =
