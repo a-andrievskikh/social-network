@@ -18,7 +18,8 @@ export const authReducer = (state: InitialStateT = initialState, action: Actions
     case SET_USER_DATA: {
       return {
         ...state,
-        data: action.userData,
+        data: action.payload,
+        isLoggedIn: action.isLoggedIn,
       }
     }
     case SET_IS_LOGGED_IN: {
@@ -34,22 +35,43 @@ export const authReducer = (state: InitialStateT = initialState, action: Actions
 }
 
 // Actions
-const getAuthUserDataAC = (userData: UserDataT) => ({ type: SET_USER_DATA, userData } as const)
+const setAuthUserDataAC = (payload: UserDataT, isLoggedIn: boolean) => ({
+  type: SET_USER_DATA,
+  payload,
+  isLoggedIn,
+} as const)
 const setIsLoggedInAC = (isLoggedIn: boolean) => ({ type: SET_IS_LOGGED_IN, isLoggedIn } as const)
 
 // Thunks
 export const getAuthUserDataTC = (): AppThunk => async dispatch => {
   const res = await authAPI.me()
   if (res.data.resultCode === 0) {
-    dispatch(setIsLoggedInTC(true))
-    dispatch(getAuthUserDataAC(res.data.data))
+    dispatch(setAuthUserDataAC(res.data.data, true))
+    // dispatch(setIsLoggedInTC(true))
   }
 }
-export const setIsLoggedInTC = (isLoggedIn: boolean): AppThunk => async dispatch => dispatch(setIsLoggedInAC(isLoggedIn))
+export const setIsLoggedInTC = (isLoggedIn: boolean): AppThunk =>
+  async dispatch => dispatch(setIsLoggedInAC(isLoggedIn))
+
+export const loginTC = (login: LoginT): AppThunk => async dispatch => {
+  const res = await authAPI.login(login)
+  if (res.data.resultCode === 0) {
+    dispatch(getAuthUserDataTC())
+  }
+}
+
+export const logoutTC = (): AppThunk => async dispatch => {
+  const res = await authAPI.logout()
+  if (res.data.resultCode === 0) {
+    dispatch(setAuthUserDataAC(initialState.data, false))
+    // dispatch(setIsLoggedInTC(false))
+  }
+}
+
 
 // Types
 type ActionsType =
-  | ReturnType<typeof getAuthUserDataAC>
+  | ReturnType<typeof setAuthUserDataAC>
   | ReturnType<typeof setIsLoggedInAC>
 
 type InitialStateT = typeof initialState
@@ -58,4 +80,11 @@ type UserDataT = {
   id: null | number
   email: null | string
   login: null | string
+}
+
+export type LoginT = {
+  email: string
+  password: string
+  rememberMe?: boolean
+  captcha?: boolean
 }
