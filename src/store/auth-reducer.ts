@@ -49,6 +49,7 @@ export const getAuthUserDataTC = (): AppThunk => async dispatch => {
   if (res.data.resultCode === 0) {
     dispatch(setAuthUserDataAC(res.data.data, true))
   }
+  return res
 }
 
 export const loginTC = (login: LoginT): AppThunk => async dispatch => {

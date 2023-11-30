@@ -6,6 +6,7 @@ import { sidebarReducer } from './sidebar-reducer'
 import { usersReducer } from './users-reducer'
 import { authReducer } from 'store/auth-reducer'
 import { reducer as formReducer } from 'redux-form'
+import { appReducer } from 'store/app-reducer'
 
 const rootReducer = combineReducers({
   profilePage: profileReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   usersPage: usersReducer,
   sidebar: sidebarReducer,
   auth: authReducer,
+  app: appReducer,
   form: formReducer,
 })
 

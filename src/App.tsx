@@ -10,15 +10,20 @@ import { Settings } from 'components/Settings/Settings'
 import { Users } from 'components/Users/Users'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useEffect } from 'react'
-import { getAuthUserDataTC } from 'store/auth-reducer'
 import { Login } from 'components/Login/Login'
+import { initializeAppTC } from 'store/app-reducer'
+import { useAppSelector } from 'common/hooks/useAppSelector'
+import { Preloader } from 'common/preloader/Preloader'
 
 export const App = () => {
   const dispatch = useAppDispatch()
+  const isAppInitialized = useAppSelector<boolean>(s => s.app.isAppInitialized)
 
   useEffect(() => {
-    dispatch(getAuthUserDataTC())
+    dispatch(initializeAppTC())
   }, [])
+
+  if (!isAppInitialized) return <Preloader />
 
   return (
     <div className="app-wrapper">
