@@ -1,23 +1,24 @@
 import { Field, InjectedFormProps, reduxForm } from 'redux-form'
 import { Input } from 'common/FormsControls/FormsControls'
 import { maxLengthCreator, required } from 'utils/validators'
+import { LoginT } from 'store/auth-reducer'
 
 const maxLength20 = maxLengthCreator(20)
 
-const LoginForm = ({ handleSubmit }: InjectedFormProps<FormDataT>) => {
+const LoginForm = ({ handleSubmit }: InjectedFormProps<LoginT>) => {
 
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <Field name={'login'}
-               type={'text'}
+        <Field name={'email'}
+               type={'email'}
                component={Input}
                validate={[required, maxLength20]}
                placeholder={'Login'} />
       </div>
       <div>
         <Field name={'password'}
-               type={'text'}
+               type={'password'}
                component={Input}
                validate={[required, maxLength20]}
                placeholder={'Password'} />
@@ -32,11 +33,4 @@ const LoginForm = ({ handleSubmit }: InjectedFormProps<FormDataT>) => {
   )
 }
 
-export const LoginReduxFrom = reduxForm<FormDataT>({ form: 'login' })(LoginForm)
-
-// Types
-export type FormDataT = {
-  login: string
-  password: string
-  rememberMe: boolean
-}
+export const LoginReduxFrom = reduxForm<LoginT>({ form: 'login' })(LoginForm)
