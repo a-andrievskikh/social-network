@@ -30,7 +30,7 @@ const initialState = {
     lookingForAJob: true,
     lookingForAJobDescription: '',
     fullName: 'samurai dimych',
-    userId: 1,
+    userId: 2,
     photos: {
       small: rick,
       large: rick,
@@ -71,9 +71,8 @@ export const setUserProfileTC = (userID: number): AppThunk => async dispatch => 
   dispatch(setUserProfileAC(res.data))
 }
 export const getUserStatusTC = (userID: number): AppThunk => async dispatch => {
-  debugger
   const res = await profileAPI.getStatus(userID)
-  dispatch(setUserStatusAC(res.statusText))
+  dispatch(setUserStatusAC(res.data))
 }
 export const setUserStatusTC = (statusText: string): AppThunk => async dispatch => {
   const res = await profileAPI.updateStatus(statusText)
