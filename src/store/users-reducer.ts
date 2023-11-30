@@ -77,9 +77,10 @@ export const setUnfollowTC = (userID: number): AppThunk => async dispatch => {
   }
   dispatch(toggleFollowingProgressAC(false, userID))
 }
-export const setUsersTC = (currentPage: number, pageSize: number): AppThunk => async dispatch => {
+export const setUsersTC = (page: number, pageSize: number): AppThunk => async dispatch => {
   dispatch(toggleIsFetchingAC(true))
-  const res = await usersAPI.getUsers(currentPage, pageSize)
+  // dispatch(setCurrentPageAC(page))
+  const res = await usersAPI.getUsers(page, pageSize)
   dispatch(setUsersAC(res.data.items))
   dispatch(setTotalUsersCountAC(res.data.totalCount))
   dispatch(toggleIsFetchingAC(false))
