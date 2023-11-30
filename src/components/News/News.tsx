@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom'
 export const News = () => {
 
   const isLoggedIn = useAppSelector<boolean>(isLoggedInSelector)
-  if (!isLoggedIn) return <Redirect to={'login'} />
+  if (!isLoggedIn) return <Redirect to={'/login'} />
 
   return (
     <div>
