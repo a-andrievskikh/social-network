@@ -10,14 +10,14 @@ import { Settings } from 'components/Settings/Settings'
 import { Users } from 'components/Users/Users'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useEffect } from 'react'
-import { setAuthUserDataTC } from 'store/auth-reducer'
+import { getAuthUserDataTC } from 'store/auth-reducer'
 import { Login } from 'components/Login/Login'
 
 export const App = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(setAuthUserDataTC())
+    dispatch(getAuthUserDataTC())
   }, [])
 
   return (

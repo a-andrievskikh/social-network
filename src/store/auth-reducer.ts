@@ -34,22 +34,22 @@ export const authReducer = (state: InitialStateT = initialState, action: Actions
 }
 
 // Actions
-const setAuthUserDataAC = (userData: UserDataT) => ({ type: SET_USER_DATA, userData } as const)
+const getAuthUserDataAC = (userData: UserDataT) => ({ type: SET_USER_DATA, userData } as const)
 const setIsLoggedInAC = (isLoggedIn: boolean) => ({ type: SET_IS_LOGGED_IN, isLoggedIn } as const)
 
 // Thunks
-export const setAuthUserDataTC = (): AppThunk => async dispatch => {
+export const getAuthUserDataTC = (): AppThunk => async dispatch => {
   const res = await authAPI.me()
   if (res.data.resultCode === 0) {
     dispatch(setIsLoggedInTC(true))
-    dispatch(setAuthUserDataAC(res.data.data))
+    dispatch(getAuthUserDataAC(res.data.data))
   }
 }
 export const setIsLoggedInTC = (isLoggedIn: boolean): AppThunk => async dispatch => dispatch(setIsLoggedInAC(isLoggedIn))
 
 // Types
 type ActionsType =
-  | ReturnType<typeof setAuthUserDataAC>
+  | ReturnType<typeof getAuthUserDataAC>
   | ReturnType<typeof setIsLoggedInAC>
 
 type InitialStateT = typeof initialState
