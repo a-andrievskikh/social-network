@@ -7,7 +7,7 @@ import { isLoggedInSelector } from 'components/Header/header-selectors'
 export const Profile = () => {
 
   const isLoggedIn = useAppSelector<boolean>(isLoggedInSelector)
-  if (!isLoggedIn) return <Redirect to={'login'} />
+  if (!isLoggedIn) return <Redirect to={'/login'} />
 
   return (
     <div>
