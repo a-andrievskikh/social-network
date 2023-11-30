@@ -1,11 +1,7 @@
 import s from './ProfileInfo.module.css'
 import { Preloader } from 'common/preloader/Preloader'
 import { useAppSelector } from 'common/hooks/useAppSelector'
-import {
-  aboutMeSelector,
-  largePhotoSelector,
-  profileSelector,
-} from 'components/Profile/ProfileItem/profileInfo-selectors'
+import { profileSelector } from 'components/Profile/ProfileItem/profileInfo-selectors'
 // import banner from 'assets/images/banner.png'
 import { NavLink } from 'react-router-dom'
 import { ProfileStatus } from './ProfileStatus'
@@ -14,8 +10,6 @@ import rick from 'assets/images/rick.jpg'
 export const ProfileInfo = () => {
   // const dispatch = useAppDispatch()
   const profile = useAppSelector(profileSelector)
-  const largePhoto = useAppSelector(largePhotoSelector)
-  const aboutMe = useAppSelector(aboutMeSelector)
 
   /*useEffect(() => {
     dispatch(getUserStatusTC(profile.userId))
@@ -31,10 +25,10 @@ export const ProfileInfo = () => {
       {/*</div>*/}
       <div className={s.descriptionBlock}>
         <img className={s.logo}
-             src={largePhoto || rick}
+             src={profile.photos.large || rick}
              alt="user's large photo" />
         <div>Name: {profile.fullName}</div>
-        <p>About me: {aboutMe || 'Information not yet provided'}</p>
+        <p>About me: {profile.aboutMe || 'Information not yet provided'}</p>
         <p>User ID: {profile.userId}</p>
         <div>Profile Status: <ProfileStatus /></div>
       </div>
