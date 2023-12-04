@@ -2,7 +2,7 @@ import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { setUserStatusTC } from 'store/profile-reducer'
 import { ChangeEvent } from 'react'
 
-export const OnEditMode = ({ status, setStatus, setEditMode }: OnEditMode) => {
+export const OnEditMode = ({ status, setStatus, setEditMode }: OnEditModeT) => {
   const dispatch = useAppDispatch()
   const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setStatus(e.currentTarget.value)
   const onBlurStatusHandler = () => {
@@ -25,7 +25,7 @@ export const OnEditMode = ({ status, setStatus, setEditMode }: OnEditMode) => {
 }
 
 // Types
-type OnEditMode = {
+type OnEditModeT = {
   status: string
   setStatus: (status: string) => void
   setEditMode: (editMode: boolean) => void

@@ -1,7 +1,7 @@
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { statusTextSelector } from 'components/Profile/ProfileItem/profileInfo-selectors'
 
-export const OffEditMode = ({ setEditMode }: OffEditMode) => {
+export const OffEditMode = ({ setEditMode }: OffEditModeT) => {
   const statusText = useAppSelector<string>(statusTextSelector)
   const onClickSetEditModeHandler = () => setEditMode(true)
 
@@ -13,6 +13,6 @@ export const OffEditMode = ({ setEditMode }: OffEditMode) => {
 }
 
 // Types
-type OffEditMode = {
+type OffEditModeT = {
   setEditMode: (editMode: boolean) => void
 }

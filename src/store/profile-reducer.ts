@@ -4,6 +4,7 @@ import { profileAPI } from 'components/Profile/api/profile-api'
 import { v1 } from 'uuid'
 
 const ADD_POST = 'ADD-POST'
+const DELETE_POST = 'DELETE-POST'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_USER_STATUS = 'SET-USER-STATUS'
 
@@ -49,6 +50,11 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
           ...state.posts,
         ],
       }
+    case DELETE_POST:
+      return {
+        ...state,
+        posts: state.posts.filter(p => p.id !== action.userID),
+      }
     case SET_USER_PROFILE:
       return { ...state, profile: action.profile }
     case SET_USER_STATUS:
@@ -60,7 +66,8 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
 }
 
 // Actions
-const addPostAC = (value: string) => ({ type: ADD_POST, value } as const)
+export const addPostAC = (value: string) => ({ type: ADD_POST, value } as const)
+export const deletePostAC = (userID: string) => ({ type: DELETE_POST, userID } as const)
 const setUserProfileAC = (profile: ProfileType) => ({ type: SET_USER_PROFILE, profile } as const)
 const setUserStatusAC = (statusText: string) => ({ type: SET_USER_STATUS, statusText } as const)
 
@@ -82,10 +89,11 @@ export const setUserStatusTC = (statusText: string): AppThunk => async dispatch 
 }
 
 //Types
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
 type ActionsType =
   | ReturnType<typeof addPostAC>
+  | ReturnType<typeof deletePostAC>
   | ReturnType<typeof setUserProfileAC>
   | ReturnType<typeof setUserStatusAC>
 
