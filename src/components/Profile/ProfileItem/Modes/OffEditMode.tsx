@@ -5,7 +5,6 @@ export const OffEditMode = ({ setEditMode }: OffEditMode) => {
   const statusText = useAppSelector<string>(statusTextSelector)
   const onClickSetEditModeHandler = () => setEditMode(true)
 
-
   return (
     <div>
       <span onDoubleClick={onClickSetEditModeHandler}>{statusText}</span>

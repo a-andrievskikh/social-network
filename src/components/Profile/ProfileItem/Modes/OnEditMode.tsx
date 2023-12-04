@@ -5,16 +5,17 @@ import { ChangeEvent } from 'react'
 export const OnEditMode = ({ status, setStatus, setEditMode }: OnEditMode) => {
   const dispatch = useAppDispatch()
   const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => setStatus(e.currentTarget.value)
+  const onBlurStatusHandler = () => {
+    dispatch(setUserStatusTC(status || 'No Status'))
+    setEditMode(false)
+  }
 
   return (
     <div>
       <input type={'text'}
              value={status}
              onChange={onChangeStatusHandler}
-             onBlur={() => {
-               dispatch(setUserStatusTC(status || 'No Status'))
-               setEditMode(false)
-             }}
+             onBlur={onBlurStatusHandler}
              placeholder={'Change status'}
              autoFocus
       >
