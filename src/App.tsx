@@ -22,7 +22,6 @@ export const App = () => {
   useEffect(() => {
     dispatch(initializeAppTC())
   }, [])
-
   if (!isAppInitialized) return <Preloader />
 
   return (
