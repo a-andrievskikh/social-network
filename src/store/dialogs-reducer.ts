@@ -1,7 +1,7 @@
 import { AppThunk } from 'store/store'
 import { v1 } from 'uuid'
 
-const SEND_MESSAGE = 'SEND-MESSAGE'
+const SEND_MESSAGE = 'dialogs/SEND-MESSAGE'
 
 const initialState = {
   dialogs: [

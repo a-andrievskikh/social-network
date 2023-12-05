@@ -1,5 +1,5 @@
 import { Field, InjectedFormProps, reduxForm } from 'redux-form'
-import { Textarea } from 'common/FormsControls/FormsControls'
+import { Textarea } from 'common/components/FormsControls/FormsControls'
 import { maxLengthCreator, required } from 'utils/validators'
 
 const maxLength50 = maxLengthCreator(50)

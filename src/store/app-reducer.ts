@@ -1,7 +1,7 @@
 import { AppThunk } from 'store/store'
 import { getAuthUserDataTC } from 'store/auth-reducer'
 
-const SET_IS_INITIALIZED = 'SET-IS-INITIALIZED'
+const SET_IS_INITIALIZED = 'app/SET-IS-INITIALIZED'
 
 const initialState = {
   isAppInitialized: false,

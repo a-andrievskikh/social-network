@@ -1,12 +1,12 @@
-import s from 'components/Login/Login.module.css'
-import { LoginReduxFrom } from 'components/Login/LoginForm/LoginForm'
+import s from 'components/Auth/Auth.module.css'
+import { LoginReduxFrom } from 'components/Auth/LoginForm/LoginForm'
 import { LoginT, loginTC } from 'store/auth-reducer'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { Redirect } from 'react-router-dom'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { isLoggedInSelector } from 'components/Header/header-selectors'
 
-export const Login = () => {
+export const Auth = () => {
   const dispatch = useAppDispatch()
   const isLoggedIn = useAppSelector(isLoggedInSelector)
   const onSubmit = (formData: LoginT) => {

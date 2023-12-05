@@ -3,10 +3,10 @@ import { AppThunk } from 'store/store'
 import { profileAPI } from 'components/Profile/api/profile-api'
 import { v1 } from 'uuid'
 
-const ADD_POST = 'ADD-POST'
-const DELETE_POST = 'DELETE-POST'
-const SET_USER_PROFILE = 'SET-USER-PROFILE'
-const SET_USER_STATUS = 'SET-USER-STATUS'
+const ADD_POST = 'profile/ADD-POST'
+const DELETE_POST = 'profile/DELETE-POST'
+const SET_USER_PROFILE = 'profile/SET-USER-PROFILE'
+const SET_USER_STATUS = 'profile/SET-USER-STATUS'
 
 const user1 = v1()
 const user2 = v1()

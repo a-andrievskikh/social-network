@@ -7,6 +7,7 @@ export const authAPI = {
   logout: () => instance.delete<LogoutResponseT>(`/auth/login`),
 }
 
+// Types
 type UserDataResponseType = {
   resultCode: number
   messages: string[],
@@ -24,6 +25,7 @@ type LoginResponseT = {
     userId: number
   }
 }
+
 type LogoutResponseT = {
   resultCode: number
   messages: string[],

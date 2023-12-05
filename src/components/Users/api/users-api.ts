@@ -14,8 +14,8 @@ type UsersDataType = {
   error: string
 }
 
-type ResponseT = {
+export type ResponseT = {
   resultCode: number
-  messages: string,
+  messages: string[],
   data: {}
 }

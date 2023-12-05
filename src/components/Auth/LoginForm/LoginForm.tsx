@@ -1,8 +1,8 @@
 import { Field, InjectedFormProps, reduxForm } from 'redux-form'
-import { Input } from 'common/FormsControls/FormsControls'
+import { Input } from 'common/components/FormsControls/FormsControls'
 import { maxLengthCreator, required } from 'utils/validators'
 import { LoginT } from 'store/auth-reducer'
-import s from 'components/Login/Login.module.css'
+import s from 'components/Auth/Auth.module.css'
 
 const maxLength20 = maxLengthCreator(20)
 

@@ -1,13 +1,16 @@
-import { usersAPI } from 'components/Users/api/users-api'
+import { ResponseT, usersAPI } from 'components/Users/api/users-api'
 import { AppThunk } from 'store/store'
+import { Dispatch } from 'redux'
+import { AxiosResponse } from 'axios'
+import { updateObjectInArray } from 'utils/updateObjectInArray'
 
-const FOLLOW = 'FOLLOW'
-const UNFOLLOW = 'UNFOLLOW'
-const SET_USERS = 'SET-USERS'
-const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
-const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT'
-const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING'
-const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE-IS-FOLLOWING-PROGRESS'
+const FOLLOW = 'users/FOLLOW'
+const UNFOLLOW = 'users/UNFOLLOW'
+const SET_USERS = 'users/SET-USERS'
+const SET_CURRENT_PAGE = 'users/SET-CURRENT-PAGE'
+const SET_TOTAL_USERS_COUNT = 'users/SET-TOTAL-USERS-COUNT'
+const TOGGLE_IS_FETCHING = 'users/TOGGLE-IS-FETCHING'
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'users/TOGGLE-IS-FOLLOWING-PROGRESS'
 
 const initialState = {
   users: [] as UserType[],
@@ -18,15 +21,15 @@ const initialState = {
   followingInProgress: [] as number[],
 }
 
-export const usersReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const usersReducer = (state: InitialStateT = initialState, action: ActionsType): InitialStateT => {
   switch (action.type) {
     case FOLLOW:
       return {
-        ...state, users: state.users.map(u => u.id === action.userID ? { ...u, followed: true } : u),
+        ...state, users: updateObjectInArray(state.users, action.userID, 'id', { followed: true }),
       }
     case UNFOLLOW:
       return {
-        ...state, users: state.users.map(u => u.id === action.userID ? { ...u, followed: false } : u),
+        ...state, users: updateObjectInArray(state.users, action.userID, 'id', { followed: false }),
       }
     case SET_USERS:
       return { ...state, users: action.users }
@@ -61,25 +64,27 @@ const toggleFollowingProgressAC = (isFetching: boolean, userID: number) => ({
 } as const)
 
 // Thunks
-export const setFollowTC = (userID: number): AppThunk => async dispatch => {
+
+const setFollowUnfollow = async (dispatch: Dispatch, userID: number, apiMethod: (userID: number) => Promise<AxiosResponse<ResponseT>>, actionCreator: typeof setFollowAC | typeof setUnfollowAC) => {
   dispatch(toggleFollowingProgressAC(true, userID))
-  const res = await usersAPI.setFollow(userID)
+  const res = await apiMethod(userID)
   if (res.data.resultCode === 0) {
-    dispatch(setFollowAC(userID))
+    dispatch(actionCreator(userID))
   }
   dispatch(toggleFollowingProgressAC(false, userID))
 }
-export const setUnfollowTC = (userID: number): AppThunk => async dispatch => {
-  dispatch(toggleFollowingProgressAC(true, userID))
-  const res = await usersAPI.setUnfollow(userID)
-  if (res.data.resultCode === 0) {
-    dispatch(setUnfollowAC(userID))
-  }
-  dispatch(toggleFollowingProgressAC(false, userID))
+
+export const setFollowTC = (userID: number): AppThunk => dispatch => {
+  return setFollowUnfollow(dispatch, userID, usersAPI.setFollow, setFollowAC)
 }
+
+export const setUnfollowTC = (userID: number): AppThunk => dispatch => {
+  return setFollowUnfollow(dispatch, userID, usersAPI.setUnfollow, setUnfollowAC)
+}
+
 export const setUsersTC = (page: number, pageSize: number): AppThunk => async dispatch => {
   dispatch(toggleIsFetchingAC(true))
-  // dispatch(setCurrentPageAC(page))
+  dispatch(setCurrentPageAC(page))
   const res = await usersAPI.getUsers(page, pageSize)
   dispatch(setUsersAC(res.data.items))
   dispatch(setTotalUsersCountAC(res.data.totalCount))
@@ -94,7 +99,7 @@ export const setCurrentPageTC = (pageNumber: number, pageSize: number): AppThunk
 }
 
 // Types
-type InitialStateType = typeof initialState
+type InitialStateT = typeof initialState
 type ActionsType =
   | ReturnType<typeof setFollowAC>
   | ReturnType<typeof setUnfollowAC>

@@ -10,7 +10,7 @@ import { Settings } from 'components/Settings/Settings'
 import { Users } from 'components/Users/Users'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useEffect } from 'react'
-import { Login } from 'components/Login/Login'
+import { Auth } from 'components/Auth/Auth'
 import { initializeAppTC } from 'store/app-reducer'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { Preloader } from 'common/preloader/Preloader'
@@ -30,7 +30,7 @@ export const App = () => {
       <Header />
       <Navbar />
       <div className="app-wrapper-content">
-        <Route path="/login" render={() => <Login />} />
+        <Route path="/login" render={() => <Auth />} />
         <Route path="/profile" render={() => <Profile />} />
         <Route path="/dialogs" render={() => <Dialogs />} />
         <Route path="/users" render={() => <Users />} />

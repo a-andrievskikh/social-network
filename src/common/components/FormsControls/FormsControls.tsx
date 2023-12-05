@@ -1,13 +1,13 @@
-import s from './FormsControls.module.css'
+import s from 'common/components/FormsControls/FormsControls.module.css'
 
-const FormControl = ({ input, meta, children }: any) => {
-  const showError = meta.touched && meta.error
+const FormControl = ({ meta: { touched, error }, children }: any) => {
+  const showError = touched && error
   return (
     <div className={`${s.formControl} ${showError ? s.error : ''}`}>
       <div>
         {children}
       </div>
-      {showError && <span>{meta.error}</span>}
+      {showError && <span>{error}</span>}
     </div>
   )
 }
