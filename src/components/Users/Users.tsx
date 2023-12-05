@@ -34,7 +34,7 @@ export const Users = () => {
     <div className={s.avatar}>
       {<Pagination />}
       {isFetching && <Preloader />}
-      {users.map(user => <User user={user} />)}
+      {users.map(user => <User key={user.id} user={user} />)}
     </div>
   )
 }
