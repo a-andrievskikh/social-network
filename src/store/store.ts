@@ -1,4 +1,4 @@
-import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux'
+import { AnyAction, applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import thunk, { ThunkAction, ThunkDispatch } from 'redux-thunk'
 import { profileReducer } from './profile-reducer'
 import { dialogsReducer } from './dialogs-reducer'
@@ -18,7 +18,12 @@ const rootReducer = combineReducers({
   form: formReducer,
 })
 
-export const store = createStore(rootReducer, applyMiddleware(thunk))
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ as any || compose
+export const store = createStore(rootReducer, composeEnhancers(
+  applyMiddleware(thunk),
+))
+
+// export const store = createStore(rootReducer, applyMiddleware(thunk))
 
 export type AppRootStateT = ReturnType<typeof store.getState>
 export type AppDispatch = ThunkDispatch<AppRootStateT, unknown, AnyAction>
@@ -27,6 +32,7 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateT,
 declare global {
   interface Window {
     store: typeof store;
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
   }
 }
 
