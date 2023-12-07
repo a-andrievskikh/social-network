@@ -2,15 +2,15 @@ import s from './ProfileInfo.module.css'
 import { Preloader } from 'common/preloader/Preloader'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { profileSelector } from 'components/Profile/ProfileItem/profileInfo-selectors'
-// import banner from 'assets/images/banner.png'
 import { NavLink } from 'react-router-dom'
 import { ProfileStatus } from './ProfileStatus'
-import rick from 'assets/images/rick.jpg'
+import userPhoto from 'assets/images/rick.jpg'
+import { ownerIdSelector } from 'components/Auth/auth-selectors'
 
 export const ProfileInfo = () => {
   // const dispatch = useAppDispatch()
   const profile = useAppSelector(profileSelector)
-
+  const ownerID = useAppSelector(ownerIdSelector)
   /*useEffect(() => {
     dispatch(getUserStatusTC(profile.userId))
   }, [profile.userId])*/
@@ -19,14 +19,12 @@ export const ProfileInfo = () => {
 
   return (
     <div>
-      {/*<div className={`${s.descriptionBlock} ${s.banner}`}>*/}
-      {/*  <img src={banner}*/}
-      {/*       alt="user's banner" />*/}
-      {/*</div>*/}
       <div className={s.descriptionBlock}>
         <img className={s.logo}
-             src={profile.photos.large || rick}
-             alt="user's large photo" />
+             src={profile.photos.large || userPhoto}
+             alt="user's large photo"
+        />
+        {}
         <div>Name: {profile.fullName}</div>
         <p>About me: {profile.aboutMe || 'Information not yet provided'}</p>
         <p>User ID: {profile.userId}</p>
@@ -40,5 +38,3 @@ export const ProfileInfo = () => {
     </div>
   )
 }
-
-// default ava "https://i.pinimg.com/originals/7e/73/1f/7e731f9fcfc7bd222e14c2e6850c69db.jpg"
