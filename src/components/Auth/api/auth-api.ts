@@ -2,32 +2,20 @@ import { instance } from 'common/api/instance'
 import { LoginT } from 'store/auth-reducer'
 
 export const authAPI = {
-  me: () => instance.get<UserDataResponseType>(`/auth/me`),
-  login: (login: LoginT) => instance.post<LoginResponseT>(`/auth/login`, login),
-  logout: () => instance.delete<LogoutResponseT>(`/auth/login`),
+  me: () => instance.get<Response<MeDataT>>(`/auth/me`),
+  login: (login: LoginT) => instance.post<Response<{ userId: number }>>(`/auth/login`, login),
+  logout: () => instance.delete<Response>(`/auth/login`),
 }
 
 // Types
-type UserDataResponseType = {
+type Response<T = {}> = {
   resultCode: number
   messages: string[],
-  data: {
-    id: number
-    email: string
-    login: string
-  }
+  data: T
 }
 
-type LoginResponseT = {
-  resultCode: number
-  messages: string[],
-  data: {
-    userId: number
-  }
-}
-
-type LogoutResponseT = {
-  resultCode: number
-  messages: string[],
-  data: {}
+type MeDataT = {
+  id: number
+  email: string
+  login: string
 }
