@@ -29,8 +29,9 @@ export const Pagination = () => {
   return (
     <div className={s.pagination}>
       {
-        portionNumber > 1 &&
-        <button className={s.btn} onClick={() => setPortionNumber(prevState => prevState - 1)}>PREV</button>
+        portionNumber > 1 ?
+          <button className={s.btn} onClick={() => setPortionNumber(prevState => prevState - 1)}>PREV</button> :
+          <div className={s.prevEmptySpace}></div>
       }
       {
         pages
