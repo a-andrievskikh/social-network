@@ -1,8 +1,8 @@
 .dialog {
   display: flex;
   flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: start;
   gap: 10px;
   padding: 5px 10px;
 }
