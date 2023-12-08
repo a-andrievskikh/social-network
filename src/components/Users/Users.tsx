@@ -24,7 +24,7 @@ export const Users = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector)
 
   useEffect(() =>
-    dispatch(setUsersTC(currentPage, pageSize)), [])
+    dispatch(setUsersTC(currentPage, pageSize)), [dispatch, currentPage, pageSize])
 
 
   if (!isLoggedIn) return <Redirect to={'/login'} />
