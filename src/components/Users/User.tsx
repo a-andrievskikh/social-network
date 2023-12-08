@@ -15,7 +15,7 @@ export const User = ({ user }: UserPT) => {
   const follow = (userID: number) => dispatch(setFollowTC(userID))
   const unfollow = (userID: number) => dispatch(setUnfollowTC(userID))
   const profileHandler = (userID: number) => {
-    dispatch(setUserProfileTC(ownerID !== userID ? ownerID : userID))
+    dispatch(setUserProfileTC(ownerID === userID ? ownerID : userID))
   }
 
   const isDisabled = followingInProgress.some(id => id === user.id)
