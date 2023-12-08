@@ -8,17 +8,25 @@
 }
 
 .pages {
+  display: block;
   padding: 2px;
+  text-align: center;
+  min-width: 32px;
   border: 1px solid #1f242a;
   cursor: pointer;
 }
 
 .selectedPage {
   padding: 2px;
+  min-width: 32px;
   font-weight: bold;
   border: 1px solid #1f242a;
 }
 
 .btn {
   padding: 3px;
+}
+
+.prevEmptySpace {
+  width: 46px;
 }
