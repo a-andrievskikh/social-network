@@ -1,6 +1,8 @@
 .loginBlock {
   /*grid-area: h;*/
-  /*float: right;*/
+  /*float: right;*//*
+  display: flex;
+  flex-direction: column;*/
   font-family: Verdana, sans-serif;
   font-size: 12px;
   width: 100px;
@@ -9,11 +11,4 @@
 .loginBlock a {
   color: #181818ff;
   text-decoration: none;
-}
-
-.formCommonError {
-  padding: 5px;
-  border: 1px solid red;
-  color: red;
-
 }
