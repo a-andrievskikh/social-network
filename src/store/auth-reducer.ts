@@ -4,6 +4,7 @@ import { stopSubmit } from 'redux-form'
 
 const SET_USER_DATA = 'auth/SET-USER-DATA'
 const SET_IS_LOGGED_IN = 'auth/SET-IS-LOGGED-IN'
+const GET_CAPTCHA_URL = 'auth/GET-CAPTCHA-URL'
 
 const initialState = {
   data: {
@@ -12,6 +13,7 @@ const initialState = {
     login: null,
   } as UserDataT,
   isLoggedIn: false,
+  captchaUrl: null as CaptchaT,
 }
 
 export const authReducer = (state: InitialStateT = initialState, action: ActionsType): InitialStateT => {
@@ -29,6 +31,12 @@ export const authReducer = (state: InitialStateT = initialState, action: Actions
         isLoggedIn: action.isLoggedIn,
       }
     }
+    case GET_CAPTCHA_URL: {
+      return {
+        ...state,
+        captchaUrl: action.captchaUrl,
+      }
+    }
     default: {
       return state
     }
@@ -43,6 +51,9 @@ const setAuthUserDataAC = (payload: UserDataT, isLoggedIn: boolean) => ({
 } as const)
 const setIsLoggedInAC = (isLoggedIn: boolean) => ({ type: SET_IS_LOGGED_IN, isLoggedIn } as const)
 
+const setCaptchaUrlAC = (captchaUrl: CaptchaT) => ({ type: GET_CAPTCHA_URL, captchaUrl } as const)
+
+
 // Thunks
 export const getAuthUserDataTC = (): AppThunk => async dispatch => {
   const res = await authAPI.me()
@@ -56,7 +67,8 @@ export const loginTC = (login: LoginT): AppThunk => async dispatch => {
   if (res.data.resultCode === 0) {
     dispatch(getAuthUserDataTC())
   } else {
-    let message = res.data.messages.length ? res.data.messages[0] : 'Some error'
+    if (res.data.resultCode === 10) dispatch(getCaptchaUrlTC())
+    const message = res.data.messages.length ? res.data.messages[0] : 'Some error'
     dispatch(stopSubmit('login', { _error: message }))
   }
 }
@@ -68,10 +80,16 @@ export const logoutTC = (): AppThunk => async dispatch => {
   }
 }
 
+export const getCaptchaUrlTC = (): AppThunk => async dispatch => {
+  const res = await authAPI.getCaptchaUrl()
+  dispatch(setCaptchaUrlAC(res.data.url))
+}
+
 // Types
 type ActionsType =
   | ReturnType<typeof setAuthUserDataAC>
   | ReturnType<typeof setIsLoggedInAC>
+  | ReturnType<typeof setCaptchaUrlAC>
 
 type InitialStateT = typeof initialState
 
@@ -85,5 +103,7 @@ export type LoginT = {
   email: string
   password: string
   rememberMe?: boolean
-  captcha?: boolean
+  captcha?: CaptchaT
 }
+
+export type CaptchaT = string | null
