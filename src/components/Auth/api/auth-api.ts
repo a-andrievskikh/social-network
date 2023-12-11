@@ -2,9 +2,10 @@ import { instance } from 'common/api/instance'
 import { LoginT } from 'store/auth-reducer'
 
 export const authAPI = {
-  me: () => instance.get<Response<MeDataT>>(`/auth/me`),
-  login: (login: LoginT) => instance.post<Response<{ userId: number }>>(`/auth/login`, login),
-  logout: () => instance.delete<Response>(`/auth/login`),
+  me: () => instance.get<Response<MeDataT>>(`auth/me`),
+  login: (login: LoginT) => instance.post<Response<{ userId: number }>>(`auth/login`, login),
+  logout: () => instance.delete<Response>(`auth/login`),
+  getCaptchaUrl: () => instance.get<{ url: string }>(`security/get-captcha-url`),
 }
 
 // Types
