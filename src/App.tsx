@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom'
 import './App.css'
 import { lazy, useEffect } from 'react'
 import { initializeAppTC } from 'store/app-reducer'
@@ -26,11 +26,17 @@ const Music = lazy(async () => ({ default: (await import('components/Music/Music
 const Settings = lazy(async () => ({ default: (await import('components/Settings/Settings')).Settings }))
 
 export const App = () => {
+  const catchAllUnhandledErrors = (promiseRejectionEvent: Event) => {
+    alert('Some error occurred')
+  }
   const dispatch = useAppDispatch()
   const isAppInitialized = useAppSelector<boolean>(s => s.app.isAppInitialized)
 
   useEffect(() => {
     dispatch(initializeAppTC())
+    window.addEventListener('unhandledrejection', catchAllUnhandledErrors)
+
+    return () => window.removeEventListener('unhandledrejection', catchAllUnhandledErrors)
   }, [dispatch])
   if (!isAppInitialized) return <Preloader />
 
@@ -40,6 +46,7 @@ export const App = () => {
       <Header />
       <Navbar />
       <div className="app-wrapper-content">
+        <Route path="/" render={() => <Redirect to={'/profile'} />} />
         <Route path="/login" render={() => <SuspenseComponent component={Auth} />} />
         <Route path="/profile" render={() => <SuspenseComponent component={Profile} />} />
         <Route path="/dialogs" render={() => <SuspenseComponent component={Dialogs} />} />
@@ -47,6 +54,7 @@ export const App = () => {
         <Route path="/news" render={() => <SuspenseComponent component={News} />} />
         <Route path="/music" render={() => <SuspenseComponent component={Music} />} />
         <Route path="/settings" render={() => <SuspenseComponent component={Settings} />} />
+        <Route path="*" render={() => <div>404 NOT FOUND</div>} />
 
         {/*<Route path="/login" render={() => <Auth />} />*/}
         {/*<Route path="/profile" render={() => <Profile />} />*/}
