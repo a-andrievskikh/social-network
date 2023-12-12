@@ -38,6 +38,7 @@ export const App = () => {
 
     return () => window.removeEventListener('unhandledrejection', catchAllUnhandledErrors)
   }, [dispatch])
+
   if (!isAppInitialized) return <Preloader />
 
 
