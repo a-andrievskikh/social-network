@@ -3,6 +3,7 @@ import { AppThunk } from 'store/store'
 import { Dispatch } from 'redux'
 import { AxiosResponse } from 'axios'
 import { updateObjectInArray } from 'utils/updateObjectInArray'
+import { Photos } from 'common/types/photos'
 
 const FOLLOW = 'users/FOLLOW'
 const UNFOLLOW = 'users/UNFOLLOW'
@@ -19,10 +20,10 @@ const initialState = {
   totalItemsCount: 0,
   currentPage: 1,
   isFetching: false,
-  followingInProgress: [] as number[],
+  followingInProgress: [] as number[], // array of users ids
 }
 
-export const usersReducer = (state: InitialStateT = initialState, action: ActionsType): InitialStateT => {
+export const usersReducer = (state = initialState, action: ActionsType): InitialStateT => {
   switch (action.type) {
     case FOLLOW:
       return {
@@ -113,10 +114,7 @@ type ActionsType =
 export type UserType = {
   id: number
   name: string
-  status: string | undefined,
-  photos: {
-    small: string | undefined
-    large: string | undefined
-  },
+  status: string
+  photos: Photos
   followed: boolean
 }
