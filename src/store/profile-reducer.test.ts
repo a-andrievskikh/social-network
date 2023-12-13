@@ -1,5 +1,4 @@
 import { addPostAC, deletePostAC, InitialStateType, PostType, profileReducer, ProfileType } from 'store/profile-reducer'
-import rick from 'assets/images/rick.jpg'
 import { v1 } from 'uuid'
 
 let state: InitialStateType
@@ -14,31 +13,11 @@ beforeEach(() => {
       { id: user1, message: 'Hi, how are you?', likesCount: 15 },
       { id: user2, message: `It's my first project.`, likesCount: 20 },
     ] as PostType[],
-    profile: {
-      aboutMe: 'Initial Profile',
-      contacts: {
-        facebook: '',
-        website: null,
-        vk: '',
-        twitter: '',
-        instagram: '',
-        youtube: null,
-        github: 'github.com',
-        mainLink: null,
-      },
-      lookingForAJob: true,
-      lookingForAJobDescription: '',
-      fullName: 'samurai dimych',
-      userId: 2,
-      photos: {
-        small: rick,
-        large: rick,
-      },
-    } as ProfileType,
-    statusText: 'Initial Status',
+    profile: {} as ProfileType | null,
+    aboutMe: '',
+    statusText: '',
   }
 })
-
 
 it('new post should be added', () => {
   const newPostText = 'New Post Text'
