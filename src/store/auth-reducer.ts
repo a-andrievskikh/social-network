@@ -16,7 +16,7 @@ const initialState = {
   captchaUrl: null as CaptchaT,
 }
 
-export const authReducer = (state: InitialStateT = initialState, action: ActionsType): InitialStateT => {
+export const authReducer = (state = initialState, action: ActionsType): InitialStateT => {
   switch (action.type) {
     case SET_USER_DATA: {
       return {
@@ -94,9 +94,9 @@ type ActionsType =
 type InitialStateT = typeof initialState
 
 type UserDataT = {
-  id: null | number
-  email: null | string
-  login: null | string
+  id: number | null
+  email: string | null
+  login: string | null
 }
 
 export type LoginT = {
