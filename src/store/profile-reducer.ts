@@ -2,6 +2,7 @@ import rick from '../assets/images/rick.jpg'
 import { AppThunk } from 'store/store'
 import { profileAPI } from 'components/Profile/api/profile-api'
 import { v1 } from 'uuid'
+import { Photos } from 'common/types/photos'
 
 const ADD_POST = 'profile/ADD-POST'
 const DELETE_POST = 'profile/DELETE-POST'
@@ -16,31 +17,12 @@ const initialState = {
     { id: user1, message: 'Hi, how are you?', likesCount: 15 },
     { id: user2, message: `It's my first project.`, likesCount: 20 },
   ] as PostType[],
-  profile: {
-    aboutMe: 'Initial Profile',
-    contacts: {
-      facebook: '',
-      website: null,
-      vk: '',
-      twitter: '',
-      instagram: '',
-      youtube: null,
-      github: 'github.com',
-      mainLink: null,
-    },
-    lookingForAJob: true,
-    lookingForAJobDescription: '',
-    fullName: 'samurai dimych',
-    userId: 2,
-    photos: {
-      small: rick,
-      large: rick,
-    },
-  } as ProfileType,
-  statusText: 'Initial Status',
+  profile: {} as ProfileType | null,
+  aboutMe: '',
+  statusText: '',
 }
 
-export const profileReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
+export const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
     case ADD_POST:
       return {
@@ -102,28 +84,23 @@ export type PostType = {
   message: string
   likesCount: number
 }
+
 export type ProfileType = {
-  aboutMe: string
-  contacts: Contacts,
+  userId: number,
   lookingForAJob: boolean,
   lookingForAJobDescription: string
   fullName: string
-  userId: number,
+  contacts: Contacts,
   photos: Photos
 }
 
 export type Contacts = {
   facebook: string
-  website: null,
+  website: string
   vk: string
   twitter: string
   instagram: string
-  youtube: null,
+  youtube: string
   github: string
-  mainLink: null
-}
-
-export type Photos = {
-  small: string
-  large: string
+  mainLink: string
 }
