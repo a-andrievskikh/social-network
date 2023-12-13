@@ -1,7 +1,7 @@
 import s from './ProfileInfo.module.css'
 import { Preloader } from 'common/preloader/Preloader'
 import { useAppSelector } from 'common/hooks/useAppSelector'
-import { profileSelector } from 'components/Profile/ProfileItem/profileInfo-selectors'
+import { aboutMeSelector, profileSelector } from 'components/Profile/ProfileItem/profileInfo-selectors'
 import { NavLink } from 'react-router-dom'
 import { ProfileStatus } from './ProfileStatus'
 import userPhoto from 'assets/images/rick.jpg'
@@ -10,6 +10,7 @@ import { ownerIdSelector } from 'components/Auth/auth-selectors'
 export const ProfileInfo = () => {
   // const dispatch = useAppDispatch()
   const profile = useAppSelector(profileSelector)
+  const aboutMe = useAppSelector(aboutMeSelector)
   const ownerID = useAppSelector(ownerIdSelector)
   /*useEffect(() => {
     dispatch(getUserStatusTC(profile.userId))
@@ -26,7 +27,7 @@ export const ProfileInfo = () => {
         />
         {}
         <div>Name: {profile.fullName}</div>
-        <p>About me: {profile.aboutMe || 'Information not yet provided'}</p>
+        <p>About me: {aboutMe || 'Information not yet provided'}</p>
         <p>User ID: {profile.userId}</p>
         <div>Profile Status: <ProfileStatus /></div>
       </div>
