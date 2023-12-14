@@ -2,7 +2,7 @@ import rick from '../assets/images/rick.jpg'
 import { AppThunk } from 'store/store'
 import { profileAPI } from 'components/Profile/api/profile-api'
 import { v1 } from 'uuid'
-import { Photos } from 'common/types/photos'
+import { CommonTypes } from 'common/types/commonTypes'
 
 const ADD_POST = 'profile/ADD-POST'
 const DELETE_POST = 'profile/DELETE-POST'
@@ -91,7 +91,7 @@ export type ProfileType = {
   lookingForAJobDescription: string
   fullName: string
   contacts: Contacts,
-  photos: Photos
+  photos: CommonTypes
 }
 
 export type Contacts = {
