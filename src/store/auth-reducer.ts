@@ -1,6 +1,7 @@
 import { AppThunk } from 'store/store'
 import { authAPI } from 'components/Auth/api/auth-api'
 import { stopSubmit } from 'redux-form'
+import { ResultCodes } from 'common/types/commonTypes'
 
 const SET_USER_DATA = 'auth/SET-USER-DATA'
 const SET_IS_LOGGED_IN = 'auth/SET-IS-LOGGED-IN'
@@ -56,26 +57,26 @@ const setCaptchaUrlAC = (captchaUrl: CaptchaT) => ({ type: GET_CAPTCHA_URL, capt
 
 // Thunks
 export const getAuthUserDataTC = (): AppThunk => async dispatch => {
-  const res = await authAPI.me()
-  if (res.data.resultCode === 0) {
-    dispatch(setAuthUserDataAC(res.data.data, true))
+  const meData = await authAPI.me()
+  if (meData.resultCode === ResultCodes.Success) {
+    dispatch(setAuthUserDataAC(meData.data, true))
   }
 }
 
 export const loginTC = (login: LoginT): AppThunk => async dispatch => {
-  const res = await authAPI.login(login)
-  if (res.data.resultCode === 0) {
+  const loginData = await authAPI.login(login)
+  if (loginData.resultCode === ResultCodes.Success) {
     dispatch(getAuthUserDataTC())
   } else {
-    if (res.data.resultCode === 10) dispatch(getCaptchaUrlTC())
-    const message = res.data.messages.length ? res.data.messages[0] : 'Some error'
+    if (loginData.resultCode === ResultCodes.Captcha) dispatch(getCaptchaUrlTC())
+    const message = loginData.messages.length ? loginData.messages[0] : 'Some error'
     dispatch(stopSubmit('login', { _error: message }))
   }
 }
 
 export const logoutTC = (): AppThunk => async dispatch => {
-  const res = await authAPI.logout()
-  if (res.data.resultCode === 0) {
+  const logoutData = await authAPI.logout()
+  if (logoutData.resultCode === ResultCodes.Success) {
     dispatch(setAuthUserDataAC(initialState.data, false))
   }
 }
