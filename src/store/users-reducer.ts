@@ -3,7 +3,7 @@ import { AppThunk } from 'store/store'
 import { Dispatch } from 'redux'
 import { AxiosResponse } from 'axios'
 import { updateObjectInArray } from 'utils/updateObjectInArray'
-import { Photos } from 'common/types/photos'
+import { CommonTypes } from 'common/types/commonTypes'
 
 const FOLLOW = 'users/FOLLOW'
 const UNFOLLOW = 'users/UNFOLLOW'
@@ -115,6 +115,6 @@ export type UserType = {
   id: number
   name: string
   status: string
-  photos: Photos
+  photos: CommonTypes
   followed: boolean
 }
