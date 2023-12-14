@@ -9,7 +9,6 @@ import { captchaUrlSelector } from 'components/Auth/auth-selectors'
 const maxLength20 = maxLengthCreator(20)
 
 const LoginForm = ({ handleSubmit, error }: InjectedFormProps<LoginT>) => {
-
   const captchaUrl = useAppSelector(captchaUrlSelector)
 
   return (
