@@ -26,7 +26,6 @@ export const Users = () => {
   useEffect(() =>
     dispatch(setUsersTC(currentPage, pageSize)), [dispatch, currentPage, pageSize])
 
-
   if (!isLoggedIn) return <Redirect to={'/login'} />
   // console.log('users rendered')
 
