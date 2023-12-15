@@ -30,7 +30,5 @@ export const initializeAppTC = (): AppThunk => async dispatch => {
 }
 
 // Types
-type ActionsType =
-  | ReturnType<typeof setIsInitializedAC>
-
 type InitialStateT = typeof initialState
+type ActionsType = ReturnType<typeof setIsInitializedAC>
