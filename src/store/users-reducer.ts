@@ -53,8 +53,8 @@ export const usersReducer = (state = initialState, action: ActionsType): Initial
 }
 
 // Actions
-const setFollowAC = (userID: number) => ({ type: FOLLOW, userID } as const)
-const setUnfollowAC = (userID: number) => ({ type: UNFOLLOW, userID } as const)
+const setFollowAC = (userID: number) => <const>{ type: FOLLOW, userID } // another option for create action creator <const>
+const setUnfollowAC = (userID: number) => <const>{ type: UNFOLLOW, userID }
 const setUsersAC = (users: UserType[]) => ({ type: SET_USERS, users } as const)
 const setCurrentPageAC = (currentPage: number) => ({ type: SET_CURRENT_PAGE, currentPage } as const)
 const setTotalUsersCountAC = (totalItemsCount: number) =>
@@ -67,7 +67,8 @@ const toggleFollowingProgressAC = (isFetching: boolean, userID: number) => ({
 
 // Thunks
 
-const setFollowUnfollow = async (dispatch: Dispatch, userID: number, apiMethod: (userID: number) => Promise<AxiosResponse<ResponseT>>, actionCreator: typeof setFollowAC | typeof setUnfollowAC) => {
+const setFollowUnfollow = async (dispatch: Dispatch, userID: number, apiMethod: (userID: number) =>
+  Promise<AxiosResponse<ResponseT>>, actionCreator: typeof setFollowAC | typeof setUnfollowAC) => {
   dispatch(toggleFollowingProgressAC(true, userID))
   const res = await apiMethod(userID)
   if (res.data.resultCode === 0) {
