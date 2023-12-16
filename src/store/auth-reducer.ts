@@ -1,11 +1,7 @@
 import { AppThunk } from 'store/store'
 import { authAPI } from 'components/Auth/api/auth-api'
 import { stopSubmit } from 'redux-form'
-import { ResultCodes } from 'common/types/commonTypes'
-
-const SET_USER_DATA = 'auth/SET-USER-DATA'
-const SET_IS_LOGGED_IN = 'auth/SET-IS-LOGGED-IN'
-const GET_CAPTCHA_URL = 'auth/GET-CAPTCHA-URL'
+import { ResultCodes } from 'common/api/instance'
 
 const initialState = {
   data: {
@@ -19,20 +15,20 @@ const initialState = {
 
 export const authReducer = (state = initialState, action: ActionsType): InitialStateT => {
   switch (action.type) {
-    case SET_USER_DATA: {
+    case 'auth/SET-USER-DATA': {
       return {
         ...state,
         data: action.payload,
         isLoggedIn: action.isLoggedIn,
       }
     }
-    case SET_IS_LOGGED_IN: {
+    case 'auth/SET-IS-LOGGED-IN': {
       return {
         ...state,
         isLoggedIn: action.isLoggedIn,
       }
     }
-    case GET_CAPTCHA_URL: {
+    case 'auth/GET-CAPTCHA-URL': {
       return {
         ...state,
         captchaUrl: action.captchaUrl,
@@ -46,14 +42,13 @@ export const authReducer = (state = initialState, action: ActionsType): InitialS
 
 // Actions
 const setAuthUserDataAC = (payload: UserDataT, isLoggedIn: boolean) => ({
-  type: SET_USER_DATA,
+  type: 'auth/SET-USER-DATA',
   payload,
   isLoggedIn,
 } as const)
-const setIsLoggedInAC = (isLoggedIn: boolean) => ({ type: SET_IS_LOGGED_IN, isLoggedIn } as const)
+const setIsLoggedInAC = (isLoggedIn: boolean) => ({ type: 'auth/SET-IS-LOGGED-IN', isLoggedIn } as const)
 
-const setCaptchaUrlAC = (captchaUrl: CaptchaT) => ({ type: GET_CAPTCHA_URL, captchaUrl } as const)
-
+const setCaptchaUrlAC = (captchaUrl: CaptchaT) => ({ type: 'auth/GET-CAPTCHA-URL', captchaUrl } as const)
 
 // Thunks
 export const getAuthUserDataTC = (): AppThunk => async dispatch => {
@@ -75,15 +70,15 @@ export const loginTC = (login: LoginT): AppThunk => async dispatch => {
 }
 
 export const logoutTC = (): AppThunk => async dispatch => {
-  const logoutData = await authAPI.logout()
-  if (logoutData.resultCode === ResultCodes.Success) {
+  const resultCode = await authAPI.logout()
+  if (resultCode === ResultCodes.Success) {
     dispatch(setAuthUserDataAC(initialState.data, false))
   }
 }
 
 export const getCaptchaUrlTC = (): AppThunk => async dispatch => {
-  const res = await authAPI.getCaptchaUrl()
-  dispatch(setCaptchaUrlAC(res.data.url))
+  const url = await authAPI.getCaptchaUrl()
+  dispatch(setCaptchaUrlAC(url))
 }
 
 // Types
