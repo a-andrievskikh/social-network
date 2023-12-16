@@ -1,13 +1,7 @@
-import rick from '../assets/images/rick.jpg'
 import { AppThunk } from 'store/store'
-import { profileAPI } from 'components/Profile/api/profile-api'
+import { profileAPI, ProfileType } from 'components/Profile/api/profile-api'
 import { v1 } from 'uuid'
-import { CommonTypes } from 'common/types/commonTypes'
-
-const ADD_POST = 'profile/ADD-POST'
-const DELETE_POST = 'profile/DELETE-POST'
-const SET_USER_PROFILE = 'profile/SET-USER-PROFILE'
-const SET_USER_STATUS = 'profile/SET-USER-STATUS'
+import { ResultCodes } from 'common/api/instance'
 
 const user1 = v1()
 const user2 = v1()
@@ -24,7 +18,7 @@ const initialState = {
 
 export const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
   switch (action.type) {
-    case ADD_POST:
+    case 'profile/ADD-POST':
       return {
         ...state,
         posts: [
@@ -32,26 +26,26 @@ export const profileReducer = (state = initialState, action: ActionsType): Initi
           ...state.posts,
         ],
       }
-    case DELETE_POST:
+    case 'profile/DELETE-POST':
       return {
         ...state,
         posts: state.posts.filter(p => p.id !== action.userID),
       }
-    case SET_USER_PROFILE:
+    case 'profile/SET-USER-PROFILE':
       return { ...state, profile: action.profile }
-    case SET_USER_STATUS:
+    case 'profile/SET-USER-STATUS':
       return { ...state, statusText: action.statusText }
-
+    
     default:
       return state
   }
 }
 
 // Actions
-export const addPostAC = (value: string) => ({ type: ADD_POST, value } as const)
-export const deletePostAC = (userID: string) => ({ type: DELETE_POST, userID } as const)
-const setUserProfileAC = (profile: ProfileType) => ({ type: SET_USER_PROFILE, profile } as const)
-const setUserStatusAC = (statusText: string) => ({ type: SET_USER_STATUS, statusText } as const)
+export const addPostAC = (value: string) => ({ type: 'profile/ADD-POST', value } as const)
+export const deletePostAC = (userID: string) => ({ type: 'profile/DELETE-POST', userID } as const)
+const setUserProfileAC = (profile: ProfileType) => ({ type: 'profile/SET-USER-PROFILE', profile } as const)
+const setUserStatusAC = (statusText: string) => ({ type: 'profile/SET-USER-STATUS', statusText } as const)
 
 // Thunks
 export const addPostTC = (value: string): AppThunk => async dispatch => dispatch(addPostAC(value))
@@ -65,7 +59,7 @@ export const getUserStatusTC = (userID: number): AppThunk => async dispatch => {
 }
 export const setUserStatusTC = (statusText: string): AppThunk => async dispatch => {
   const res = await profileAPI.updateStatus(statusText)
-  if (res.data.resultCode === 0) {
+  if (res.data.resultCode === ResultCodes.Success) {
     dispatch(setUserStatusAC(statusText))
   }
 }
@@ -85,22 +79,3 @@ export type PostType = {
   likesCount: number
 }
 
-export type ProfileType = {
-  userId: number,
-  lookingForAJob: boolean,
-  lookingForAJobDescription: string
-  fullName: string
-  contacts: Contacts,
-  photos: CommonTypes
-}
-
-export type Contacts = {
-  facebook: string
-  website: string
-  vk: string
-  twitter: string
-  instagram: string
-  youtube: string
-  github: string
-  mainLink: string
-}
