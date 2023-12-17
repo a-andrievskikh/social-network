@@ -1,5 +1,6 @@
-import { instance, Response } from 'common/api/instance'
+import { instance } from 'common/api/instance'
 import { LoginT } from 'store/auth-reducer'
+import { Response } from 'common/types/commonTypes'
 
 export const authAPI = {
   me: () => instance.get<Response<MeData>>(`auth/me`).then(res => res.data),
