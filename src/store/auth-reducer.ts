@@ -1,7 +1,7 @@
 import { AppThunk } from 'store/store'
 import { authAPI } from 'components/Auth/api/auth-api'
 import { stopSubmit } from 'redux-form'
-import { ResultCodes } from 'common/api/instance'
+import { ResultCodes } from 'common/types/commonTypes'
 
 const initialState = {
   data: {
