@@ -1,7 +1,7 @@
 import { AppRootStateT } from 'store/store'
-import { UserType } from 'store/users-reducer'
+import { UserData } from 'components/Users/api/users-api'
 
-export const usersSelector = (s: AppRootStateT) => s.usersPage.users as UserType[]
+export const usersSelector = (s: AppRootStateT) => s.usersPage.users as UserData[]
 export const pageSizeSelector = (s: AppRootStateT) => s.usersPage.pageSize as number
 export const totalItemsCountSelector = (s: AppRootStateT) => s.usersPage.totalItemsCount as number
 export const portionSizeSelector = (s: AppRootStateT) => s.usersPage.portionSize as number
