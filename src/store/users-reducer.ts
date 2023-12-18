@@ -3,7 +3,7 @@ import { AppThunk } from 'store/store'
 import { Dispatch } from 'redux'
 import { AxiosResponse } from 'axios'
 import { updateObjectInArray } from 'utils/updateObjectInArray'
-import { Response, ResultCodes } from 'common/api/instance'
+import { Response, ResultCodes } from 'common/types/commonTypes'
 
 const initialState = {
   users: [] as UserData[],
