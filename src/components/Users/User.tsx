@@ -1,4 +1,4 @@
-import { setFollowTC, setUnfollowTC, UserType } from 'store/users-reducer'
+import { setFollowTC, setUnfollowTC } from 'store/users-reducer'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
 import { useAppSelector } from 'common/hooks/useAppSelector'
 import { followingInProgressSelector } from 'components/Users/users-selectors'
@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom'
 import userAvatar from 'assets/images/rick.jpg'
 import s from './User.module.css'
 import { ownerIdSelector } from 'components/Auth/auth-selectors'
+import { UserData } from 'components/Users/api/users-api'
 
 export const User = ({ user }: UserPT) => {
   const dispatch = useAppDispatch()
@@ -17,9 +18,9 @@ export const User = ({ user }: UserPT) => {
   const profileHandler = (userID: number) => {
     dispatch(setUserProfileTC(ownerID === userID ? ownerID : userID))
   }
-
+  
   const isDisabled = followingInProgress.some(id => id === user.id)
-
+  
   return (
     <div key={user.id} className={s.user}>
       <div>
@@ -45,12 +46,12 @@ export const User = ({ user }: UserPT) => {
         <div>{user.status}</div>
       </div>
       {/*<div>
-        <div>{'user.location.country'}</div>
-        <div>{'user.location.city'}</div>
-      </div>*/}
+       <div>{'user.location.country'}</div>
+       <div>{'user.location.city'}</div>
+       </div>*/}
     </div>
   )
 }
 type UserPT = {
-  user: UserType
+  user: UserData
 }
