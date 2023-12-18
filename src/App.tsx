@@ -31,17 +31,16 @@ export const App = () => {
   }
   const dispatch = useAppDispatch()
   const isAppInitialized = useAppSelector<boolean>(s => s.app.isAppInitialized)
-
+  
   useEffect(() => {
     dispatch(initializeAppTC())
     window.addEventListener('unhandledrejection', catchAllUnhandledErrors)
-
+    
     return () => window.removeEventListener('unhandledrejection', catchAllUnhandledErrors)
   }, [dispatch])
-
+  
   if (!isAppInitialized) return <Preloader />
-
-
+  
   return (
     <div className="app-wrapper">
       <Header />
@@ -56,7 +55,7 @@ export const App = () => {
         <Route path="/music" render={() => <SuspenseComponent component={Music} />} />
         <Route path="/settings" render={() => <SuspenseComponent component={Settings} />} />
         <Route path="*" render={() => <div>404 NOT FOUND</div>} />
-
+        
         {/*<Route path="/login" render={() => <Auth />} />*/}
         {/*<Route path="/profile" render={() => <Profile />} />*/}
         {/*<Route path="/dialogs" render={() => <Dialogs />} />*/}
