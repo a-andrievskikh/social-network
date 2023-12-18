@@ -1,7 +1,7 @@
 import { AppThunk } from 'store/store'
 import { profileAPI, ProfileType } from 'components/Profile/api/profile-api'
 import { v1 } from 'uuid'
-import { ResultCodes } from 'common/api/instance'
+import { ResultCodes } from 'common/types/commonTypes'
 
 const user1 = v1()
 const user2 = v1()
