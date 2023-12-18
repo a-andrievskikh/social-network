@@ -1,5 +1,6 @@
-import { addPostAC, deletePostAC, InitialStateType, PostType, profileReducer, ProfileType } from 'store/profile-reducer'
+import { addPostAC, deletePostAC, InitialStateType, PostType, profileReducer } from 'store/profile-reducer'
 import { v1 } from 'uuid'
+import { ProfileType } from 'components/Profile/api/profile-api'
 
 let state: InitialStateType
 let user1: string
@@ -22,7 +23,7 @@ beforeEach(() => {
 it('new post should be added', () => {
   const newPostText = 'New Post Text'
   const newState = profileReducer(state, addPostAC(newPostText))
-
+  
   expect(newState.posts.length).toBe(3)
   expect(newState.posts[0].message).toBe(newPostText)
   expect(newState.posts[0].likesCount).toBe(0)
@@ -31,7 +32,7 @@ it('new post should be added', () => {
 it('post should be deleted', () => {
   const postID = user2
   const newState = profileReducer(state, deletePostAC(postID))
-
+  
   expect(newState.posts.length).toBe(1)
   expect(newState.posts.every(p => p.id !== postID)).toBeTruthy()
 })
