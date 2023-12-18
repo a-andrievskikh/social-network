@@ -3,3 +3,15 @@ export type Photos = {
   large: string | null
 }
 
+export enum ResultCodes {
+  Success = 0,
+  Failed = 1,
+  Captcha = 10
+}
+
+export type Response<D = {}> = {
+  resultCode: ResultCodes
+  messages: string[],
+  fieldsErrors: string[]
+  data: D
+}
