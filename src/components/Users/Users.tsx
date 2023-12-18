@@ -22,13 +22,13 @@ export const Users = () => {
   const currentPage = useAppSelector(currentPageSelector)
   const isFetching = useAppSelector(isFetchingSelector)
   const isLoggedIn = useAppSelector(isLoggedInSelector)
-
+  
   useEffect(() =>
     dispatch(setUsersTC(currentPage, pageSize)), [dispatch, currentPage, pageSize])
-
+  
   if (!isLoggedIn) return <Redirect to={'/login'} />
   // console.log('users rendered')
-
+  
   return (
     <div className={s.avatar}>
       {<Pagination />}
