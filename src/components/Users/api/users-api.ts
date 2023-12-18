@@ -1,21 +1,23 @@
 import { instance } from 'common/api/instance'
-import { UserType } from 'store/users-reducer'
+import { Photos, Response } from 'common/types/commonTypes'
 
 export const usersAPI = {
-  getUsers: (currentPage: number = 1, pageSize: number = 5) => instance.get<UsersDataType>(`users?page=${currentPage}&count=${pageSize}`),
-  setFollow: (userID: number) => instance.post<ResponseT>(`follow/${userID}`, {}),
-  setUnfollow: (userID: number) => instance.delete<ResponseT>(`follow/${userID}`, {}),
+  getUsers: (currentPage: number = 1, pageSize: number = 5) => instance.get<UsersData>(`users?page=${currentPage}&count=${pageSize}`).then(res => res.data),
+  setFollow: (userID: number) => instance.post<Response>(`follow/${userID}`, {}),
+  setUnfollow: (userID: number) => instance.delete<Response>(`follow/${userID}`, {}),
 }
 
 // Types
-type UsersDataType = {
-  items: UserType[]
+type UsersData = {
+  items: UserData[]
   totalCount: number
-  error: string
+  error: string | null
 }
 
-export type ResponseT = {
-  resultCode: number
-  messages: string[],
-  data: {}
+export type UserData = {
+  id: number
+  name: string
+  status: string
+  photos: Photos
+  followed: boolean
 }
