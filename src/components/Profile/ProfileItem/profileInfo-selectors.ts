@@ -1,5 +1,5 @@
 import { AppRootStateT } from 'store/store'
-import { ProfileType } from 'store/profile-reducer'
+import { ProfileType } from 'components/Profile/api/profile-api'
 
 export const profileSelector = (s: AppRootStateT) => s.profilePage.profile as ProfileType
 export const largePhotoSelector = (s: AppRootStateT) => s.profilePage.profile?.photos.large as string
