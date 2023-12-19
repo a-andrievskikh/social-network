@@ -1,15 +1,15 @@
 import { instance } from 'common/api/instance'
 import { LoginT } from 'store/auth-reducer'
-import { Response } from 'common/types/commonTypes'
+import { APIResponse } from 'common/types/common-types'
 
 export const authAPI = {
-  me: () => instance.get<Response<MeData>>(`auth/me`).then(res => res.data),
+  me: () => instance.get<APIResponse<MeData>>(`auth/me`).then(res => res.data),
   
   login: ({ email, password, rememberMe = false, captcha = null }: LoginT) =>
-    (instance.post<Response<LoginData>>(`auth/login`, { email, password, rememberMe, captcha }))
+    (instance.post<APIResponse<LoginData>>(`auth/login`, { email, password, rememberMe, captcha }))
     .then(res => res.data),
   
-  logout: () => instance.delete<Response>(`auth/login`).then(res => res.data).then(res => res.resultCode),
+  logout: () => instance.delete<APIResponse>(`auth/login`).then(res => res.data.resultCode),
   getCaptchaUrl: () => instance.get<CaptchaData>(`security/get-captcha-url`).then(res => res.data.url),
 }
 
