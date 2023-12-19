@@ -1,10 +1,10 @@
 import { instance } from 'common/api/instance'
-import { Photos, Response } from 'common/types/commonTypes'
+import { Photos, APIResponse } from 'common/types/common-types'
 
 export const profileAPI = {
-  getProfile: (userID: number) => instance.get<ProfileType>(`profile/${userID}`),
-  getStatus: (userID: number) => instance.get<string>(`profile/status/${userID}`),
-  updateStatus: (status: string) => instance.put<Response>(`profile/status`, { status }),
+  getProfile: (userID: number) => instance.get<ProfileType>(`profile/${userID}`).then(res => res.data),
+  getStatus: (userID: number) => instance.get<string>(`profile/status/${userID}`).then(res => res.data),
+  updateStatus: (status: string) => instance.put<APIResponse>(`profile/status`, { status }).then(res => res.data),
 }
 
 // Types
