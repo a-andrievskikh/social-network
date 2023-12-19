@@ -9,7 +9,7 @@ export enum ResultCodes {
   Captcha = 10
 }
 
-export type Response<D = {}> = {
+export type APIResponse<D = {}> = {
   resultCode: ResultCodes
   messages: string[],
   fieldsErrors: string[]
