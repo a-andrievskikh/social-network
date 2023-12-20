@@ -8,3 +8,4 @@ export const portionSizeSelector = (s: AppRootStateT) => s.usersPage.portionSize
 export const currentPageSelector = (s: AppRootStateT) => s.usersPage.currentPage as number
 export const isFetchingSelector = (s: AppRootStateT) => s.usersPage.isFetching as boolean
 export const followingInProgressSelector = (s: AppRootStateT) => s.usersPage.followingInProgress as number[]
+export const filterSelector = (s: AppRootStateT) => s.usersPage.filter.term as string
