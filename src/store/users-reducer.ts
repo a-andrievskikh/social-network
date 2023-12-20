@@ -12,6 +12,7 @@ const initialState = {
   currentPage: 1,
   isFetching: false,
   followingInProgress: [] as number[], // array of users ids
+  filter: { term: '' },
 }
 
 export const usersReducer = (state = initialState, action: ActionsType): InitialState => {
@@ -37,6 +38,11 @@ export const usersReducer = (state = initialState, action: ActionsType): Initial
         ...state,
         followingInProgress: action.isFetching ? [...state.followingInProgress, action.userID] : state.followingInProgress.filter(id => id !== action.userID),
       }
+    case 'users/TERM-FILTER':
+      return {
+        ...state,
+        filter: action.payload,
+      }
     
     default:
       return state
@@ -55,9 +61,9 @@ export const toggleFollowingProgressAC = (isFetching: boolean, userID: number) =
   type: 'users/TOGGLE-IS-FOLLOWING-PROGRESS',
   isFetching, userID,
 } as const)
+export const setFilterTermAC = (term: string) => <const>{ type: 'users/TERM-FILTER', payload: { term } }
 
 // Thunks
-
 const setFollowUnfollow = async (dispatch: Dispatch<ActionsType>, userID: number, apiMethod: (userID: number) => Promise<APIResponse>,
                                  actionCreator: (userID: number) => ActionsType) => {
   dispatch(toggleFollowingProgressAC(true, userID))
@@ -74,10 +80,11 @@ export const setFollowTC = (userID: number): AppThunk => async dispatch =>
 export const setUnfollowTC = (userID: number): AppThunk => async dispatch =>
   await setFollowUnfollow(dispatch, userID, usersAPI.setUnfollow, setUnfollowAC)
 
-export const setUsersTC = (page: number, pageSize: number): AppThunk => async dispatch => {
+export const setUsersTC = (page: number, pageSize: number, term: string): AppThunk => async dispatch => {
   dispatch(toggleIsFetchingAC(true))
   dispatch(setCurrentPageAC(page))
-  const data = await usersAPI.getUsers(page, pageSize)
+  dispatch(setFilterTermAC(term))
+  const data = await usersAPI.getUsers(page, pageSize, term)
   dispatch(setUsersAC(data.items))
   dispatch(setTotalUsersCountAC(data.totalCount))
   dispatch(toggleIsFetchingAC(false))
@@ -93,6 +100,7 @@ export const setCurrentPageTC = (pageNumber: number, pageSize: number): AppThunk
 
 // Types
 export type InitialState = typeof initialState
+export type Filter = typeof initialState.filter
 export type ActionsType =
   | ReturnType<typeof setFollowAC>
   | ReturnType<typeof setUnfollowAC>
@@ -101,3 +109,4 @@ export type ActionsType =
   | ReturnType<typeof setTotalUsersCountAC>
   | ReturnType<typeof toggleIsFetchingAC>
   | ReturnType<typeof toggleFollowingProgressAC>
+  | ReturnType<typeof setFilterTermAC>
