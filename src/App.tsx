@@ -8,6 +8,7 @@ import { Preloader } from 'common/preloader/Preloader'
 import { Header } from 'components/Header/Header'
 import { Navbar } from 'components/Navbar/Navbar'
 import { SuspenseComponent } from 'common/components/Suspense/SuspenseComponent'
+import { isAppInitializedSelector } from 'app-selectors'
 
 // import { Auth } from 'components/Auth/Auth'
 // import { Profile } from 'components/Profile/Profile'
@@ -30,14 +31,14 @@ export const App = () => {
     alert('Some error occurred')
   }
   const dispatch = useAppDispatch()
-  const isAppInitialized = useAppSelector<boolean>(s => s.app.isAppInitialized)
+  const isAppInitialized = useAppSelector(isAppInitializedSelector)
   
   useEffect(() => {
     dispatch(initializeAppTC())
     window.addEventListener('unhandledrejection', catchAllUnhandledErrors)
     
     return () => window.removeEventListener('unhandledrejection', catchAllUnhandledErrors)
-  }, [dispatch])
+  }, [])
   
   if (!isAppInitialized) return <Preloader />
   
