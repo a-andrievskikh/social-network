@@ -1,5 +1,5 @@
 import { Redirect, Route } from 'react-router-dom'
-import 'App.module.css'
+import s from 'App.module.css'
 import { lazy, useEffect } from 'react'
 import { initializeAppTC } from 'store/app-reducer'
 import { useAppDispatch } from 'common/hooks/useAppDispatch'
@@ -35,10 +35,10 @@ export const App = () => {
   if (!isAppInitialized) return <Preloader />
   
   return (
-    <div className="app-wrapper">
+    <div className={s.appWrapper}>
       <Header />
       <Navbar />
-      <div className="app-wrapper-content">
+      <div className={s.appWrapperContent}>
         <Route path="/" render={() => <Redirect to={'/profile'} />} />
         <Route path="/login" render={() => <SuspenseComponent component={Auth} />} />
         <Route path="/profile" render={() => <SuspenseComponent component={Profile} />} />
