@@ -13,9 +13,9 @@ export const Auth = () => {
     console.log(formData)
     dispatch(loginTC(formData))
   }
-
+  
   if (isLoggedIn) return <Redirect to={'/profile'} />
-
+  
   return (
     <div className={s.loginBlock}>
       <h1>LOGIN</h1>
