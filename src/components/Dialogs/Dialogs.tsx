@@ -14,17 +14,17 @@ export const Dialogs = () => {
   const dialogs = useAppSelector(dialogsSelector)
   const messages = useAppSelector(messagesSelector)
   const isLoggedIn = useAppSelector(isLoggedInSelector)
-
+  
   const dialogsItems = dialogs
-    .map(d => <DialogItem key={d.id} id={d.id} name={d.name} />)
-
+  .map(d => <DialogItem key={d.id} id={d.id} name={d.name} />)
+  
   const messagesItems = messages
-    .map((m, idx) => <Message key={m.id} id={m.id} message={m.message} idx={idx} />)
-
+  .map((m, idx) => <Message key={m.id} id={m.id} message={m.message} idx={idx} />)
+  
   const addNewMessageHandler = (value: NewMessageBodyT) => dispatch(sendMessageTC(value.newMessageBody))
-
-  if (!isLoggedIn) return <Redirect to={'/login'} />
-
+  
+  if (!isLoggedIn) return <Redirect to={'login'} />
+  
   return (
     <div className={s.dialogs}>
       <div className={s.dialogsItems}>{dialogsItems}</div>
