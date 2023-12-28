@@ -5,7 +5,7 @@ import { maxLengthCreator, required } from 'utils/validators'
 const maxLength50 = maxLengthCreator(50)
 
 export const AddMessageForm = ({ handleSubmit }: InjectedFormProps<NewMessageBodyT>) => {
-
+  
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -13,7 +13,8 @@ export const AddMessageForm = ({ handleSubmit }: InjectedFormProps<NewMessageBod
                type={'textarea'}
                component={Textarea}
                validate={[required, maxLength50]}
-               placeholder={'Enter your message'} />
+               placeholder={'Enter your message'}
+        />
       </div>
       <div>
         <button>Send message</button>
