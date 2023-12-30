@@ -1,7 +1,8 @@
 import { AppThunk } from 'store/store'
-import { authAPI } from 'components/Auth/api/auth-api'
+import { authAPI, CaptchaData } from 'components/Auth/api/auth-api'
 import { stopSubmit } from 'redux-form'
 import { ResultCodes } from 'common/types/common-types'
+import { AxiosResponse } from 'axios'
 
 const initialState = {
   data: {
@@ -46,9 +47,13 @@ const setAuthUserDataAC = (payload: UserDataT, isLoggedIn: boolean) => ({
   payload,
   isLoggedIn,
 } as const)
+
 const setIsLoggedInAC = (isLoggedIn: boolean) => ({ type: 'auth/SET-IS-LOGGED-IN', isLoggedIn } as const)
 
-const setCaptchaUrlAC = (captchaUrl: CaptchaT) => ({ type: 'auth/GET-CAPTCHA-URL', captchaUrl } as const)
+const setCaptchaUrlAC = (captchaUrl: CaptchaT) => ({
+  type: 'auth/GET-CAPTCHA-URL',
+  captchaUrl,
+} as const)
 
 // Thunks
 export const getAuthUserDataTC = (): AppThunk => async dispatch => {
@@ -70,7 +75,7 @@ export const loginTC = (login: LoginT): AppThunk => async dispatch => {
 }
 
 export const logoutTC = (): AppThunk => async dispatch => {
-  const resultCode = await authAPI.logout()
+  const resultCode: ResultCodes = await authAPI.logout()
   if (resultCode === ResultCodes.Success) {
     dispatch(setAuthUserDataAC(initialState.data, false))
   }
@@ -99,7 +104,7 @@ export type LoginT = {
   email: string
   password: string
   rememberMe?: boolean
-  captcha?: CaptchaT
+  captcha?: string | null
 }
 
 export type CaptchaT = string | null
