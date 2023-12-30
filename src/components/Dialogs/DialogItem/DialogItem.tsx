@@ -1,8 +1,7 @@
 import s from './DialogItem.module.css'
 import { NavLink } from 'react-router-dom'
-import { memo } from 'react'
 
-export const DialogItem = memo(({ id, name }: DialogItemPropsType) => {
+export const DialogItem = ({ id, name }: { id: number, name: string }) => {
   const path = `dialogs/${id}`
   return (
     <div className={`${s.dialog} ${s.active} ${s.avatar}`}>
@@ -15,10 +14,4 @@ export const DialogItem = memo(({ id, name }: DialogItemPropsType) => {
       <NavLink to={path}>{name}</NavLink>
     </div>
   )
-})
-
-// Types
-type DialogItemPropsType = {
-  id: number
-  name: string,
 }
