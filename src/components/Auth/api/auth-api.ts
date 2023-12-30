@@ -1,6 +1,6 @@
 import { instance } from 'common/api/instance'
 import { LoginT } from 'store/auth-reducer'
-import { APIResponse } from 'common/types/common-types'
+import { APIResponse, ResultCodes } from 'common/types/common-types'
 
 export const authAPI = {
   me: () => instance.get<APIResponse<MeData>>(`auth/me`).then(res => res.data),
@@ -9,8 +9,9 @@ export const authAPI = {
     (instance.post<APIResponse<LoginData>>(`auth/login`, { email, password, rememberMe, captcha }))
     .then(res => res.data),
   
-  logout: () => instance.delete<APIResponse>(`auth/login`).then(res => res.data.resultCode),
-  getCaptchaUrl: () => instance.get<CaptchaData>(`security/get-captcha-url`).then(res => res.data.url),
+  logout: () => instance.delete<APIResponse>(`auth/login`).then(res => res.data.resultCode as ResultCodes),
+  
+  getCaptchaUrl: () => instance.get<CaptchaData>(`security/get-captcha-url`).then(res => res.data.url as string),
 }
 
 // Types
@@ -21,4 +22,4 @@ type MeData = {
 }
 
 type LoginData = { userId: number }
-type CaptchaData = { url: string }
+export type CaptchaData = { url: string }
