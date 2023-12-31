@@ -5,11 +5,7 @@
   justify-content: space-between;
   align-items: center;
   grid-area: h;
-  background-color: #555ec3;
-}
-
-.header img {
-  width: 50px;
+  background-color: #3b72bd;
 }
 
 .login {
@@ -18,4 +14,10 @@
   font-size: 24px;
   text-decoration: none;
   color: #181818;
+}
+
+.logo {
+  display: block;
+  width: 80px;
+  height: 80px;
 }
