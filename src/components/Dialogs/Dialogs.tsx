@@ -2,7 +2,7 @@ import s from './Dialogs.module.css'
 import { DialogItem } from './DialogItem/DialogItem'
 import { Message } from './Message/Message'
 import { useAppSelector } from 'common/hooks/useAppSelector'
-import { Redirect } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import { isLoggedInSelector } from 'components/Header/header-selectors'
 import { dialogsSelector, messagesSelector } from 'components/Dialogs/dialogs-selectors'
 import { AddMessageReduxForm, NewMessageBodyT } from 'components/Dialogs/AddMessageForm/AddMessageForm'
@@ -23,7 +23,7 @@ export const Dialogs = () => {
   
   const addNewMessageHandler = (value: NewMessageBodyT) => dispatch(sendMessageTC(value.newMessageBody))
   
-  if (!isLoggedIn) return <Redirect to={'login'} />
+  if (!isLoggedIn) return <Navigate to={'/login'} />
   
   return (
     <div className={s.dialogs}>
