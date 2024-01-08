@@ -1,7 +1,7 @@
 import { AppThunk } from 'store/store'
 import { profileAPI, ProfileType } from 'components/Profile/api/profile-api'
 import { v1 } from 'uuid'
-import { ResultCodes } from 'common/types/commonTypes'
+import { Photos, ResultCodes } from 'common/types/common-types'
 
 const user1 = v1()
 const user2 = v1()
@@ -16,7 +16,7 @@ const initialState = {
   statusText: '',
 }
 
-export const profileReducer = (state = initialState, action: ActionsType): InitialStateType => {
+export const profileReducer = (state = initialState, action: Actions): InitialState => {
   switch (action.type) {
     case 'profile/ADD-POST':
       return {
@@ -49,25 +49,25 @@ const setUserStatusAC = (statusText: string) => ({ type: 'profile/SET-USER-STATU
 
 // Thunks
 export const addPostTC = (value: string): AppThunk => async dispatch => dispatch(addPostAC(value))
-export const setUserProfileTC = (userID: number): AppThunk => async dispatch => {
-  const res = await profileAPI.getProfile(userID)
-  dispatch(setUserProfileAC(res.data))
+export const getUserProfileTC = (userID: number): AppThunk => async dispatch => {
+  const data = await profileAPI.getProfile(userID)
+  dispatch(setUserProfileAC(data))
 }
 export const getUserStatusTC = (userID: number): AppThunk => async dispatch => {
-  const res = await profileAPI.getStatus(userID)
-  dispatch(setUserStatusAC(res.data))
+  const data = await profileAPI.getStatus(userID)
+  dispatch(setUserStatusAC(data))
 }
 export const setUserStatusTC = (statusText: string): AppThunk => async dispatch => {
-  const res = await profileAPI.updateStatus(statusText)
-  if (res.data.resultCode === ResultCodes.Success) {
+  const data = await profileAPI.updateStatus(statusText)
+  if (data.resultCode === ResultCodes.Success) {
     dispatch(setUserStatusAC(statusText))
   }
 }
 
 //Types
-export type InitialStateType = typeof initialState
+export type InitialState = typeof initialState
 
-type ActionsType =
+type Actions =
   | ReturnType<typeof addPostAC>
   | ReturnType<typeof deletePostAC>
   | ReturnType<typeof setUserProfileAC>
