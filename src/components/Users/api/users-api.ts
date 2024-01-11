@@ -1,10 +1,11 @@
 import { instance } from 'common/api/instance'
-import { Photos, Response } from 'common/types/commonTypes'
+import { Photos, APIResponse } from 'common/types/common-types'
 
 export const usersAPI = {
-  getUsers: (currentPage: number = 1, pageSize: number = 5) => instance.get<UsersData>(`users?page=${currentPage}&count=${pageSize}`).then(res => res.data),
-  setFollow: (userID: number) => instance.post<Response>(`follow/${userID}`, {}),
-  setUnfollow: (userID: number) => instance.delete<Response>(`follow/${userID}`, {}),
+  getUsers: (currentPage: number = 1, pageSize: number = 5, term = '') =>
+    instance.get<UsersData>(`users?page=${currentPage}&count=${pageSize}&term=${term}`).then(res => res.data),
+  setFollow: (userID: number) => instance.post<APIResponse>(`follow/${userID}`).then(res => res.data),
+  setUnfollow: (userID: number) => instance.delete<APIResponse>(`follow/${userID}`).then(res => res.data),
 }
 
 // Types
