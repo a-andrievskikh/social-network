@@ -17,6 +17,7 @@ body {
 .appWrapperContent {
   grid-area: c;
   background-color: #4f99fdff;
+  color: white;
 }
 
 
