@@ -1,4 +1,13 @@
 {
+  "files": [],
+  "references": [
+    {
+      "path": "packages/react-router"
+    },
+    {
+      "path": "packages/react-router-dom"
+    }
+  ],
   "compilerOptions": {
     "baseUrl": "src",
     "target": "es5",
