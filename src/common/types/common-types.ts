@@ -15,3 +15,4 @@ export type APIResponse<D = {}> = {
   fieldsErrors: string[]
   data: D
 }
+
