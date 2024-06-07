@@ -22,4 +22,4 @@ type MeData = {
 }
 
 type LoginData = { userId: number }
-export type CaptchaData = { url: string }
+type CaptchaData = { url: string }
